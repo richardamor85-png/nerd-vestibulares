@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nerd-vest-cache-v2';
+const CACHE_NAME = 'nerd-vest-cache-v3';
 const urlsToCache = [
   './index.html',
   './metricas.html',
@@ -7,7 +7,7 @@ const urlsToCache = [
   './icon.png'
 ];
 
-// Instalação: Salva os arquivos e força a ativação imediata
+// Instalação: Salva os arquivos essenciais e força a ativação imediata
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -15,10 +15,10 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
-  self.skipWaiting(); // Força o SW a pular a etapa de espera
+  self.skipWaiting();
 });
 
-// Ativação: Limpa caches antigos (ex: v1) e assume o controle de imediato
+// Ativação: Limpa caches antigos e assume o controle de imediato
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -32,19 +32,24 @@ self.addEventListener('activate', event => {
       );
     })
   );
-  return self.clients.claim(); // Assume o controle das páginas abertas instantaneamente
+  return self.clients.claim();
 });
 
-// Estratégia Network-First (Busca na rede primeiro, se falhar usa o cache)
+// Estratégia Network-First com exclusão total das rotas do Firebase
 self.addEventListener('fetch', event => {
+  const url = event.request.url;
+
+  // IGNORA requisições do Firebase para permitir comunicação em tempo real imediata
+  if (url.includes('firebaseio.com') || url.includes('googleapis.com')) {
+    return; // Deixa o navegador lidar diretamente com a rede sem interceptação do cache
+  }
+
   event.respondWith(
     fetch(event.request)
       .then(networkResponse => {
-        // Se obteve sucesso na rede, retorna o arquivo atualizado
         return networkResponse;
       })
       .catch(() => {
-        // Se estiver offline, recorre ao cache local
         return caches.match(event.request);
       })
   );

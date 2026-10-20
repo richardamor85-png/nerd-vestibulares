@@ -30,25 +30,28 @@
       const database = firebase.database();
       let usuarioUid = null;
 
-      // Baixa os dados da nuvem ao iniciar se houver internet e utilizador logado
-      function sincronizarComNuvemAoIniciar() {
-        if (navigator.onLine && usuarioUid) {
-          database.ref('users/' + usuarioUid).once('value').then((snapshot) => {
-            const dadosNuvem = snapshot.val();
-            if (dadosNuvem) {
-              const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
-              const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
-              localStorage.setItem(chaveStorage, JSON.stringify(dadosNuvem));
-              if (typeof carregarPerfilEspecifico === 'function') {
-                carregarPerfilEspecifico(nomeAluno);
-              }
-              console.log("Progresso sincronizado da nuvem para o dispositivo!");
+      // Escuta em tempo real (onValue) do Firebase para sincronização instantânea
+      function escutarMudancasNuvem(uid) {
+        if (!uid) return;
+        const userRef = database.ref('users/' + uid);
+        
+        userRef.on('value', (snapshot) => {
+          const cloudData = snapshot.val();
+          if (cloudData) {
+            const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
+            const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
+            
+            localStorage.setItem(chaveStorage, JSON.stringify(cloudData));
+            
+            if (typeof carregarPerfilEspecifico === 'function') {
+              carregarPerfilEspecifico(nomeAluno);
             }
-          });
-        }
+            console.log("⚡ Progresso sincronizado em tempo real da nuvem!");
+          }
+        });
       }
 
-      // Salva no localStorage e envia para o Firebase se online
+      // Salva no localStorage e envia com set() garantido para o Firebase
       function salvarDadosHibrido(dadosSalvar) {
         const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
         const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
@@ -56,7 +59,7 @@
         // 1. Salva offline no navegador
         localStorage.setItem(chaveStorage, JSON.stringify(dadosSalvar));
 
-        // 2. Envia para a nuvem se houver conexão
+        // 2. Envia para a nuvem na rota do UID do utilizador
         if (navigator.onLine && usuarioUid) {
           database.ref('users/' + usuarioUid).set(dadosSalvar)
             .then(() => console.log("Dados sincronizados com o Firebase!"))
@@ -251,7 +254,7 @@
           <p class="auth-switch">Não tem conta? <a href="#" id="to-register">Cadastre-se</a></p>
         </form>
 
-        <!-- Formulário de Cadastro (Oculto inicialmente) -->
+        <!-- Formulário de Cadastro -->
         <form id="register-form" class="auth-form" style="display: none;">
           <div class="input-group">
             <label for="reg-email">E-mail</label>
@@ -380,7 +383,6 @@
             <h2 style="color: #38bdf8; text-align: center; margin-top: 0;">⚙️ Configurações do Jogo</h2>
             <div style="text-align: center; width: 100%;">
                 
-                <!-- Aparência / Tema Unificado -->
                 <div class="config-card-box">
                     <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #38bdf8;">Tema da Interface:</label>
                     <div style="display: flex; gap: 15px; margin-bottom: 5px;">
@@ -389,7 +391,6 @@
                     </div>
                 </div>
 
-                <!-- Motor de Revisão -->
                 <div class="config-card-box">
                     <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #38bdf8;">Escolha o Motor de Espaçamento:</label>
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;">
@@ -1064,26 +1065,13 @@
               return;
             }
 
-            // Utilizador logado com E-mail e Senha: Esconde o modal e sincroniza os dados
+            // Utilizador logado com E-mail e Senha: Esconde o modal e ativa escuta em tempo real
             modal.style.display = "none";
             console.log("Utilizador autenticado ID:", user.uid);
             usuarioUid = user.uid;
             
-            const userRef = firebase.database().ref('users/' + user.uid);
-            userRef.once('value').then((snapshot) => {
-              const cloudData = snapshot.val();
-              if (cloudData) {
-                localStorage.setItem('nerd_vest_save', JSON.stringify(cloudData));
-                console.log("Progresso sincronizado da nuvem para o aparelho!");
-              } else {
-                const localData = localStorage.getItem('nerd_vest_save');
-                if (localData) {
-                  userRef.set(JSON.parse(localData));
-                } else {
-                  userRef.set({ progress: 0, unlockedTopics: [] });
-                }
-              }
-            });
+            // Inicia a escuta reativa da nuvem
+            escutarMudancasNuvem(usuarioUid);
 
           } else {
             // Nenhum utilizador logado: Exibe o modal fixo na tela
