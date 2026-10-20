@@ -1,0 +1,15 @@
+{
+  "name": "Nerd Vestibulares",
+  "short_name": "NerdVest",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#070913",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
