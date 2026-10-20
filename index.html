@@ -140,6 +140,151 @@
     </style>
 </head>
 <body>
+    <!-- MODAL DE AUTENTICAÇÃO (LOGIN / CADASTRO) -->
+<div id="auth-modal" class="auth-overlay">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>🎓 Nerd Vestibulares</h2>
+      <p id="auth-subtitle">Faça login para sincronizar o seu progresso na nuvem</p>
+    </div>
+
+    <!-- Formulário de Login -->
+    <form id="login-form" class="auth-form">
+      <div class="input-group">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email" required placeholder="exemplo@email.com">
+      </div>
+      <div class="input-group">
+        <label for="login-senha">Senha</label>
+        <input type="password" id="login-senha" required placeholder="Sua senha secreta">
+      </div>
+      <button type="submit" class="auth-btn">ENTRAR NO JOGO</button>
+      <p class="auth-switch">Não tem conta? <a href="#" id="to-register">Cadastre-se</a></p>
+    </form>
+
+    <!-- Formulário de Cadastro (Oculto inicialmente) -->
+    <form id="register-form" class="auth-form" style="display: none;">
+      <div class="input-group">
+        <label for="reg-email">E-mail</label>
+        <input type="email" id="reg-email" required placeholder="exemplo@email.com">
+      </div>
+      <div class="input-group">
+        <label for="reg-senha">Senha</label>
+        <input type="password" id="reg-senha" required placeholder="Mínimo de 6 caracteres">
+      </div>
+      <div class="input-group">
+        <label for="reg-confirmar">Confirmar Senha</label>
+        <input type="password" id="reg-confirmar" required placeholder="Repita a senha">
+      </div>
+      <button type="submit" class="auth-btn adventure-btn">CRIAR CONTA ADVENTURE</button>
+      <p class="auth-switch">Já tem uma conta? <a href="#" id="to-login">Faça login</a></p>
+    </form>
+    
+    <div id="auth-error" class="auth-error-msg"></div>
+  </div>
+</div>
+
+<style>
+  /* Estilos do Modal */
+  .auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .auth-card {
+    background: #1e293b;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #334155;
+    color: #f8fafc;
+  }
+  .auth-header h2 {
+    margin: 0 0 8px 0;
+    color: #38bdf8;
+    text-align: center;
+  }
+  .auth-header p {
+    color: #94a3b8;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .input-group {
+    margin-bottom: 16px;
+  }
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+  }
+  .input-group input {
+    width: 100%;
+    padding: 10px 14px;
+    background: #0f172a;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  .input-group input:focus {
+    border-color: #38bdf8;
+    outline: none;
+  }
+  .auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+  }
+  .auth-btn:hover {
+    background: #0369a1;
+  }
+  .adventure-btn {
+    background: #16a34a;
+  }
+  .adventure-btn:hover {
+    background: #15803d;
+  }
+  .auth-switch {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+  .auth-switch a {
+    color: #38bdf8;
+    text-decoration: none;
+  }
+  .auth-switch a:hover {
+    text-decoration: underline;
+  }
+  .auth-error-msg {
+    color: #ef4444;
+    font-size: 13px;
+    text-align: center;
+    margin-top: 12px;
+  }
+</style>
 
     <header>
         <h1>Nerd Vestibulares</h1>
@@ -893,6 +1038,134 @@
         });
     });
   }
+  // Importações necessárias (caso use o SDK Modular v9+) ou manipulação via Firebase global
+// Certifique-se de ajustar conforme a sua importação atual do Firebase no projeto.
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("auth-modal");
+  const loginForm = document.getElementById("login-form");
+  const registerForm = document.getElementById("register-form");
+  const toRegisterBtn = document.getElementById("to-register");
+  const toLoginBtn = document.getElementById("to-login");
+  const errorMsg = document.getElementById("auth-error");
+
+  // Alternar entre Telas de Login e Cadastro
+  toRegisterBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginForm.style.display = "none";
+    registerForm.style.display = "block";
+    errorMsg.textContent = "";
+  });
+
+  toLoginBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    registerForm.style.display = "none";
+    loginForm.style.display = "block";
+    errorMsg.textContent = "";
+  });
+
+  // Configurar Persistência Local (Mantém o usuário logado ao reabrir o app)
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .catch((error) => {
+      console.error("Erro na persistência de auth:", error);
+    });
+
+  // Monitorar Estado de Autenticação
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // Usuário logado: Esconde o modal e carrega dados da nuvem
+      modal.style.display = "none";
+      console.log("Usuário autenticado ID:", user.uid);
+      
+      // Sincronizar dados do Realtime Database para o localStorage
+      const userRef = firebase.database().ref('users/' + user.uid);
+      userRef.once('value').then((snapshot) => {
+        const cloudData = snapshot.val();
+        if (cloudData) {
+          // Se houver dados na nuvem, atualiza o localStorage local
+          localStorage.setItem('nerd_vest_save', JSON.stringify(cloudData));
+          console.log("Progresso sincronizado da nuvem para o aparelho!");
+        } else {
+          // Se for conta nova vazia, cria a estrutura inicial na nuvem
+          const localData = localStorage.getItem('nerd_vest_save');
+          if (localData) {
+            userRef.set(JSON.parse(localData));
+          } else {
+            userRef.set({ progress: 0, unlockedTopics: [] });
+          }
+        }
+      });
+
+    } else {
+      // Usuário deslogado: Exibe o modal
+      modal.style.display = "flex";
+    }
+  });
+
+  // Ação de Login (`signInWithEmailAndPassword`)
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("login-email").value;
+    const senha = document.getElementById("login-senha").value;
+
+    errorMsg.textContent = "A entrar...";
+
+    firebase.auth().signInWithEmailAndPassword(email, senha)
+      .then((userCredential) => {
+        errorMsg.textContent = "";
+      })
+      .catch((error) => {
+        errorMsg.textContent = "Erro: " + traduzirErroFirebase(error.code);
+      });
+  });
+
+  // Ação de Cadastro (`createUserWithEmailAndPassword`)
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("reg-email").value;
+    const senha = document.getElementById("reg-senha").value;
+    const confirmar = document.getElementById("reg-confirmar").value;
+
+    if (senha !== confirmar) {
+      errorMsg.textContent = "As senhas não coincidem!";
+      return;
+    }
+
+    if (senha.length < 6) {
+      errorMsg.textContent = "A senha deve ter pelo menos 6 caracteres.";
+      return;
+    }
+
+    errorMsg.textContent = "A criar conta...";
+
+    firebase.auth().createUserWithEmailAndPassword(email, senha)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // Inicializa uma pasta vazia/base para o novo usuário no Realtime Database
+        firebase.database().ref('users/' + user.uid).set({
+          criadoEm: new Date().toISOString(),
+          progressoInicial: true
+        });
+        errorMsg.textContent = "";
+      })
+      .catch((error) => {
+        errorMsg.textContent = "Erro: " + traduzirErroFirebase(error.code);
+      });
+  });
+
+  // Tradutor amigável de erros do Firebase para português
+  function traduzirErroFirebase(code) {
+    switch (code) {
+      case 'auth/invalid-email': return 'E-mail inválido.';
+      case 'auth/user-not-found': return 'Utilizador não encontrado.';
+      case 'auth/wrong-password': return 'Senha incorreta.';
+      case 'auth/email-already-in-use': return 'Este e-mail já está registado.';
+      case 'auth/weak-password': return 'A senha é muito fraca.';
+      case 'auth/invalid-credential': return 'E-mail ou senha incorretos.';
+      default: return 'Ocorreu um erro na autenticação.';
+    }
+  }
+});
 </script>
 </body>
 </html>
