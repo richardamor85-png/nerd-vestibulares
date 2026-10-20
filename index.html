@@ -1071,7 +1071,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // Monitorar Estado de Autenticação
+  // Monitorar Estado de Autenticação
   firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // Se ainda for um utilizador anónimo antigo guardado no navegador, faz logout para forçar o E-mail/Senha
+      if (user.isAnonymous) {
+        firebase.auth().signOut();
+        modal.style.display = "flex";
+        return;
+      }
+
+      // Utilizador real logado com e-mail/senha: Esconde o modal e carrega dados da nuvem
+      modal.style.display = "none";
+      console.log("Utilizador autenticado ID:", user.uid);
+      
+      // Sincronizar dados do Realtime Database para o localStorage
+      const userRef = firebase.database().ref('users/' + user.uid);
+      userRef.once('value').then((snapshot) => {
+        const cloudData = snapshot.val();
+        if (cloudData) {
+          localStorage.setItem('nerd_vest_save', JSON.stringify(cloudData));
+          console.log("Progresso sincronizado da nuvem para o aparelho!");
+        } else {
+          const localData = localStorage.getItem('nerd_vest_save');
+          if (localData) {
+            userRef.set(JSON.parse(localData));
+          } else {
+            userRef.set({ progress: 0, unlockedTopics: [] });
+          }
+        }
+      });
+
+    } else {
+      // Utilizador deslogado: Exibe o modal fixo na tela
+      modal.style.display = "flex";
+    }
+  });
     if (user) {
       // Usuário logado: Esconde o modal e carrega dados da nuvem
       modal.style.display = "none";
