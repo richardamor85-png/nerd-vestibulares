@@ -8,13 +8,17 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- Firebase App, Auth e Database (SDKs Compatíveis) -->
+    <!-- Fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Firebase App, Auth e Database -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
     <script>
-      // As suas credenciais reais do Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyDN3Imzt0oULpKsttM-nc6q-TsDGNop09w",
         authDomain: "nerd-vestibulares.firebaseapp.com",
@@ -25,261 +29,154 @@
         appId: "1:1069606816248:web:9ebaa5a1ddacf602716e0d"
       };
 
-      // Inicializa o Firebase
       firebase.initializeApp(firebaseConfig);
       const database = firebase.database();
       let usuarioUid = null;
 
-      // Escuta em tempo real (onValue) do Firebase para sincronização instantânea
       function escutarMudancasNuvem(uid) {
         if (!uid) return;
         const userRef = database.ref('users/' + uid);
-        
         userRef.on('value', (snapshot) => {
           const cloudData = snapshot.val();
           if (cloudData) {
             const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
             const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
-            
             localStorage.setItem(chaveStorage, JSON.stringify(cloudData));
-            
             if (typeof carregarPerfilEspecifico === 'function') {
               carregarPerfilEspecifico(nomeAluno);
             }
-            console.log("⚡ Progresso sincronizado em tempo real da nuvem!");
           }
         });
       }
 
-      // Salva no localStorage e envia com set() garantido para o Firebase
       function salvarDadosHibrido(dadosSalvar) {
         const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
         const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
-        
-        // 1. Salva offline no navegador
         localStorage.setItem(chaveStorage, JSON.stringify(dadosSalvar));
-
-        // 2. Envia para a nuvem na rota do UID do utilizador
         if (navigator.onLine && usuarioUid) {
-          database.ref('users/' + usuarioUid).set(dadosSalvar)
-            .then(() => console.log("Dados sincronizados com o Firebase!"))
-            .catch(err => console.error("Erro ao sincronizar com o Firebase:", err));
+          database.ref('users/' + usuarioUid).set(dadosSalvar);
         }
       }
     </script>
 
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #070913; color: #f8fafc; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+        * { box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         
-        /* Tema Claro Opcional Incorporado */
-        body.light-theme { background: #f1f5f9; color: #1e293b; }
-        body.light-theme .game-container { background: linear-gradient(145deg, #ffffff, #e2e8f0); border: 1px solid #cbd5e1; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        body.light-theme .rpg-hud, body.light-theme .stats-box, body.light-theme .config-card-box, body.light-theme input[type="text"], body.light-theme select { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
-        body.light-theme .case-desc { background: #f8fafc; color: #334155; }
-        body.light-theme .option-card { background: #e2e8f0; color: #1e293b; border-color: #cbd5e1; }
-        body.light-theme .option-card:hover:not(:disabled) { background: #cbd5e1; }
+        /* TEMA 1: GLASSMORPHISM 3D SUAVE */
+        body.theme-glass3d {
+            background-color: #05070c; color: #ffffff; margin: 0; padding: 20px 15px;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+        body.theme-glass3d .bg-orb { display: block; }
+        body.theme-glass3d .game-container {
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+        }
+        body.theme-glass3d .case-desc, body.theme-glass3d .theory-content-box { background: rgba(11, 17, 32, 0.9); border: 1px solid rgba(255,255,255,0.12); color: #f8fafc; }
+        body.theme-glass3d .option-card { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; font-weight: 600; }
 
-        header { text-align: center; margin-bottom: 15px; }
-        h1 { color: #38bdf8; margin: 0 0 5px 0; font-size: 26px; text-shadow: 0 2px 8px rgba(56, 189, 248, 0.4); letter-spacing: 0.5px; }
-        .subtitle { color: #94a3b8; font-size: 13px; font-weight: 500; }
+        /* TEMA 2: AZUL NEON CLÁSSICO */
+        body.theme-neon { background-color: #070913; color: #f8fafc; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body.theme-neon .bg-orb { display: none; }
+        body.theme-neon .game-container { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid #334155; }
+        body.theme-neon .case-desc, body.theme-neon .theory-content-box { background: #0f172a; border-left: 4px solid #38bdf8; color: #f8fafc; }
+        body.theme-neon .option-card { background: #1e293b; border: 1px solid #475569; color: #ffffff; font-weight: 600; }
 
-        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px; font-weight: 600; }
+        /* TEMA 3: BRANCO SUAVE / CLEAN */
+        body.theme-clean { background-color: #f1f5f9; color: #0f172a; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body.theme-clean .bg-orb { display: none; }
+        body.theme-clean .game-container { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        body.theme-clean .rpg-hud, body.theme-clean .stats-box, body.theme-clean .config-card-box, body.theme-clean .theory-sidebar { background: #f8fafc; color: #0f172a; border-color: #cbd5e1; }
+        body.theme-clean .case-desc, body.theme-clean .theory-content-box { background: #f8fafc; color: #1e293b; border-left: 4px solid #0284c7; }
+        body.theme-clean .option-card { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; font-weight: 600; }
 
-        .game-container { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 16px; padding: 25px; max-width: 750px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.7); position: relative; min-height: 520px; display: flex; flex-direction: column; justify-content: space-between; }
-        
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.45; animation: floatOrb 14s ease-in-out infinite alternate; }
+        .orb-1 { width: 350px; height: 350px; background: linear-gradient(135deg, #1d4ed8, #c026d3); top: -60px; left: -80px; }
+        .orb-2 { width: 380px; height: 380px; background: linear-gradient(135deg, #059669, #0284c7); bottom: -80px; right: -90px; animation-delay: -7s; }
+
+        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(25px, 35px) scale(1.05); } }
+
+        header { text-align: center; margin-bottom: 20px; z-index: 1; }
+        h1 { color: #ffffff; margin: 0 0 6px 0; font-size: 28px; font-weight: 800; }
+        body.theme-clean h1 { color: #0f172a; }
+        .subtitle { color: #cbd5e1; font-size: 13px; font-weight: 600; }
+
+        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; }
+
+        .game-container { border-radius: 20px; padding: 28px; max-width: 960px; width: 100%; position: relative; min-height: 540px; display: flex; flex-direction: column; justify-content: space-between; }
         .screen { display: none; flex-direction: column; width: 100%; height: 100%; }
         .screen.active { display: flex; }
 
-        .rpg-hud { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px 15px; border-radius: 10px; border: 1px solid #475569; margin-bottom: 15px; font-size: 13px; }
+        .rpg-hud { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.12); margin-bottom: 20px; font-size: 13px; }
         .rpg-hud div { display: flex; flex-direction: column; align-items: center; }
-        .hud-val { font-weight: bold; color: #38bdf8; font-size: 14px; }
-        .hud-label { font-size: 10px; color: #94a3b8; text-transform: uppercase; margin-top: 2px; }
+        .hud-val { font-weight: 800; color: #38bdf8; font-size: 16px; }
+        .hud-label { font-size: 10px; color: #cbd5e1; text-transform: uppercase; margin-top: 2px; font-weight: 700; }
 
-        .progress-container { width: 100%; background: #0f172a; height: 10px; border-radius: 5px; margin-bottom: 20px; overflow: hidden; border: 1px solid #334155; }
-        .progress-bar { height: 100%; background: linear-gradient(90deg, #0ea5e9, #10b981); width: 0%; transition: width 0.4s ease; }
+        .progress-container { width: 100%; background: rgba(15, 23, 42, 0.6); height: 8px; border-radius: 10px; margin-bottom: 22px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #38bdf8, #10b981); width: 0%; transition: width 0.4s ease; }
 
-        .mission-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
-        .tag-historia { background: #d97706; color: #fff; }
-        .tag-biologia { background: #059669; color: #fff; }
+        .mission-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; }
+        .tag-historia { background: rgba(217, 119, 6, 0.3); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.5); }
+        .tag-biologia { background: rgba(16, 185, 129, 0.3); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.5); }
 
-        .case-title { font-size: 16px; font-weight: bold; color: #38bdf8; margin-bottom: 10px; }
-        .case-desc { font-size: 15px; line-height: 1.5; color: #cbd5e1; background: #0f172a; padding: 15px; border-radius: 10px; border-left: 4px solid #38bdf8; margin-bottom: 20px; font-weight: 500; }
+        .case-header-box { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+        .case-accent-line { width: 4px; height: 38px; background: linear-gradient(180deg, #38bdf8, #818cf8); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+        .case-title { font-size: 15px; font-weight: 700; line-height: 1.3; color: #ffffff; }
 
-        .options-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .option-card { background: #334155; border: 1px solid #475569; color: #f8fafc; padding: 12px 16px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 14px; transition: all 0.2s; }
-        .option-card:hover:not(:disabled) { background: #475569; border-color: #94a3b8; transform: translateX(4px); }
-        .option-card.correct { background: #059669 !important; border-color: #10b981 !important; }
-        .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; }
+        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; }
 
-        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid #0ea5e9; border-radius: 8px; padding: 12px 15px; margin-bottom: 15px; display: none; font-size: 13px; line-height: 1.5; color: #e0f2fe; }
-        .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 5px; }
+        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+        .option-card { padding: 14px 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; }
+        .option-card.correct { background: #059669 !important; border-color: #10b981 !important; color: #fff !important; }
+        .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; color: #fff !important; }
 
-        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 12px; width: 100%; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(14,165,233,0.3); margin-top: 8px; }
-        .btn-action:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        .btn-secondary { background: #334155; box-shadow: none; }
-        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); display: none; }
-        .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
-        .btn-skip { background: #475569; color: #f8fafc; box-shadow: none; }
-        .btn-danger { background: #7f1d1d; color: #fca5a5; margin-top: 15px; font-size: 13px; padding: 8px; box-shadow: none; }
+        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; }
+        .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 6px; font-weight: 800; }
 
-        input[type="text"], select { width: 100%; max-width: 320px; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; font-size: 14px; margin-bottom: 12px; text-align: center; }
-        label { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 3px; text-transform: uppercase; text-align: left; margin-left: calc(50% - 160px); font-weight: 600; }
+        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35); margin-top: 10px; }
+        .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); }
+        .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: none; color: #ffffff; }
+        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); display: none; }
+        .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35); }
+        .btn-theory { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); }
+        .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; }
+        .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin-top: 16px; font-size: 13px; padding: 10px; box-shadow: none; font-weight: 700; }
 
-        .stats-box { background: #0f172a; border: 1px solid #334155; padding: 15px; border-radius: 8px; text-align: left; margin-bottom: 15px; font-size: 13px; max-height: 220px; overflow-y: auto; }
-        .menu-grid { display: flex; flex-direction: column; gap: 10px; max-width: 350px; margin: 0 auto; width: 100%; align-items: center; }
+        input[type="text"], input[type="number"], select { width: 100%; max-width: 340px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
+        label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; margin-left: calc(50% - 170px); font-weight: 800; letter-spacing: 0.5px; }
 
-        .config-card-box { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 15px; text-align: left; font-size: 13px; width: 100%; max-width: 320px; margin: 0 auto 15px auto; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
-        .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: #cbd5e1; cursor: pointer; }
-        .config-card-box input[type="text"], .config-card-box input[type="number"] { width: 100%; max-width: 100%; text-align: center; margin-top: 5px; }
+        .stats-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); padding: 18px; border-radius: 12px; text-align: left; margin-bottom: 18px; font-size: 14px; max-height: 480px; overflow-y: auto; line-height: 1.6; color: #f8fafc; }
+        .menu-grid { display: flex; flex-direction: column; gap: 12px; max-width: 380px; margin: 0 auto; width: 100%; align-items: center; }
 
-        /* Estilos do Modal de Autenticação */
-        .auth-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(15, 23, 42, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .auth-card {
-            background: #1e293b;
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid #334155;
-            color: #f8fafc;
-        }
-        .auth-header h2 {
-            margin: 0 0 8px 0;
-            color: #38bdf8;
-            text-align: center;
-        }
-        .auth-header p {
-            color: #94a3b8;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .auth-form .input-group {
-            margin-bottom: 16px;
-        }
-        .auth-form .input-group label {
-            display: block;
-            font-size: 13px;
-            color: #cbd5e1;
-            margin-bottom: 6px;
-            text-align: left;
-            margin-left: 0;
-            text-transform: none;
-        }
-        .auth-form .input-group input {
-            width: 100%;
-            max-width: 100%;
-            padding: 10px 14px;
-            background: #0f172a;
-            border: 1px solid #475569;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 14px;
-            box-sizing: border-box;
-            text-align: left;
-            margin-bottom: 0;
-        }
-        .auth-form .input-group input:focus {
-            border-color: #38bdf8;
-            outline: none;
-        }
-        .auth-btn {
-            width: 100%;
-            padding: 12px;
-            background: #0284c7;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
-        }
-        .auth-btn:hover { background: #0369a1; }
-        .adventure-btn { background: #16a34a; }
-        .adventure-btn:hover { background: #15803d; }
-        .auth-switch {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 13px;
-            color: #94a3b8;
-        }
-        .auth-switch a {
-            color: #38bdf8;
-            text-decoration: none;
-        }
-        .auth-switch a:hover { text-decoration: underline; }
-        .auth-error-msg {
-            color: #ef4444;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 12px;
-        }
+        .config-card-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 18px auto; color: #f8fafc; }
+        .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; }
+
+        .filter-panel-box { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
+        .filter-panel-box select { margin-bottom: 0; max-width: 200px; padding: 8px 10px; font-size: 12px; }
+
+        /* RESUMOS TEÓRICOS */
+        .theory-layout { display: flex; gap: 20px; width: 100%; align-items: flex-start; }
+        .theory-sidebar { width: 280px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto; }
+        .theory-sidebar-item { padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: #cbd5e1; transition: 0.2s; text-align: left; border: 1px solid transparent; }
+        .theory-sidebar-item:hover, .theory-sidebar-item.active { background: #0ea5e9; color: white; border-color: #38bdf8; }
+        .theory-content-box { flex: 1; padding: 25px; border-radius: 14px; line-height: 1.8; font-size: 15px; max-height: 550px; overflow-y: auto; text-align: left; color: #f8fafc; font-weight: 500; }
+        
+        .bizu-card { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin: 18px 0; color: #fde68a; font-size: 14px; line-height: 1.6; }
+        .bizu-card b { color: #fbbf24; }
+
+        .fixar-card { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 18px; margin: 20px 0; }
+        .fixar-banner { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; padding: 8px 12px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 12px; display: inline-block; margin-bottom: 12px; }
+
+        @media (max-width: 768px) { .theory-layout { flex-direction: column; } .theory-sidebar { width: 100%; } .filter-panel-box select { max-width: 100%; } }
     </style>
 </head>
-<body>
-    <!-- MODAL DE AUTENTICAÇÃO (LOGIN / CADASTRO) -->
-    <div id="auth-modal" class="auth-overlay" style="display: none;">
-      <div class="auth-card">
-        <div class="auth-header">
-          <h2>🎓 Nerd Vestibulares</h2>
-          <p id="auth-subtitle">Faça login para sincronizar o seu progresso na nuvem</p>
-        </div>
-
-        <!-- Formulário de Login -->
-        <form id="login-form" class="auth-form">
-          <div class="input-group">
-            <label for="login-email">E-mail</label>
-            <input type="email" id="login-email" required placeholder="exemplo@email.com">
-          </div>
-          <div class="input-group">
-            <label for="login-senha">Senha</label>
-            <input type="password" id="login-senha" required placeholder="Sua senha secreta">
-          </div>
-          <button type="submit" class="auth-btn">ENTRAR NO JOGO</button>
-          <p class="auth-switch">Não tem conta? <a href="#" id="to-register">Cadastre-se</a></p>
-        </form>
-
-        <!-- Formulário de Cadastro -->
-        <form id="register-form" class="auth-form" style="display: none;">
-          <div class="input-group">
-            <label for="reg-email">E-mail</label>
-            <input type="email" id="reg-email" required placeholder="exemplo@email.com">
-          </div>
-          <div class="input-group">
-            <label for="reg-senha">Senha</label>
-            <input type="password" id="reg-senha" required placeholder="Mínimo de 6 caracteres">
-          </div>
-          <div class="input-group">
-            <label for="reg-confirmar">Confirmar Senha</label>
-            <input type="password" id="reg-confirmar" required placeholder="Repita a senha">
-          </div>
-          <button type="submit" class="auth-btn adventure-btn">CRIAR CONTA ADVENTURE</button>
-          <p class="auth-switch">Já tem uma conta? <a href="#" id="to-login">Faça login</a></p>
-        </form>
-        
-        <div id="auth-error" class="auth-error-msg"></div>
-      </div>
-    </div>
+<body class="theme-glass3d">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
 
     <header>
         <h1>Nerd Vestibulares</h1>
-        <div class="subtitle">Plataforma de Alta Performance &bull; Filtro em 3 Níveis</div>
+        <div class="subtitle">Plataforma de Alta Performance &bull; Teoria & Exercícios</div>
     </header>
 
     <div class="game-container">
@@ -287,9 +184,9 @@
         <!-- TELA 1: MENU PRINCIPAL -->
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px;">
-                <h2 style="color: #38bdf8; margin-bottom: 5px; font-size: 18px;">Painel de Comando</h2>
-                <div class="db-counter" id="dbCounterBadge">Carregando banco de questões...</div>
-                <p id="welcomeMsg" style="color: #94a3b8; font-size: 12px; margin-bottom: 10px;"></p>
+                <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
+                <div class="db-counter" id="dbCounterBadge">Carregando banco de dados...</div>
+                <p id="welcomeMsg" style="color: #cbd5e1; font-size: 13px; margin-bottom: 16px; font-weight: 600;"></p>
                 
                 <div class="menu-grid">
                     <div style="width:100%;">
@@ -316,106 +213,107 @@
                             <option value="Todos">📌 Todos os Subtópicos</option>
                         </select>
                     </div>
+
+                    <!-- REINTEGRADO: SELETOR DE TAMANHO DA SESSÃO -->
                     <div style="width:100%;">
                         <label>Tamanho Máximo da Sessão:</label>
-                        <select id="selectTamanho">
-                            <option value="5">⚡ Bloco Rápido (Até 5)</option>
+                        <select id="selectTamanhoSessao">
+                            <option value="5">⚡ Rápido (5 Questões)</option>
                             <option value="10" selected>🎯 Bloco Padrão (Até 10)</option>
-                            <option value="20">🔥 Bloco Extendido (Até 20)</option>
+                            <option value="20">🔥 Maratona (20 Questões)</option>
                         </select>
                     </div>
-                    <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Iniciar Operação (Revisão Espaçada)</button>
+                    
+                    <!-- BOTÕES DO MENU ORGANIZADOS -->
+                    <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Revisão Espaçada)</button>
                     <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
-                    <button class="btn-action btn-secondary" onclick="abrirProgresso()">📊 Progresso & Status de Revisão</button>
-                    <button class="btn-action btn-secondary" style="background: #334155; filter: brightness(0.9);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações do Jogo</button>
+                    <button class="btn-action btn-theory" onclick="abrirResumoTeorico()">📖 Resumos Teóricos Direcionados</button>
+                    <button class="btn-action btn-secondary" onclick="abrirProgresso()">📊 Dashboard de Métricas</button>
+                    <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações Gerais</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA 1.5: SUBMENU DE ESTUDO PERSONALIZADO -->
+        <!-- TELA DE RESUMO TEÓRICO COM HIERARQUIA COMPLETA -->
+        <div id="screenTheory" class="screen">
+            <h2 style="color: #34d399; text-align: center; margin-top: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
+            
+            <div class="filter-panel-box">
+                <select id="theoryFilterDisc" onchange="filtrarResumosTeoricos()">
+                    <option value="Todos">🌐 Disciplina: Todas</option>
+                    <option value="História">🏛️ História</option>
+                    <option value="Biologia">🧬 Biologia</option>
+                </select>
+                <select id="theoryFilterTopico" onchange="filtrarResumosTeoricos()">
+                    <option value="Todos">📂 Tópico: Todos</option>
+                </select>
+            </div>
+
+            <div class="theory-layout">
+                <div class="theory-sidebar" id="theorySidebar"></div>
+                <div class="theory-content-box" id="theoryContent">
+                    <p style="color: #cbd5e1;">Selecione um tópico na barra lateral para carregar a teoria completa.</p>
+                </div>
+            </div>
+            <button class="btn-action btn-secondary" style="margin-top: 15px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
+        </div>
+
+        <!-- TELA SUBMENU PERSONALIZADO -->
         <div id="screenCustomMenu" class="screen">
             <div style="text-align: center; margin-top: 10px;">
-                <h2 style="color: #c084fc; margin-bottom: 5px;">⚡ Estudo Personalizado</h2>
-                <div class="subtitle" style="margin-bottom: 15px;">Filtre livremente sem alterar o progresso oficial de revisão</div>
-                
+                <h2 style="color: #c084fc; margin-bottom: 6px; font-weight: 800;">⚡ Estudo Personalizado</h2>
                 <div class="menu-grid">
                     <div style="width:100%;">
                         <label>Tipo de Questões:</label>
                         <select id="customTipoFiltro">
                             <option value="erradas">❌ Somente as Erradas (Reforço)</option>
                             <option value="acertadas">✅ Somente as Acertadas (Revisão)</option>
-                            <option value="ambas" selected>🔄 Acertadas e Erradas (Respondidas)</option>
+                            <option value="ambas" selected>🔄 Todas as Respondidas</option>
                         </select>
                     </div>
-                    <div style="width:100%;">
-                        <label>1. Disciplina / Tema:</label>
-                        <select id="customFiltroTema" onchange="atualizarTopicosCustom()">
-                            <option value="Todos" selected>🌐 Todas as Disciplinas</option>
-                            <option value="Historia">🏛️ História</option>
-                            <option value="Biologia">🧬 Biologia</option>
-                        </select>
-                    </div>
-                    <div style="width:100%;">
-                        <label>2. Tópico Principal:</label>
-                        <select id="customFiltroTopico" onchange="atualizarSubtopicosCustom()">
-                            <option value="Todos">📂 Todos os Tópicos</option>
-                        </select>
-                    </div>
-                    <div style="width:100%;">
-                        <label>3. Subtópico (Assunto Secundário):</label>
-                        <select id="customFiltroSubtopico">
-                            <option value="Todos">📌 Todos os Subtópicos</option>
-                        </select>
-                    </div>
-                    <div style="width:100%;">
-                        <label>Tamanho da Sessão:</label>
-                        <select id="customTamanho">
-                            <option value="5">⚡ Bloco Rápido (5 Questões)</option>
-                            <option value="10" selected>🎯 Bloco Padrão (10 Questões)</option>
-                            <option value="20">🔥 Bloco Extendido (20 Questões)</option>
-                        </select>
-                    </div>
-                    <button class="btn-action btn-custom" onclick="iniciarEstudoPersonalizado()">🚀 Iniciar Simulado Personalizado</button>
+                    <button class="btn-action btn-custom" onclick="iniciarEstudoPersonalizado()">🚀 Iniciar Simulado Livre</button>
                     <button class="btn-action btn-secondary" onclick="voltarMenu()">Voltar ao Menu Principal</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA 1.6: CONFIGURAÇÕES DO JOGO -->
+        <!-- TELA CONFIGURAÇÕES -->
         <div id="screenConfig" class="screen">
-            <h2 style="color: #38bdf8; text-align: center; margin-top: 0;">⚙️ Configurações do Jogo</h2>
+            <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">⚙️ Configurações Gerais</h2>
             <div style="text-align: center; width: 100%;">
                 
                 <div class="config-card-box">
-                    <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #38bdf8;">Tema da Interface:</label>
-                    <div style="display: flex; gap: 15px; margin-bottom: 5px;">
-                        <label><input type="radio" name="temaApp" value="escuro" checked> <b>Modo Escuro (Neo Azul)</b></label>
-                        <label><input type="radio" name="temaApp" value="claro"> <b>Modo Claro</b></label>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #38bdf8;">Tema Visual da Interface:</label>
+                    <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+                        <label><input type="radio" name="temaApp" value="glass3d" checked> <b>✨ Glassmorphism 3D Suave</b></label>
+                        <label><input type="radio" name="temaApp" value="neon"> <b>🌌 Azul Neon Clássico</b></label>
+                        <label><input type="radio" name="temaApp" value="clean"> <b>☀️ Branco Suave / Clean</b></label>
                     </div>
                 </div>
 
                 <div class="config-card-box">
-                    <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #38bdf8;">Escolha o Motor de Espaçamento:</label>
-                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;">
-                        <label><input type="radio" name="motorRevisao" value="fsrs" checked> <b>Modo FSRS Fixo</b> (Automático)</label>
-                        <label><input type="radio" name="motorRevisao" value="sm2"> <b>Modo SuperMemo SM-2</b> (Customizado)</label>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #38bdf8;">Motor de Agendamento (Espaçamento):</label>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; text-align: left;">
+                        <label><input type="radio" name="motorRevisao" value="fsrs" checked> <b>Modo FSRS Fixo</b> (Algoritmo Dinâmico)</label>
+                        <label><input type="radio" name="motorRevisao" value="sm2"> <b>Modo SuperMemo SM-2</b> (Passos Personalizados)</label>
                     </div>
                     
-                    <div style="margin-bottom: 12px;">
-                        <label style="font-size: 11px; color: #94a3b8; display: block; margin-bottom: 3px;">Passos Iniciais (ex: 1m 10m 1d 4d):</label>
+                    <div style="margin-bottom: 10px;">
+                        <label style="font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px;">Passos Iniciais (SM-2):</label>
                         <input type="text" id="inputPassos" value="1m 10m 1d 4d">
                     </div>
 
                     <div>
-                        <label style="font-size: 11px; color: #94a3b8; display: block; margin-bottom: 3px;">Intervalo Máximo (dias):</label>
+                        <label style="font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px;">Intervalo Máximo (dias):</label>
                         <input type="number" id="inputMaxIntervalo" value="90" min="1">
                     </div>
                 </div>
+
             </div>
-            <button class="btn-action btn-secondary" onclick="salvarConfiguracoesEVoltar()">Salvar e Voltar ao Menu</button>
+            <button class="btn-action btn-secondary" onclick="salvarConfiguracoesEVoltar()">Salvar Configurações e Voltar</button>
         </div>
 
-        <!-- TELA 2: JOGO / MISSÕES -->
+        <!-- TELA DO JOGO / SIMULADO -->
         <div id="screenGame" class="screen">
             <div class="rpg-hud">
                 <div><span class="hud-val" id="hudNivel">Card 1/10</span><span class="hud-label">Sessão</span></div>
@@ -430,49 +328,46 @@
 
             <div>
                 <span class="mission-badge" id="missionTag">História</span>
-                <div class="case-title" id="caseTitle">Tópico</div>
-                <div class="case-desc" id="caseDesc">Carregando...</div>
-
-                <div class="options-grid" id="optionsGrid"></div>
-                
-                <button class="btn-action btn-skip" id="skipCardBtn" onclick="pularCardAtual()">⏭️ Pular Questão (Revisar no Final)</button>
-
-                <div class="explanation-box" id="explanationBox">
-                    <strong id="expTitle">💡 Mini-Resumo Teórico Explicativo:</strong>
-                    <span id="expText">Explicação detalhada...</span>
+                <div class="case-header-box">
+                    <div class="case-accent-line"></div>
+                    <div class="case-title" id="caseTitle">Tópico Principal</div>
                 </div>
-
-                <button class="btn-action btn-warning" id="nextCardBtn" onclick="avancarCardComSeguranca()">Entendido, Próximo Card ➔</button>
-                
-                <button class="btn-action btn-danger" onclick="confirmarAbandonoSessao()">↩️ Abandonar Sessão e Voltar ao Menu</button>
+                <div class="case-desc" id="caseDesc">Carregando pergunta...</div>
+                <div class="options-grid" id="optionsGrid"></div>
+                <button class="btn-action btn-skip" id="skipCardBtn" onclick="pularCardAtual()">⏭️ Pular Questão</button>
+                <div class="explanation-box" id="explanationBox">
+                    <strong id="expTitle">💡 Mini-Resumo Teórico:</strong>
+                    <span id="expText">Explicação...</span>
+                </div>
+                <button class="btn-action btn-warning" id="nextCardBtn" onclick="avancarCardComSeguranca()">Próximo Card ➔</button>
+                <button class="btn-action btn-danger" onclick="confirmarAbandonoSessao()">↩️ Abandonar Sessão</button>
             </div>
         </div>
 
-        <!-- TELA 4: RELATÓRIO FINAL -->
+        <!-- TELA DE RELATÓRIO FINAL -->
         <div id="screenReport" class="screen" style="justify-content: center; text-align: center;">
-            <h2 id="reportTitle" style="color: #38bdf8;">Resultado da Etapa</h2>
-            <div class="stats-box" id="reportContent" style="max-height: 240px;"></div>
+            <h2 id="reportTitle" style="color: #38bdf8; font-weight: 800;">Resultado da Etapa</h2>
+            <div class="stats-box" id="reportContent"></div>
             <div style="display: flex; gap: 10px; flex-direction: column;">
-                <button class="btn-action" onclick="repetirUltimoModo()">🔄 Nova Sessão (Mesmo Modo)</button>
+                <button class="btn-action" onclick="repetirUltimoModo()">🔄 Nova Sessão</button>
                 <button class="btn-action btn-secondary" onclick="voltarMenu()">Menu Principal</button>
             </div>
         </div>
 
     </div>
 
-    <!-- Importa os bancos de dados separados e o unificador -->
+    <!-- Scripts Modulares -->
     <script src="historia.js"></script>
     <script src="biologia.js"></script>
     <script src="questoes.js"></script>
+    <script src="resumo_historia.js"></script>
+    <script src="resumo_biologia.js"></script>
+    <script src="resumos.js"></script>
 
     <script>
         let sessaoAtual = {
             nome: "Richard",
             modoPersonalizado: false,
-            filtroDisciplina: "Todos",
-            filtroTopico: "Todos",
-            filtroSubtopico: "Todos",
-            tamanhoBloco: 10,
             cardsSessao: [],
             indice: 0,
             xp: 0,
@@ -483,8 +378,7 @@
             questoesRespondidasHistorico: {},
             tempoInicioSessao: 0,
             tempoInicioCard: 0,
-            timerInterval: null,
-            temposCards: []
+            timerInterval: null
         };
 
         window.onload = function() {
@@ -503,11 +397,10 @@
             sessaoAtual.nome = nome;
             const chaveStorage = 'nerd_vestibulares_perfil_' + nome.toLowerCase();
             const salvo = localStorage.getItem(chaveStorage);
-
             if(salvo) {
                 const dados = JSON.parse(salvo);
                 sessaoAtual.xp = dados.xp || 0;
-                sessaoAtual.historicoRevisao = dados.historicoRevisao || dados.historicoAnki || {};
+                sessaoAtual.historicoRevisao = dados.historicoRevisao || {};
                 sessaoAtual.questoesRespondidasHistorico = dados.questoesRespondidasHistorico || {};
             } else {
                 sessaoAtual.xp = 0;
@@ -519,7 +412,7 @@
 
         function atualizarTelaBoasVindas() {
             const nome = document.getElementById('playerName').value || "Richard";
-            document.getElementById('welcomeMsg').innerText = `Vestibulando: ${nome} | XP Acumulado: ${sessaoAtual.xp} XP`;
+            document.getElementById('welcomeMsg').innerText = `Vestibulando: ${nome} | XP: ${sessaoAtual.xp} XP`;
             atualizarContadorFiltro();
         }
 
@@ -539,34 +432,25 @@
                 let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
                 let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
                 let matchSub = (subtopico === 'Todos' || c.subgrupo === subtopico);
-                let disponivel = cardEstaDisponivelRevisao(c.id);
-
-                return matchDisc && matchTop && matchSub && disponivel;
+                return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
             });
-
-            document.getElementById('dbCounterBadge').innerText = `📚 Cards prontos para revisão hoje: ${filtrados.length} (Total Geral: ${masterDeck.length})`;
+            document.getElementById('dbCounterBadge').innerText = `📚 Cards para revisão hoje: ${filtrados.length} (Total: ${masterDeck.length})`;
         }
 
         function atualizarTopicosMenu() {
             const disciplina = document.getElementById('selectFiltroTema').value;
             const selectTopico = document.getElementById('selectTopico');
             selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
-
-            let topicosDisponiveis = new Set();
-            masterDeck.forEach(card => {
-                if(disciplina === 'Todos' || card.deck === disciplina) {
-                    let topicoNome = card.topicoPrincipal || card.subgrupo;
-                    if(topicoNome) topicosDisponiveis.add(topicoNome);
+            let topicos = new Set();
+            masterDeck.forEach(c => {
+                if(disciplina === 'Todos' || c.deck === disciplina) {
+                    if(c.topicoPrincipal || c.subgrupo) topicos.add(c.topicoPrincipal || c.subgrupo);
                 }
             });
-
-            topicosDisponiveis.forEach(top => {
-                let opt = document.createElement('option');
-                opt.value = top;
-                opt.innerText = top;
+            topicos.forEach(t => {
+                let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
                 selectTopico.appendChild(opt);
             });
-
             atualizarSubtopicosMenu();
         }
 
@@ -575,35 +459,140 @@
             const topico = document.getElementById('selectTopico').value;
             const selectSub = document.getElementById('selectSubtopico');
             selectSub.innerHTML = '<option value="Todos">📌 Todos os Subtópicos</option>';
-
-            let subtopicosDisponiveis = new Set();
-            masterDeck.forEach(card => {
-                let matchDisc = (disciplina === 'Todos' || card.deck === disciplina);
-                let matchTop = (topico === 'Todos' || (card.topicoPrincipal || card.subgrupo) === topico);
-
-                if(matchDisc && matchTop) {
-                    if(card.subgrupo) subtopicosDisponiveis.add(card.subgrupo);
-                }
+            let subs = new Set();
+            masterDeck.forEach(c => {
+                let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
+                if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
             });
-
-            subtopicosDisponiveis.forEach(sub => {
-                let opt = document.createElement('option');
-                opt.value = sub;
-                opt.innerText = sub;
+            subs.forEach(s => {
+                let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
                 selectSub.appendChild(opt);
             });
-
             atualizarContadorFiltro();
         }
 
-        function abrirModalPersonalizado() {
-            atualizarTopicosCustom();
-            mudarTela('screenCustomMenu');
+        /* NAVEGAÇÃO DOS RESUMOS TEÓRICOS */
+        function abrirResumoTeorico() {
+            mudarTela('screenTheory');
+            atualizarFiltrosResumosTeoricos();
+            filtrarResumosTeoricos();
         }
 
-        function abrirConfiguracoesJogo() {
-            mudarTela('screenConfig');
+        function atualizarFiltrosResumosTeoricos() {
+            const discSelect = document.getElementById('theoryFilterDisc').value;
+            const topicoSelect = document.getElementById('theoryFilterTopico');
+            topicoSelect.innerHTML = '<option value="Todos">📂 Tópico: Todos</option>';
+
+            if (typeof moduloResumoDirecionado !== 'undefined') {
+                let topicos = new Set();
+                moduloResumoDirecionado.forEach(m => {
+                    if (discSelect === 'Todos' || m.disciplina === discSelect) {
+                        if (m.topico) topicos.add(m.topico);
+                    }
+                });
+                topicos.forEach(t => {
+                    let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
+                    topicoSelect.appendChild(opt);
+                });
+            }
         }
+
+        function filtrarResumosTeoricos() {
+            const disc = document.getElementById('theoryFilterDisc').value;
+            const topico = document.getElementById('theoryFilterTopico').value;
+            const sidebar = document.getElementById('theorySidebar');
+            sidebar.innerHTML = '';
+
+            if (typeof moduloResumoDirecionado !== 'undefined' && moduloResumoDirecionado.length > 0) {
+                let filtrados = moduloResumoDirecionado.filter(m => {
+                    let mDisc = (disc === 'Todos' || m.disciplina === disc);
+                    let mTop = (topico === 'Todos' || m.topico === topico);
+                    return mDisc && mTop;
+                });
+
+                if (filtrados.length > 0) {
+                    filtrados.forEach((mod, idx) => {
+                        const item = document.createElement('div');
+                        item.className = `theory-sidebar-item ${idx === 0 ? 'active' : ''}`;
+                        item.innerText = `${mod.disciplina} ➔ ${mod.topico || ''}: ${mod.subtopico || mod.tituloModulo}`;
+                        item.onclick = () => {
+                            document.querySelectorAll('.theory-sidebar-item').forEach(i => i.classList.remove('active'));
+                            item.classList.add('active');
+                            renderizarConteudoTeorico(mod);
+                        };
+                        sidebar.appendChild(item);
+                    });
+                    renderizarConteudoTeorico(filtrados[0]);
+                } else {
+                    sidebar.innerHTML = '<div style="color:#cbd5e1; font-size:12px;">Nenhum resumo encontrado para esses filtros.</div>';
+                    document.getElementById('theoryContent').innerHTML = '<p style="color:#cbd5e1;">Nenhum conteúdo disponível.</p>';
+                }
+            }
+        }
+
+        function renderizarConteudoTeorico(modulo) {
+            const box = document.getElementById('theoryContent');
+            let html = `<h3 style="color: #38bdf8; margin-top:0; font-size: 20px;">${modulo.tituloModulo}</h3>`;
+            html += `<p style="font-size:12px; color:#34d399; font-weight:700; margin-bottom:15px;">📌 ${modulo.disciplina} ➔ ${modulo.topico || ''} ➔ ${modulo.subtopico || ''}</p>`;
+            
+            modulo.conteudo.forEach((bloco, bIdx) => {
+                if (bloco.tipo === 'texto') {
+                    html += `<p style="margin-bottom: 18px; color: #f1f5f9;">${bloco.corpo}</p>`;
+                } else if (bloco.tipo === 'bizu') {
+                    html += `
+                        <div class="bizu-card">
+                            <b>💡 BIZU & PEGADINHA DE PROVA:</b><br>${bloco.corpo}
+                        </div>
+                    `;
+                } else if (bloco.tipo === 'questao_fixar') {
+                    html += `
+                        <div class="fixar-card" id="fixar-${bIdx}">
+                            <div class="fixar-banner">🎯 QUESTÃO MODELO PARA FIXAR (${bloco.estilo || 'Prática'})</div>
+                            <p style="font-weight: 700; color: #ffffff; margin-bottom: 12px; font-size: 15px;">${bloco.enunciado}</p>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                ${bloco.alternativas.map((alt) => {
+                                    let letra = alt.charAt(0);
+                                    return `<button class="option-card" onclick="responderQuestaoFixar(${bIdx}, '${letra}', '${bloco.gabarito}', this)">${alt}</button>`;
+                                }).join('')}
+                            </div>
+                            <div id="feedback-${bIdx}" style="margin-top: 12px; display: none; padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.5;"></div>
+                        </div>
+                    `;
+                }
+            });
+            box.innerHTML = html;
+        }
+
+        function responderQuestaoFixar(bIdx, escolhida, gabarito, btnElement) {
+            const card = document.getElementById(`fixar-${bIdx}`);
+            const botoes = card.querySelectorAll('.option-card');
+            botoes.forEach(b => b.disabled = true);
+
+            const feedback = document.getElementById(`feedback-${bIdx}`);
+            feedback.style.display = 'block';
+
+            if (escolhida === gabarito) {
+                btnElement.classList.add('correct');
+                feedback.style.background = 'rgba(5, 150, 105, 0.25)';
+                feedback.style.border = '1px solid #10b981';
+                feedback.style.color = '#6ee7b7';
+                feedback.innerHTML = `<b>🎉 Resposta Correta!</b> Parabéns.`;
+            } else {
+                btnElement.classList.add('wrong');
+                botoes.forEach(b => {
+                    if (b.innerText.charAt(0) === gabarito) b.classList.add('correct');
+                });
+                feedback.style.background = 'rgba(220, 38, 38, 0.25)';
+                feedback.style.border = '1px solid #ef4444';
+                feedback.style.color = '#fca5a5';
+                feedback.innerHTML = `<b>❌ Resposta Incorreta.</b> O gabarito correto é a letra <b>${gabarito}</b>.`;
+            }
+        }
+
+        function abrirModalPersonalizado() { mudarTela('screenCustomMenu'); }
+        function abrirConfiguracoesJogo() { mudarTela('screenConfig'); }
+        function abrirProgresso() { window.location.href = 'metricas.html'; }
 
         function salvarConfiguracoesEVoltar() {
             const temaEscolhido = document.querySelector('input[name="temaApp"]:checked').value;
@@ -628,76 +617,24 @@
             if (salvo) {
                 const config = JSON.parse(salvo);
                 if (config.tema) {
-                    const radioTema = document.querySelector(`input[name="temaApp"][value="${config.tema}"]`);
-                    if (radioTema) radioTema.checked = true;
+                    const radio = document.querySelector(`input[name="temaApp"][value="${config.tema}"]`);
+                    if(radio) radio.checked = true;
                     aplicarTemaVisual(config.tema);
                 }
                 if (config.motor) {
-                    const radio = document.querySelector(`input[name="motorRevisao"][value="${config.motor}"]`);
-                    if (radio) radio.checked = true;
+                    const rMotor = document.querySelector(`input[name="motorRevisao"][value="${config.motor}"]`);
+                    if(rMotor) rMotor.checked = true;
                 }
-                if (config.passos) {
-                    document.getElementById('inputPassos').value = config.passos;
-                }
-                if (config.maxIntervalo) {
-                    document.getElementById('inputMaxIntervalo').value = config.maxIntervalo;
-                }
+                if (config.passos) document.getElementById('inputPassos').value = config.passos;
+                if (config.maxIntervalo) document.getElementById('inputMaxIntervalo').value = config.maxIntervalo;
+            } else {
+                aplicarTemaVisual('glass3d');
             }
         }
 
         function aplicarTemaVisual(tema) {
-            if (tema === 'claro') {
-                document.body.classList.add('light-theme');
-            } else {
-                document.body.classList.remove('light-theme');
-            }
-        }
-
-        function atualizarTopicosCustom() {
-            const disciplina = document.getElementById('customFiltroTema').value;
-            const selectTopico = document.getElementById('customFiltroTopico');
-            selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
-
-            let topicosDisponiveis = new Set();
-            masterDeck.forEach(card => {
-                if(disciplina === 'Todos' || card.deck === disciplina) {
-                    let topicoNome = card.topicoPrincipal || card.subgrupo;
-                    if(topicoNome) topicosDisponiveis.add(topicoNome);
-                }
-            });
-
-            topicosDisponiveis.forEach(top => {
-                let opt = document.createElement('option');
-                opt.value = top;
-                opt.innerText = top;
-                selectTopico.appendChild(opt);
-            });
-
-            atualizarSubtopicosCustom();
-        }
-
-        function atualizarSubtopicosCustom() {
-            const disciplina = document.getElementById('customFiltroTema').value;
-            const topico = document.getElementById('customFiltroTopico').value;
-            const selectSub = document.getElementById('customFiltroSubtopico');
-            selectSub.innerHTML = '<option value="Todos">📌 Todos os Subtópicos</option>';
-
-            let subtopicosDisponiveis = new Set();
-            masterDeck.forEach(card => {
-                let matchDisc = (disciplina === 'Todos' || card.deck === disciplina);
-                let matchTop = (topico === 'Todos' || (card.topicoPrincipal || card.subgrupo) === topico);
-
-                if(matchDisc && matchTop) {
-                    if(card.subgrupo) subtopicosDisponiveis.add(card.subgrupo);
-                }
-            });
-
-            subtopicosDisponiveis.forEach(sub => {
-                let opt = document.createElement('option');
-                opt.value = sub;
-                opt.innerText = sub;
-                selectSub.appendChild(opt);
-            });
+            document.body.classList.remove('theme-glass3d', 'theme-neon', 'theme-clean');
+            document.body.classList.add('theme-' + (tema || 'glass3d'));
         }
 
         function mudarTela(idTela) {
@@ -715,146 +652,44 @@
             if(confirm("Deseja abandonar a sessão atual?")) voltarMenu();
         }
 
-        function abrirProgresso() {
-            window.location.href = 'metricas.html';
-        }
-
-        /* MOTOR DE REVISÃO */
-        function parsearPassos(stringPassos) {
-            return stringPassos.trim().split(/\s+/).map(passo => {
-                const valor = parseFloat(passo);
-                const unidade = passo.slice(-1).toLowerCase();
-                if (unidade === 'm') { return valor / (24 * 60); }
-                return valor;
-            });
-        }
-
         function processarRespostaRevisao(cardId, acertou) {
-            const agora = Date.now();
             sessaoAtual.questoesRespondidasHistorico[cardId] = acertou ? 'acertou' : 'errou';
-
-            if (sessaoAtual.modoPersonalizado) return;
-
-            const tipoMotor = document.querySelector('input[name="motorRevisao"]:checked').value;
-            const stringPassosInput = document.getElementById('inputPassos').value;
-            const maxIntervaloDias = parseFloat(document.getElementById('inputMaxIntervalo').value) || 90;
-
-            if(!sessaoAtual.historicoRevisao[cardId]) {
-                sessaoAtual.historicoRevisao[cardId] = {
-                    estabilidade: 1.0,
-                    dificuldade: 5.0,
-                    intervaloAtual: 0,
-                    easeFactor: 2.5,
-                    passoIndex: 0,
-                    erros: 0,
-                    ultimaRevisao: agora,
-                    proximaRevisao: agora
-                };
-            }
-            let cardProgresso = sessaoAtual.historicoRevisao[cardId];
-            let novoIntervaloDias = 0;
-
-            if (tipoMotor === 'fsrs') {
-                if (!acertou) {
-                    cardProgresso.estabilidade = 1.0;
-                    cardProgresso.dificuldade = Math.min(10.0, cardProgresso.dificuldade + 1.0);
-                    novoIntervaloDias = 0.0007;
-                    cardProgresso.passoIndex = 0;
-                    cardProgresso.erros++;
-                } else {
-                    let fatorCrescimento = 2.5; 
-                    cardProgresso.estabilidade = Math.max(1.0, cardProgresso.estabilidade * (fatorCrescimento / (0.5 * cardProgresso.dificuldade)));
-                    novoIntervaloDias = Math.round(cardProgresso.estabilidade);
-                }
-            } else {
-                const passosArray = parsearPassos(stringPassosInput);
-                if (!acertou) {
-                    cardProgresso.passoIndex = 0;
-                    novoIntervaloDias = passosArray[0] || 0.0007;
-                    cardProgresso.erros++;
-                } else {
-                    if (cardProgresso.passoIndex < passosArray.length) {
-                        novoIntervaloDias = passosArray[cardProgresso.passoIndex];
-                        cardProgresso.passoIndex++;
-                    } else {
-                        if (cardProgresso.intervaloAtual === 0) {
-                            novoIntervaloDias = 1;
-                        } else {
-                            novoIntervaloDias = Math.round(cardProgresso.intervaloAtual * cardProgresso.easeFactor);
-                        }
-                        cardProgresso.easeFactor = Math.max(1.3, cardProgresso.easeFactor + 0.1);
-                    }
-                }
-            }
-
-            if (novoIntervaloDias > maxIntervaloDias) { novoIntervaloDias = maxIntervaloDias; }
-
-            cardProgresso.intervaloAtual = novoIntervaloDias;
-            cardProgresso.ultimaRevisao = agora;
-            cardProgresso.proximaRevisao = agora + (novoIntervaloDias * 24 * 60 * 60 * 1000);
-        }
-
-        function prepararSessaoCards() {
-            if (sessaoAtual.modoPersonalizado) {
-                const tipoFiltro = document.getElementById('customTipoFiltro').value;
-                const disciplina = document.getElementById('customFiltroTema').value;
-                const topico = document.getElementById('customFiltroTopico').value;
-                const subtopico = document.getElementById('customFiltroSubtopico').value;
-                const tamanho = parseInt(document.getElementById('customTamanho').value);
-
-                let deckFiltrado = masterDeck.filter(c => {
-                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
-                    let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
-                    let matchSub = (subtopico === 'Todos' || c.subgrupo === subtopico);
-                    let statusResposta = sessaoAtual.questoesRespondidasHistorico[c.id];
-
-                    let matchTipo = false;
-                    if (tipoFiltro === 'erradas' && statusResposta === 'errou') matchTipo = true;
-                    if (tipoFiltro === 'acertadas' && statusResposta === 'acertou') matchTipo = true;
-                    if (tipoFiltro === 'ambas' && statusResposta !== undefined) matchTipo = true;
-
-                    return matchDisc && matchTop && matchSub && matchTipo;
-                });
-
-                deckFiltrado.sort(() => Math.random() - 0.5);
-                sessaoAtual.cardsSessao = deckFiltrado.slice(0, Math.min(tamanho, deckFiltrado.length));
-            } else {
-                sessaoAtual.filtroDisciplina = document.getElementById('selectFiltroTema').value;
-                sessaoAtual.filtroTopico = document.getElementById('selectTopico').value;
-                sessaoAtual.filtroSubtopico = document.getElementById('selectSubtopico').value;
-                sessaoAtual.tamanhoBloco = parseInt(document.getElementById('selectTamanho').value);
-
-                let deckFiltrado = masterDeck.filter(c => {
-                    let matchDisc = (sessaoAtual.filtroDisciplina === 'Todos' || c.deck === sessaoAtual.filtroDisciplina);
-                    let matchTop = (sessaoAtual.filtroTopico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === sessaoAtual.filtroTopico);
-                    let matchSub = (sessaoAtual.filtroSubtopico === 'Todos' || c.subgrupo === sessaoAtual.filtroSubtopico);
-                    let disponivel = cardEstaDisponivelRevisao(c.id);
-
-                    return matchDisc && matchTop && matchSub && disponivel;
-                });
-
-                deckFiltrado.sort(() => Math.random() - 0.5);
-                sessaoAtual.cardsSessao = deckFiltrado.slice(0, Math.min(sessaoAtual.tamanhoBloco, deckFiltrado.length));
-            }
         }
 
         function iniciarMissaoGeral() { sessaoAtual.modoPersonalizado = false; executarInicioSessao(); }
         function iniciarEstudoPersonalizado() { sessaoAtual.modoPersonalizado = true; executarInicioSessao(); }
 
         function executarInicioSessao() {
-            const nomeInput = document.getElementById('playerName').value.trim();
-            sessaoAtual.nome = nomeInput !== "" ? nomeInput : "Richard";
             sessaoAtual.indice = 0;
             sessaoAtual.vidas = 3;
             sessaoAtual.acertos = 0;
             sessaoAtual.erros = 0;
-            sessaoAtual.temposCards = [];
             sessaoAtual.tempoInicioSessao = Date.now();
 
-            prepararSessaoCards();
+            // Pega o limite escolhido no seletor do menu (5, 10 ou 20)
+            let limiteDesejado = parseInt(document.getElementById('selectTamanhoSessao').value) || 10;
+
+            if (sessaoAtual.modoPersonalizado) {
+                let deckFiltrado = masterDeck.filter(c => sessaoAtual.questoesRespondidasHistorico[c.id] !== undefined);
+                deckFiltrado.sort(() => Math.random() - 0.5);
+                sessaoAtual.cardsSessao = deckFiltrado.slice(0, limiteDesejado);
+            } else {
+                let disc = document.getElementById('selectFiltroTema').value;
+                let top = document.getElementById('selectTopico').value;
+                let sub = document.getElementById('selectSubtopico').value;
+
+                let deckFiltrado = masterDeck.filter(c => {
+                    let matchDisc = (disc === 'Todos' || c.deck === disc);
+                    let matchTop = (top === 'Todos' || (c.topicoPrincipal || c.subgrupo) === top);
+                    let matchSub = (sub === 'Todos' || c.subgrupo === sub);
+                    return matchDisc && matchTop && matchSub;
+                });
+                deckFiltrado.sort(() => Math.random() - 0.5);
+                sessaoAtual.cardsSessao = deckFiltrado.slice(0, limiteDesejado);
+            }
 
             if(sessaoAtual.cardsSessao.length === 0) {
-                alert("Nenhuma questão encontrada com esses filtros ou prontas para revisão neste momento.");
+                alert("Nenhuma questão encontrada com esses filtros.");
                 return;
             }
 
@@ -868,10 +703,9 @@
             pararTimer();
             sessaoAtual.tempoInicioCard = Date.now();
             document.getElementById('hudTimer').innerText = '0s';
-
             sessaoAtual.timerInterval = setInterval(() => {
-                let segundosDecorridos = Math.floor((Date.now() - sessaoAtual.tempoInicioCard) / 1000);
-                document.getElementById('hudTimer').innerText = segundosDecorridos + 's';
+                let seg = Math.floor((Date.now() - sessaoAtual.tempoInicioCard) / 1000);
+                document.getElementById('hudTimer').innerText = seg + 's';
             }, 1000);
         }
 
@@ -880,34 +714,31 @@
         }
 
         function carregarCard() {
-            if(sessaoAtual.indice >= sessaoAtual.cardsSessao.length || sessaoAtual.vidas <= 0) {
+            if(sessaoAtual.indice >= sessaoAtual.cardsSessao.length || (!sessaoAtual.modoPersonalizado && sessaoAtual.vidas <= 0)) {
                 finalizarSessaoEtapa();
                 return;
             }
 
             iniciarTimerCard();
-
             const card = sessaoAtual.cardsSessao[sessaoAtual.indice];
             const total = sessaoAtual.cardsSessao.length;
 
             document.getElementById('hudNivel').innerText = `Card ${sessaoAtual.indice + 1}/${total}`;
-            document.getElementById('hudVidas').innerText = '❤️❤️❤️'.repeat(sessaoAtual.vidas);
+            document.getElementById('hudVidas').innerText = sessaoAtual.modoPersonalizado ? '♾️ Livre' : '❤️'.repeat(Math.max(0, sessaoAtual.vidas));
             
-            let taxaAcerto = sessaoAtual.indice > 0 ? Math.round((sessaoAtual.acertos / sessaoAtual.indice) * 100) : 100;
-            document.getElementById('hudAcertos').innerText = taxaAcerto + '%';
+            let taxa = sessaoAtual.indice > 0 ? Math.round((sessaoAtual.acertos / sessaoAtual.indice) * 100) : 100;
+            document.getElementById('hudAcertos').innerText = taxa + '%';
             document.getElementById('progressBar').style.width = ((sessaoAtual.indice / total) * 100) + '%';
 
             const tag = document.getElementById('missionTag');
             tag.className = `mission-badge ${card.tag || 'tag-historia'}`;
             tag.innerText = card.deck || "Estudo";
 
-            let topicoExibicao = card.topicoPrincipal ? `${card.topicoPrincipal} ➔ ${card.subgrupo}` : card.subgrupo;
-            document.getElementById('caseTitle').innerText = `${topicoExibicao} — ${card.topico}`;
+            document.getElementById('caseTitle').innerText = `${card.subgrupo || ''} — ${card.topico}`;
             document.getElementById('caseDesc').innerText = card.q;
 
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
-
             let alternativas = [...card.erradas, card.a].sort(() => Math.random() - 0.5);
 
             alternativas.forEach(alt => {
@@ -925,20 +756,13 @@
 
         function pularCardAtual() {
             pararTimer();
-            const cardPulado = sessaoAtual.cardsSessao.splice(sessaoAtual.indice, 1)[0];
-            sessaoAtual.cardsSessao.push(cardPulado);
+            let pulado = sessaoAtual.cardsSessao.splice(sessaoAtual.indice, 1)[0];
+            sessaoAtual.cardsSessao.push(pulado);
             carregarCard();
         }
 
         function responderCard(escolhida, correta, cardId, explicacaoTexto, elementoBtn) {
             pararTimer();
-            let tempoGastoSegundos = Math.round((Date.now() - sessaoAtual.tempoInicioCard) / 1000);
-            
-            sessaoAtual.temposCards.push({
-                topico: masterDeck.find(c => c.id === cardId).topico,
-                tempo: tempoGastoSegundos
-            });
-
             const botoes = document.querySelectorAll('.option-card');
             botoes.forEach(b => b.disabled = true);
             document.getElementById('skipCardBtn').style.display = 'none';
@@ -954,13 +778,14 @@
                 elementoBtn.classList.add('wrong');
                 botoes.forEach(b => { if(b.innerText === correta) b.classList.add('correct'); });
                 sessaoAtual.erros++;
-                sessaoAtual.vidas--;
-                document.getElementById('hudVidas').innerText = '❤️❤️❤️'.substring(0, sessaoAtual.vidas);
+                if (!sessaoAtual.modoPersonalizado) {
+                    sessaoAtual.vidas--;
+                    document.getElementById('hudVidas').innerText = '❤️'.repeat(Math.max(0, sessaoAtual.vidas));
+                }
             }
 
             salvarDadosLocais();
-
-            document.getElementById('expText').innerText = explicacaoTexto || "Conceito fundamental para revisão no ENEM.";
+            document.getElementById('expText').innerText = explicacaoTexto || "Conceito fundamental.";
             document.getElementById('explanationBox').style.display = 'block';
             document.getElementById('nextCardBtn').style.display = 'block';
         }
@@ -971,182 +796,32 @@
         }
 
         function salvarDadosLocais() {
-            const dadosSalvar = {
+            salvarDadosHibrido({
                 xp: sessaoAtual.xp,
                 historicoRevisao: sessaoAtual.historicoRevisao,
                 questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico
-            };
-            
-            salvarDadosHibrido(dadosSalvar);
+            });
         }
 
         function finalizarSessaoEtapa() {
             pararTimer();
             mudarTela('screenReport');
+            let totalResp = sessaoAtual.acertos + sessaoAtual.erros;
+            let percentual = totalResp > 0 ? Math.round((sessaoAtual.acertos / totalResp) * 100) : 0;
+
+            if (sessaoAtual.vidas <= 0 && !sessaoAtual.modoPersonalizado) {
+                document.getElementById('reportTitle').innerText = "🚫 Operação Interrompida (0 Vidas Restantes)";
+            } else {
+                document.getElementById('reportTitle').innerText = percentual >= 70 ? "🏆 Sessão Concluída!" : "⚠️ Desempenho Abaixo da Meta";
+            }
             
-            let tempoTotalSegundos = Math.round((Date.now() - sessaoAtual.tempoInicioSessao) / 1000);
-            let minutosTotal = Math.floor(tempoTotalSegundos / 60);
-            let segundosTotalRestantes = tempoTotalSegundos % 60;
-            let tempoFormatado = minutosTotal > 0 ? `${minutosTotal}m ${segundosTotalRestantes}s` : `${segundosTotalRestantes} segundos`;
-
-            const totalRespondido = sessaoAtual.acertos + sessaoAtual.erros;
-            let percentual = totalRespondido > 0 ? Math.round((sessaoAtual.acertos / totalRespondido) * 100) : 0;
-            let aprovado = percentual >= 70 && sessaoAtual.vidas > 0;
-
-            document.getElementById('reportTitle').innerText = aprovado ? "🏆 Sessão Concluída com Sucesso!" : "⚠️ Desempenho Abaixo da Meta (70%)";
-            
-            let html = `<strong>📊 Relatório de Desempenho e Tempo:</strong><br>`;
-            html += `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
-            html += `• Tempo Total Decorrido: <b>${tempoFormatado}</b><br><br>`;
-            html += `• XP Ganho nesta Sessão: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
-
+            let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
+            html += `• XP Ganho: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
+            if (sessaoAtual.vidas <= 0 && !sessaoAtual.modoPersonalizado) {
+                html += `<br><div style="color: #fca5a5; font-size: 13px;">💡 Dica: Suas vidas acabaram. Recomendamos acessar o <b>Resumo Direcionado</b> na tela inicial para revisar a teoria!</div>`;
+            }
             document.getElementById('reportContent').innerHTML = html;
         }
-    </script>
-
-    <script>
-      // Registo do Service Worker com atualização automática
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-              console.log('Service Worker registado com sucesso!', registration);
-
-              registration.onupdatefound = () => {
-                const installingWorker = registration.installing;
-                installingWorker.onstatechange = () => {
-                  if (installingWorker.state === 'installed') {
-                    if (navigator.serviceWorker.controller) {
-                      console.log('Nova versão do app detetada. A atualizar...');
-                      window.location.reload();
-                    }
-                  }
-                };
-              };
-            })
-            .catch(error => {
-              console.log('Erro ao registar o Service Worker:', error);
-            });
-        });
-      }
-
-      // Sistema de Autenticação por E-mail e Senha (Firebase Auth)
-      document.addEventListener("DOMContentLoaded", () => {
-        const modal = document.getElementById("auth-modal");
-        const loginForm = document.getElementById("login-form");
-        const registerForm = document.getElementById("register-form");
-        const toRegisterBtn = document.getElementById("to-register");
-        const toLoginBtn = document.getElementById("to-login");
-        const errorMsg = document.getElementById("auth-error");
-
-        // Alternar entre Telas de Login e Cadastro
-        toRegisterBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          loginForm.style.display = "none";
-          registerForm.style.display = "block";
-          errorMsg.textContent = "";
-        });
-
-        toLoginBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          registerForm.style.display = "none";
-          loginForm.style.display = "block";
-          errorMsg.textContent = "";
-        });
-
-        // Configurar Persistência Local
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-          .catch((error) => {
-            console.error("Erro na persistência de auth:", error);
-          });
-
-        // Monitorar Estado de Autenticação
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            // Se houver um utilizador anónimo antigo na sessão, faz logout para forçar o login real
-            if (user.isAnonymous) {
-              firebase.auth().signOut();
-              modal.style.display = "flex";
-              return;
-            }
-
-            // Utilizador logado com E-mail e Senha: Esconde o modal e ativa escuta em tempo real
-            modal.style.display = "none";
-            console.log("Utilizador autenticado ID:", user.uid);
-            usuarioUid = user.uid;
-            
-            // Inicia a escuta reativa da nuvem
-            escutarMudancasNuvem(usuarioUid);
-
-          } else {
-            // Nenhum utilizador logado: Exibe o modal fixo na tela
-            modal.style.display = "flex";
-          }
-        });
-
-        // Ação de Login
-        loginForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const email = document.getElementById("login-email").value;
-          const senha = document.getElementById("login-senha").value;
-
-          errorMsg.textContent = "A entrar...";
-
-          firebase.auth().signInWithEmailAndPassword(email, senha)
-            .then(() => {
-              errorMsg.textContent = "";
-            })
-            .catch((error) => {
-              errorMsg.textContent = "Erro: " + traduzirErroFirebase(error.code);
-            });
-        });
-
-        // Ação de Cadastro
-        registerForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const email = document.getElementById("reg-email").value;
-          const senha = document.getElementById("reg-senha").value;
-          const confirmar = document.getElementById("reg-confirmar").value;
-
-          if (senha !== confirmar) {
-            errorMsg.textContent = "As senhas não coincidem!";
-            return;
-          }
-
-          if (senha.length < 6) {
-            errorMsg.textContent = "A senha deve ter pelo menos 6 caracteres.";
-            return;
-          }
-
-          errorMsg.textContent = "A criar conta...";
-
-          firebase.auth().createUserWithEmailAndPassword(email, senha)
-            .then((userCredential) => {
-              const user = userCredential.user;
-              firebase.database().ref('users/' + user.uid).set({
-                criadoEm: new Date().toISOString(),
-                progressoInicial: true
-              });
-              errorMsg.textContent = "";
-            })
-            .catch((error) => {
-              errorMsg.textContent = "Erro: " + traduzirErroFirebase(error.code);
-            });
-        });
-
-        // Tradutor amigável de erros do Firebase para português
-        function traduzirErroFirebase(code) {
-          switch (code) {
-            case 'auth/invalid-email': return 'E-mail inválido.';
-            case 'auth/user-not-found': return 'Utilizador não encontrado.';
-            case 'auth/wrong-password': return 'Senha incorreta.';
-            case 'auth/email-already-in-use': return 'Este e-mail já está registado.';
-            case 'auth/weak-password': return 'A senha é muito fraca.';
-            case 'auth/invalid-credential': return 'E-mail ou senha incorretos.';
-            default: return 'Ocorreu um erro na autenticação.';
-          }
-        }
-      });
     </script>
 </body>
 </html>
