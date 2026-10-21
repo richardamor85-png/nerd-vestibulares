@@ -33,22 +33,15 @@
       const database = firebase.database();
       let usuarioUid = null;
 
-      function escutarMudancasNuvem(uid) {
-        if (!uid) return;
-        const userRef = database.ref('users/' + uid);
-        userRef.on('value', (snapshot) => {
-          const cloudData = snapshot.val();
-          if (cloudData) {
-            localStorage.setItem('nerd_vestibulares_perfil_usuario', JSON.stringify(cloudData));
-            if (typeof carregarPerfilUsuario === 'function') {
-              carregarPerfilUsuario();
-            }
-          }
-        });
+      function obterChavePerfilLocalStorage() {
+        let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
+        let nomeJogador = (config.nomeJogador || 'Richard').trim();
+        return 'nerd_vestibulares_perfil_' + nomeJogador;
       }
 
       function salvarDadosHibrido(dadosSalvar) {
-        localStorage.setItem('nerd_vestibulares_perfil_usuario', JSON.stringify(dadosSalvar));
+        let chaveLocal = obterChavePerfilLocalStorage();
+        localStorage.setItem(chaveLocal, JSON.stringify(dadosSalvar));
         if (navigator.onLine && usuarioUid) {
           database.ref('users/' + usuarioUid).set(dadosSalvar);
         }
@@ -129,7 +122,6 @@
         .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; }
         .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 6px; font-weight: 800; }
 
-        /* PADRÃO DE BOTÕES EQUILIBRADO */
         .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px 24px; max-width: 380px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35); margin: 6px auto; display: block; text-align: center; }
         .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); }
         .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: none; color: #ffffff; }
@@ -151,7 +143,7 @@
         .filter-panel-box { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
         .filter-panel-box select { margin-bottom: 0; max-width: 200px; padding: 8px 10px; font-size: 12px; }
 
-        /* RESUMOS TEÓRICOS & EDITOR COMPLETO ESTILO WORD */
+        /* RESUMOS TEÓRICOS & EDITOR ESTILO WORD COMPLETO */
         .theory-layout { display: flex; gap: 20px; width: 100%; align-items: flex-start; transition: all 0.3s ease; }
         .theory-sidebar { width: 280px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto; transition: all 0.3s ease; }
         .theory-sidebar.collapsed { display: none; }
@@ -160,7 +152,6 @@
         
         .theory-main-area { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
         
-        /* BARRA DE FERRAMENTAS ESTILO WORD */
         .editor-toolbar { display: flex; gap: 5px; background: rgba(15, 23, 42, 0.95); padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); flex-wrap: wrap; align-items: center; }
         .editor-btn { background: #1e293b; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .editor-btn:hover { background: #0ea5e9; border-color: #38bdf8; color: #fff; }
@@ -175,7 +166,6 @@
         .fixar-card { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 18px; margin: 20px 0; text-align: left; }
         .fixar-banner { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; padding: 8px 12px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 12px; display: inline-block; margin-bottom: 12px; }
 
-        /* MODO CONCENTRAÇÃO (TELA CHEIA) */
         body.focus-mode .game-container { max-width: 100% !important; height: 95vh !important; }
         body.focus-mode header, body.focus-mode .filter-panel-box, body.focus-mode .theory-sidebar { display: none !important; }
 
@@ -240,7 +230,7 @@
             </div>
         </div>
 
-        <!-- TELA DE RESUMO TEÓRICO COM EDITOR ESTILO WORD COMPLETO -->
+        <!-- TELA DE RESUMO TEÓRICO -->
         <div id="screenTheory" class="screen">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <h2 style="color: #34d399; margin: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
@@ -265,7 +255,6 @@
                 <div class="theory-sidebar" id="theorySidebar"></div>
                 
                 <div class="theory-main-area">
-                    <!-- BARRA DE FERRAMENTAS ESTILO WORD COMPLETA -->
                     <div class="editor-toolbar">
                         <button class="editor-btn" title="Negrito" onclick="executarComandoEditor('bold')"><b>N</b></button>
                         <button class="editor-btn" title="Itálico" onclick="executarComandoEditor('italic')"><i>I</i></button>
@@ -318,11 +307,16 @@
             </div>
         </div>
 
-        <!-- TELA CONFIGURAÇÕES -->
+        <!-- TELA CONFIGURAÇÕES (COM NOME DO JOGADOR EMBUTIDO) -->
         <div id="screenConfig" class="screen">
             <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">⚙️ Configurações Gerais</h2>
             <div style="text-align: center; width: 100%;">
                 
+                <div class="config-card-box">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #38bdf8;">Nome do Jogador:</label>
+                    <input type="text" id="inputNomeJogador" value="Richard" placeholder="Ex: Richard">
+                </div>
+
                 <div class="config-card-box">
                     <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #38bdf8;">Tema Visual da Interface:</label>
                     <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
@@ -432,7 +426,8 @@
         };
 
         function carregarPerfilUsuario() {
-            const salvo = localStorage.getItem('nerd_vestibulares_perfil_usuario');
+            let chaveLocal = obterChavePerfilLocalStorage();
+            const salvo = localStorage.getItem(chaveLocal);
             if(salvo) {
                 try {
                     const dados = JSON.parse(salvo);
@@ -453,7 +448,9 @@
         }
 
         function atualizarTelaBoasVindas() {
-            document.getElementById('welcomeMsg').innerText = `XP Acumulado: ${sessaoAtual.xp} XP`;
+            let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
+            let nomeJ = config.nomeJogador || 'Richard';
+            document.getElementById('welcomeMsg').innerText = `Jogador: ${nomeJ} | XP Acumulado: ${sessaoAtual.xp} XP`;
             atualizarContadorFiltro();
         }
 
@@ -513,7 +510,6 @@
             atualizarContadorFiltro();
         }
 
-        /* NAVEGAÇÃO DOS RESUMOS TEÓRICOS & EDITOR */
         function abrirResumoTeorico() {
             mudarTela('screenTheory');
             atualizarFiltrosResumosTeoricos();
@@ -674,12 +670,14 @@
         function abrirDashboardMetricas() { window.location.href = 'metricas.html'; }
 
         function salvarConfiguracoesEVoltar() {
+            const nomeJogador = document.getElementById('inputNomeJogador').value.trim() || 'Richard';
             const temaEscolhido = document.querySelector('input[name="temaApp"]:checked').value;
             const motorEscolhido = document.querySelector('input[name="motorRevisao"]:checked').value;
             const passos = document.getElementById('inputPassos').value;
             const maxIntervalo = document.getElementById('inputMaxIntervalo').value;
 
             const configObj = {
+                nomeJogador: nomeJogador,
                 tema: temaEscolhido,
                 motor: motorEscolhido,
                 passos: passos,
@@ -688,13 +686,18 @@
 
             localStorage.setItem('nerd_vestibulares_config_motor', JSON.stringify(configObj));
             aplicarTemaVisual(temaEscolhido);
+            carregarPerfilUsuario();
             alert("💾 Configurações salvas com sucesso!");
+            voltarMenu();
         }
 
         function carregarConfiguracoesSalvas() {
             const salvo = localStorage.getItem('nerd_vestibulares_config_motor');
             if (salvo) {
                 const config = JSON.parse(salvo);
+                if (config.nomeJogador) {
+                    document.getElementById('inputNomeJogador').value = config.nomeJogador;
+                }
                 if (config.tema) {
                     const radio = document.querySelector(`input[name="temaApp"][value="${config.tema}"]`);
                     if(radio) radio.checked = true;
@@ -731,8 +734,36 @@
             if(confirm("Deseja abandonar a sessão atual?")) voltarMenu();
         }
 
+        function calcularProximaRevisao(acertou) {
+            let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
+            let motor = config.motor || 'fsrs';
+            let agora = Date.now();
+            let umDiaMs = 24 * 60 * 60 * 1000;
+
+            if (!acertou) {
+                // Errou: revisa em 10 minutos
+                return agora + (10 * 60 * 1000);
+            }
+
+            if (motor === 'sm2') {
+                return agora + (1 * umDiaMs);
+            } else {
+                // Modo FSRS Fixo Dinâmico (exemplo progressivo 1d -> 3d -> 7d -> 15d)
+                return agora + (3 * umDiaMs);
+            }
+        }
+
         function processarRespostaRevisao(cardId, acertou) {
+            // Se for estudo personalizado, NÃO altera o agendamento FSRS/SM-2
+            if (sessaoAtual.modoPersonalizado) return;
+
             sessaoAtual.questoesRespondidasHistorico[cardId] = acertou ? 'acertou' : 'errou';
+            
+            let proximaData = calcularProximaRevisao(acertou);
+            sessaoAtual.historicoRevisao[cardId] = {
+                proximaRevisao: proximaData,
+                ultimaResposta: acertou ? 'acertou' : 'errou'
+            };
         }
 
         function iniciarMissaoGeral() { sessaoAtual.modoPersonalizado = false; executarInicioSessao(); }
@@ -760,14 +791,14 @@
                     let matchDisc = (disc === 'Todos' || c.deck === disc);
                     let matchTop = (top === 'Todos' || (c.topicoPrincipal || c.subgrupo) === top);
                     let matchSub = (sub === 'Todos' || c.subgrupo === sub);
-                    return matchDisc && matchTop && matchSub;
+                    return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
                 });
                 deckFiltrado.sort(() => Math.random() - 0.5);
                 sessaoAtual.cardsSessao = deckFiltrado.slice(0, limiteDesejado);
             }
 
             if(sessaoAtual.cardsSessao.length === 0) {
-                alert("Nenhuma questão encontrada com esses filtros.");
+                alert("Nenhuma questão disponível para revisão hoje com esses filtros. Experimente o Estudo Personalizado ou mude o filtro!");
                 return;
             }
 

@@ -12,7 +12,6 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #070913; color: #f8fafc; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.3s, color 0.3s; }
 
-        /* Tema Claro Opcional */
         body.light-theme { background: #f1f5f9; color: #1e293b; }
         body.light-theme .card-section, body.light-theme .sidebar-nav, body.light-theme .filters-container, body.light-theme .card-header, body.light-theme .table-footer, body.light-theme .kpi-card { background: #ffffff !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
         body.light-theme .data-table th { background: #f8fafc !important; color: #475569 !important; }
@@ -20,23 +19,19 @@
         body.light-theme .data-table tr:hover { background: #f1f5f9 !important; }
         body.light-theme .filter-group input, body.light-theme .filter-group select { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
 
-        /* Topo / Breadcrumb */
         .top-bar { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .breadcrumb { font-size: 16px; color: #94a3b8; font-weight: 500; }
         .breadcrumb span { color: #38bdf8; font-weight: 700; }
 
-        /* Barra de Filtros Executiva */
-        .filters-container { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px 20px; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap: 12px; align-items: flex-end; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .filters-container { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px 20px; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) auto; gap: 12px; align-items: flex-end; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .filter-group { display: flex; flex-direction: column; }
         .filter-group label { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
         .filter-group input, .filter-group select { padding: 9px; border: 1px solid #475569; border-radius: 6px; font-size: 13px; background: #0f172a; color: #f8fafc; outline: none; }
         .btn-filtrar { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; height: 38px; box-shadow: 0 4px 12px rgba(14,165,233,0.3); transition: 0.2s; }
         .btn-filtrar:hover { filter: brightness(1.1); }
 
-        /* Layout Principal */
         .main-layout { display: flex; width: 100%; max-width: 1200px; gap: 20px; align-items: flex-start; }
         
-        /* Menu Lateral Estilo Executivo */
         .sidebar-nav { background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 75px; display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .nav-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; color: #94a3b8; font-size: 20px; transition: 0.2s; text-decoration: none; text-align: center; }
         .nav-icon:hover { background: #334155; color: #38bdf8; }
@@ -44,26 +39,22 @@
         .nav-text-btn { font-size: 10px; font-weight: bold; line-height: 1.1; color: #cbd5e1; }
         .nav-icon:hover .nav-text-btn { color: #38bdf8; }
 
-        /* Área de Conteúdo */
         .content-area { flex: 1; display: flex; flex-direction: column; gap: 20px; }
         .tab-content { display: none; flex-direction: column; gap: 20px; }
         .tab-content.active { display: flex; }
 
-        /* KPI Cards Executivos */
         .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; }
         .kpi-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: flex; flex-direction: column; justify-content: space-between; }
         .kpi-title { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
         .kpi-value { font-size: 26px; font-weight: bold; color: #38bdf8; margin-top: 8px; }
         .kpi-footer { font-size: 12px; color: #10b981; margin-top: 5px; font-weight: 600; }
 
-        /* Secções de Cartões e Gráficos */
         .card-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .card-header { background: #0f172a; padding: 15px 20px; border-bottom: 1px solid #334155; font-weight: bold; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
 
         .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
         @media (max-width: 850px) { .charts-row { grid-template-columns: 1fr; } }
 
-        /* Tabelas */
         .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; color: #f8fafc; }
         .data-table th, .data-table td { padding: 12px 18px; border-bottom: 1px solid #334155; }
         .data-table th { background: #0f172a; color: #94a3b8; font-weight: 600; }
@@ -71,7 +62,6 @@
 
         .table-footer { background: #0f172a; padding: 15px 20px; border-top: 1px solid #334155; font-size: 13px; font-weight: 600; color: #f8fafc; display: flex; justify-content: space-between; }
 
-        /* Botões de Ação */
         .action-footer { display: flex; gap: 10px; margin-top: 5px; }
         .btn-action { border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; color: white; background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 4px 12px rgba(37,99,235,0.3); transition: 0.2s; }
         .btn-action:hover { filter: brightness(1.1); transform: translateY(-1px); }
@@ -85,15 +75,11 @@
         <div class="breadcrumb">Dashboard Executivo > <span id="breadcrumbTitle">Visão Geral de Desempenho</span></div>
     </div>
 
-    <!-- Barra de Filtros Executiva (Sem Codinome) -->
+    <!-- Barra de Filtros Executiva com Nome do Jogador -->
     <div class="filters-container">
         <div class="filter-group">
-            <label>Período de Análise</label>
-            <select id="filtroPeriodo">
-                <option value="todos" selected>Todo o Período Histórico</option>
-                <option value="hoje">Sessão de Hoje</option>
-                <option value="7d">Últimos 7 Dias</option>
-            </select>
+            <label>Nome do Jogador</label>
+            <input type="text" id="filtroNomeJogador" value="Richard">
         </div>
         <div class="filter-group">
             <label>Disciplina / Tema</label>
@@ -120,7 +106,7 @@
 
     <div class="main-layout">
         
-        <!-- Menu Lateral Executivo com Voltar ao Menu Principal -->
+        <!-- Menu Lateral Executivo -->
         <div class="sidebar-nav">
             <div class="nav-icon active" onclick="trocarAba(0, 'Visão Geral de Desempenho')" title="Dashboard Executivo">📊</div>
             <div class="nav-icon" onclick="trocarAba(1, 'Análise Avançada e Radar')" title="Radar de Habilidades e Gráficos">📈</div>
@@ -135,7 +121,6 @@
             <!-- ABA 1: DASHBOARD EXECUTIVO & KPIS -->
             <div id="aba0" class="tab-content active">
                 
-                <!-- KPI CARDS -->
                 <div class="kpi-grid">
                     <div class="kpi-card">
                         <div class="kpi-title">Questões Resolvidas</div>
@@ -159,7 +144,6 @@
                     </div>
                 </div>
 
-                <!-- TABELA DE DESEMPENHO POR MATÉRIA -->
                 <div class="card-section">
                     <div class="card-header">
                         <span>Desempenho Consolidado por Matéria e Assunto</span>
@@ -174,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ABA 2: ANÁLISE AVANÇADA & RADAR DE HABILIDADES -->
+            <!-- ABA 2: ANÁLISE AVANÇADA & RADAR -->
             <div id="aba1" class="tab-content">
                 <div class="charts-row">
                     <div class="card-section" style="flex: 1;">
@@ -221,17 +205,20 @@
         let meuGraficoResolucao = null;
 
         window.onload = function() {
-            carregarConfiguracaoTema();
+            carregarConfiguracaoInicial();
             atualizarTopicosMetricas();
             carregarDadosLocalStorage();
             renderizarPainel();
             renderizarGraficos();
         };
 
-        function carregarConfiguracaoTema() {
+        function carregarConfiguracaoInicial() {
             const configSalva = localStorage.getItem('nerd_vestibulares_config_motor');
             if (configSalva) {
                 const conf = JSON.parse(configSalva);
+                if (conf.nomeJogador) {
+                    document.getElementById('filtroNomeJogador').value = conf.nomeJogador;
+                }
                 if (conf.tema === 'claro') {
                     document.body.classList.add('light-theme');
                 } else {
@@ -290,31 +277,31 @@
         }
 
         function carregarDadosLocalStorage() {
-            let chaves = Object.keys(localStorage);
+            let nomeJogador = (document.getElementById('filtroNomeJogador').value || 'Richard').trim();
+            let chavePerfil = 'nerd_vestibulares_perfil_' + nomeJogador;
             let historicoUnificado = [];
 
-            chaves.forEach(chave => {
-                if (chave.includes('nerd_vestibulares_perfil_')) {
-                    try {
-                        let dados = JSON.parse(localStorage.getItem(chave));
-                        if (dados.questoesRespondidasHistorico) {
-                            for (let qId in dados.questoesRespondidasHistorico) {
-                                let status = dados.questoesRespondidasHistorico[qId];
-                                let cardObj = typeof masterDeck !== 'undefined' ? masterDeck.find(c => c.id == qId) : null;
-                                
-                                historicoUnificado.push({
-                                    questaoId: qId,
-                                    deck: cardObj ? cardObj.deck : "Geral",
-                                    topicoPrincipal: cardObj ? (cardObj.topicoPrincipal || cardObj.subgrupo) : "Geral",
-                                    subgrupo: cardObj ? cardObj.subgrupo : "Geral",
-                                    acertou: (status === 'acertou'),
-                                    data: new Date().toISOString().split('T')[0]
-                                });
-                            }
+            let dadosBrutos = localStorage.getItem(chavePerfil);
+            if (dadosBrutos) {
+                try {
+                    let dados = JSON.parse(dadosBrutos);
+                    if (dados.questoesRespondidasHistorico) {
+                        for (let qId in dados.questoesRespondidasHistorico) {
+                            let status = dados.questoesRespondidasHistorico[qId];
+                            let cardObj = typeof masterDeck !== 'undefined' ? masterDeck.find(c => c.id == qId) : null;
+                            
+                            historicoUnificado.push({
+                                questaoId: qId,
+                                deck: cardObj ? cardObj.deck : "Geral",
+                                topicoPrincipal: cardObj ? (cardObj.topicoPrincipal || cardObj.subgrupo) : "Geral",
+                                subgrupo: cardObj ? cardObj.subgrupo : "Geral",
+                                acertou: (status === 'acertou'),
+                                data: new Date().toISOString().split('T')[0]
+                            });
                         }
-                    } catch(e) { console.error(e); }
-                }
-            });
+                    }
+                } catch(e) { console.error(e); }
+            }
 
             historicoGlobal = historicoUnificado;
         }
@@ -360,7 +347,6 @@
             let totalErros = totalResolvidas - totalAcertos;
             let percentualAcerto = totalResolvidas > 0 ? Math.round((totalAcertos / totalResolvidas) * 100) : 0;
 
-            // Atualiza KPI Cards
             document.getElementById('kpiTotal').innerText = totalResolvidas;
             document.getElementById('kpiTaxa').innerText = percentualAcerto + '%';
             document.getElementById('kpiAcertosErros').innerText = `${totalAcertos} / ${totalErros}`;
@@ -448,7 +434,6 @@
                 dadosRadar = [50, 50];
             }
 
-            // Gráfico de Radar
             const ctxRadar = document.getElementById('chartRadar').getContext('2d');
             if (graficoRadar) graficoRadar.destroy();
             graficoRadar = new Chart(ctxRadar, {
@@ -481,7 +466,6 @@
             let totalAcertos = historicoGlobal.filter(h => h.acertou).length;
             let percTotal = historicoGlobal.length > 0 ? Math.round((totalAcertos / historicoGlobal.length) * 100) : 0;
 
-            // Gráfico de Evolução (Linha)
             const ctxEvolucao = document.getElementById('chartEvolucao').getContext('2d');
             if (meuGraficoEvolucao) meuGraficoEvolucao.destroy();
             meuGraficoEvolucao = new Chart(ctxEvolucao, {
@@ -501,7 +485,6 @@
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // Gráfico de Resoluções (Barra)
             const ctxResolucao = document.getElementById('chartResolucoes').getContext('2d');
             if (meuGraficoResolucao) meuGraficoResolucao.destroy();
             meuGraficoResolucao = new Chart(ctxResolucao, {
