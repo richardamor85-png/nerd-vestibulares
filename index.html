@@ -39,20 +39,16 @@
         userRef.on('value', (snapshot) => {
           const cloudData = snapshot.val();
           if (cloudData) {
-            const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
-            const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
-            localStorage.setItem(chaveStorage, JSON.stringify(cloudData));
-            if (typeof carregarPerfilEspecifico === 'function') {
-              carregarPerfilEspecifico(nomeAluno);
+            localStorage.setItem('nerd_vestibulares_perfil_usuario', JSON.stringify(cloudData));
+            if (typeof carregarPerfilUsuario === 'function') {
+              carregarPerfilUsuario();
             }
           }
         });
       }
 
       function salvarDadosHibrido(dadosSalvar) {
-        const nomeAluno = document.getElementById('playerName').value.trim() || "Richard";
-        const chaveStorage = 'nerd_vestibulares_perfil_' + nomeAluno.toLowerCase();
-        localStorage.setItem(chaveStorage, JSON.stringify(dadosSalvar));
+        localStorage.setItem('nerd_vestibulares_perfil_usuario', JSON.stringify(dadosSalvar));
         if (navigator.onLine && usuarioUid) {
           database.ref('users/' + usuarioUid).set(dadosSalvar);
         }
@@ -181,7 +177,7 @@
 
     <div class="game-container">
         
-        <!-- TELA 1: MENU PRINCIPAL -->
+        <!-- TELA 1: MENU PRINCIPAL (SEM CAMPO DE CODINOME) -->
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
@@ -189,10 +185,6 @@
                 <p id="welcomeMsg" style="color: #cbd5e1; font-size: 13px; margin-bottom: 16px; font-weight: 600;"></p>
                 
                 <div class="menu-grid">
-                    <div style="width:100%;">
-                        <label>Codinome do Aluno:</label>
-                        <input type="text" id="playerName" value="Richard" oninput="carregarPerfilPorNome()" autocomplete="off">
-                    </div>
                     <div style="width:100%;">
                         <label>1. Disciplina / Tema:</label>
                         <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
@@ -214,7 +206,7 @@
                         </select>
                     </div>
 
-                    <!-- REINTEGRADO: SELETOR DE TAMANHO DA SESSÃO -->
+                    <!-- SELETOR DE TAMANHO DA SESSÃO -->
                     <div style="width:100%;">
                         <label>Tamanho Máximo da Sessão:</label>
                         <select id="selectTamanhoSessao">
@@ -224,7 +216,7 @@
                         </select>
                     </div>
                     
-                    <!-- BOTÕES DO MENU ORGANIZADOS -->
+                    <!-- BOTÕES DO MENU PRINCIPAL -->
                     <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Revisão Espaçada)</button>
                     <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
                     <button class="btn-action btn-theory" onclick="abrirResumoTeorico()">📖 Resumos Teóricos Direcionados</button>
@@ -234,7 +226,7 @@
             </div>
         </div>
 
-        <!-- TELA DE RESUMO TEÓRICO COM HIERARQUIA COMPLETA -->
+        <!-- TELA DE RESUMO TEÓRICO -->
         <div id="screenTheory" class="screen">
             <h2 style="color: #34d399; text-align: center; margin-top: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
             
@@ -366,7 +358,6 @@
 
     <script>
         let sessaoAtual = {
-            nome: "Richard",
             modoPersonalizado: false,
             cardsSessao: [],
             indice: 0,
@@ -383,19 +374,12 @@
 
         window.onload = function() {
             carregarConfiguracoesSalvas();
-            const nomeInicial = document.getElementById('playerName').value.trim() || "Richard";
-            carregarPerfilEspecifico(nomeInicial);
+            carregarPerfilUsuario();
             atualizarTopicosMenu();
         };
 
-        function carregarPerfilPorNome() {
-            const nomeInput = document.getElementById('playerName').value.trim();
-            if(nomeInput !== "") carregarPerfilEspecifico(nomeInput);
-        }
-
-        function carregarPerfilEspecifico(nome) {
-            sessaoAtual.nome = nome;
-            const chaveStorage = 'nerd_vestibulares_perfil_' + nome.toLowerCase();
+        function carregarPerfilUsuario() {
+            const chaveStorage = 'nerd_vestibulares_perfil_usuario';
             const salvo = localStorage.getItem(chaveStorage);
             if(salvo) {
                 const dados = JSON.parse(salvo);
@@ -411,8 +395,7 @@
         }
 
         function atualizarTelaBoasVindas() {
-            const nome = document.getElementById('playerName').value || "Richard";
-            document.getElementById('welcomeMsg').innerText = `Vestibulando: ${nome} | XP: ${sessaoAtual.xp} XP`;
+            document.getElementById('welcomeMsg').innerText = `XP Acumulado: ${sessaoAtual.xp} XP`;
             atualizarContadorFiltro();
         }
 
@@ -666,7 +649,6 @@
             sessaoAtual.erros = 0;
             sessaoAtual.tempoInicioSessao = Date.now();
 
-            // Pega o limite escolhido no seletor do menu (5, 10 ou 20)
             let limiteDesejado = parseInt(document.getElementById('selectTamanhoSessao').value) || 10;
 
             if (sessaoAtual.modoPersonalizado) {
