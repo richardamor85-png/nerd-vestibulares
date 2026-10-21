@@ -1,7 +1,9 @@
-const CACHE_NAME = 'nerd-vest-cache-v3';
+const CACHE_NAME = 'nerd-vest-cache-v4';
 const urlsToCache = [
   './index.html',
   './metricas.html',
+  './historia.js',
+  './biologia.js',
   './questoes.js',
   './manifest.json',
   './icon.png'
@@ -41,7 +43,7 @@ self.addEventListener('fetch', event => {
 
   // IGNORA requisições do Firebase para permitir comunicação em tempo real imediata
   if (url.includes('firebaseio.com') || url.includes('googleapis.com')) {
-    return; // Deixa o navegador lidar diretamente com a rede sem interceptação do cache
+    return;
   }
 
   event.respondWith(
