@@ -52,7 +52,7 @@
         body { background: #070913; color: #f8fafc; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.3s, color 0.3s; }
 
         body.light-theme { background: #f1f5f9; color: #1e293b; }
-        body.light-theme .card-section, body.light-theme .sidebar-nav, body.light-theme .filters-container, body.light-theme .card-header, body.light-theme .table-footer, body.light-theme .kpi-card { background: #ffffff !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
+        body.light-theme .card-section, body.light-theme .sidebar-nav, body.light-theme .filters-container, body.light-theme .card-header, body.light-theme .table-footer, body.light-theme .kpi-card, body.light-theme .forecast-card { background: #ffffff !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
         body.light-theme .data-table th { background: #f8fafc !important; color: #475569 !important; }
         body.light-theme .data-table td { border-color: #e2e8f0 !important; color: #334155 !important; }
         body.light-theme .data-table tr:hover { background: #f1f5f9 !important; }
@@ -87,6 +87,13 @@
         .kpi-title { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
         .kpi-value { font-size: 26px; font-weight: bold; color: #38bdf8; margin-top: 8px; }
         .kpi-footer { font-size: 12px; color: #10b981; margin-top: 5px; font-weight: 600; }
+
+        /* Estilos do Painel de Previsão */
+        .forecast-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
+        .forecast-card { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 12px; text-align: center; }
+        .forecast-date { font-size: 11px; color: #94a3b8; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
+        .forecast-count { font-size: 20px; font-weight: bold; color: #38bdf8; }
+        .forecast-sub { font-size: 10px; color: #64748b; margin-top: 2px; }
 
         .card-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .card-header { background: #0f172a; padding: 15px 20px; border-bottom: 1px solid #334155; font-weight: bold; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
@@ -177,19 +184,70 @@
                         <div class="kpi-footer">Proporção de eficácia</div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-title">Status do Concurso</div>
-                        <div class="kpi-value" style="color: #10b981; font-size: 22px;">🟢 Operacional</div>
-                        <div class="kpi-footer">Modo de Alta Performance</div>
+                        <div class="kpi-title">Projeção Próximos 7 Dias</div>
+                        <div class="kpi-value" id="kpiProjecao7d" style="color: #c084fc;">0 cards</div>
+                        <div class="kpi-footer">Retorno do Spaced Repetition</div>
                     </div>
                 </div>
 
-                <div class="card-section">
-                    <div class="card-header">
-                        <span>Desempenho Consolidado por Matéria e Assunto</span>
-                        <span style="font-size: 12px; color: #94a3b8;">Filtro em 3 Níveis Ativo</span>
+                <!-- SEÇÃO NOVAS ESTIMATIVAS DE REVISÃO FUTURA (FSRS / SM-2) -->
+                <div class="card-section" style="padding: 18px;">
+                    <div class="card-header" style="background: transparent; padding: 0 0 12px 0; border: none;">
+                        <span>📅 Estimativa de Retorno dos Cards (Sincronizado aos Filtros)</span>
+                        <span style="font-size: 11px; color: #a855f7; font-weight: bold;">Motor Espaçado FSRS / SM-2</span>
                     </div>
-                    <div id="tabelaMateriaContainer"></div>
-                    <div class="table-footer" id="tabelaFooterResumo">Resolvidas: 0 | Acertos: 0 | Erros: 0</div>
+                    <div class="forecast-grid">
+                        <div class="forecast-card">
+                            <div class="forecast-date">Hoje / Atrasados</div>
+                            <div class="forecast-count" id="fcHoje" style="color: #ef4444;">0</div>
+                            <div class="forecast-sub">Disponíveis agora</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="forecast-date">Amanhã</div>
+                            <div class="forecast-count" id="fcAmanha" style="color: #f59e0b;">0</div>
+                            <div class="forecast-sub">Projeção 24h</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="forecast-date">Em 3 Dias</div>
+                            <div class="forecast-count" id="fc3d" style="color: #38bdf8;">0</div>
+                            <div class="forecast-sub">Intervalo curto</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="forecast-date">Em 7 Dias</div>
+                            <div class="forecast-count" id="fc7d" style="color: #10b981;">0</div>
+                            <div class="forecast-sub">Próxima semana</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="forecast-date">Em 15 Dias</div>
+                            <div class="forecast-count" id="fc15d" style="color: #818cf8;">0</div>
+                            <div class="forecast-sub">Consolidação</div>
+                        </div>
+                        <div class="forecast-card">
+                            <div class="forecast-date">Em 30 Dias</div>
+                            <div class="forecast-count" id="fc30d" style="color: #c084fc;">0</div>
+                            <div class="forecast-sub">Longo prazo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW COM TABELA E NOVO GRÁFICO DE PIZZA -->
+                <div class="charts-row">
+                    <div class="card-section" style="flex: 1.3;">
+                        <div class="card-header">
+                            <span>Desempenho Consolidado por Matéria</span>
+                        </div>
+                        <div id="tabelaMateriaContainer"></div>
+                        <div class="table-footer" id="tabelaFooterResumo">Resolvidas: 0 | Acertos: 0 | Erros: 0</div>
+                    </div>
+
+                    <div class="card-section" style="flex: 0.7;">
+                        <div class="card-header">
+                            <span>Proporção Geral (Filtro Ativo)</span>
+                        </div>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="chartPizza"></canvas>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="action-footer">
@@ -239,9 +297,13 @@
 
     <script>
         let historicoGlobal = [];
+        let mapaRevisoesFuturas = {};
+        let totalBancoFiltrado = 0;
+
         let graficoRadar = null;
         let meuGraficoEvolucao = null;
         let meuGraficoResolucao = null;
+        let graficoPizza = null;
 
         window.onload = function() {
             carregarConfiguracaoInicial();
@@ -314,6 +376,7 @@
             let nomeJogador = (document.getElementById('filtroNomeJogador').value || 'Richard').trim();
             let chavePerfil = 'nerd_vestibulares_perfil_' + nomeJogador;
             let historicoUnificado = [];
+            mapaRevisoesFuturas = {};
 
             let dadosBrutos = localStorage.getItem(chavePerfil);
             if (dadosBrutos) {
@@ -334,6 +397,10 @@
                             });
                         }
                     }
+
+                    if (dados.historicoRevisao) {
+                        mapaRevisoesFuturas = dados.historicoRevisao;
+                    }
                 } catch(e) { console.error(e); }
             }
 
@@ -352,22 +419,64 @@
         }
 
         function aplicarFiltros() {
+            carregarDadosLocalStorage();
+            renderizarPainel();
+            renderizarGraficos();
+        }
+
+        function obterHistoricoFiltrado() {
             const discFiltro = document.getElementById('filtroDisciplina').value;
             const topFiltro = document.getElementById('filtroTopico').value;
             const subFiltro = document.getElementById('filtroSubtopico').value;
 
-            carregarDadosLocalStorage();
-
-            let filtrados = historicoGlobal.filter(h => {
+            return historicoGlobal.filter(h => {
                 let matchDisc = (discFiltro === 'Todos' || h.deck === discFiltro);
                 let matchTop = (topFiltro === 'Todos' || h.topicoPrincipal === topFiltro);
                 let matchSub = (subFiltro === 'Todos' || h.subgrupo === subFiltro);
                 return matchDisc && matchTop && matchSub;
             });
+        }
 
-            historicoGlobal = filtrados;
-            renderizarPainel();
-            renderizarGraficos();
+        function calcularEstimativasAgenda() {
+            const discFiltro = document.getElementById('filtroDisciplina').value;
+            const topFiltro = document.getElementById('filtroTopico').value;
+            const subFiltro = document.getElementById('filtroSubtopico').value;
+
+            let agora = Date.now();
+            let umDiaMs = 24 * 60 * 60 * 1000;
+
+            let contadores = { hoje: 0, amanha: 0, d3: 0, d7: 0, d15: 0, d30: 0 };
+
+            if (typeof masterDeck !== 'undefined') {
+                let filtradosDeck = masterDeck.filter(c => {
+                    let matchDisc = (discFiltro === 'Todos' || c.deck === discFiltro);
+                    let matchTop = (topFiltro === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topFiltro);
+                    let matchSub = (subFiltro === 'Todos' || c.subgrupo === subFiltro);
+                    return matchDisc && matchTop && matchSub;
+                });
+
+                totalBancoFiltrado = filtradosDeck.length;
+
+                filtradosDeck.forEach(c => {
+                    let info = mapaRevisoesFuturas[c.id];
+                    if (info && info.proximaRevisao) {
+                        let diffMs = info.proximaRevisao - agora;
+                        let diffDias = diffMs / umDiaMs;
+
+                        if (diffDias <= 0) contadores.hoje++;
+                        else if (diffDias <= 1) contadores.amanha++;
+                        else if (diffDias <= 3) contadores.d3++;
+                        else if (diffDias <= 7) contadores.d7++;
+                        else if (diffDias <= 15) contadores.d15++;
+                        else if (diffDias <= 30) contadores.d30++;
+                    } else {
+                        // Cards nunca estudados contam como disponíveis hoje
+                        contadores.hoje++;
+                    }
+                });
+            }
+
+            return contadores;
         }
 
         function renderizarPainel() {
@@ -376,8 +485,10 @@
             const footerResumo = document.getElementById('tabelaFooterResumo');
             const atividadesFooter = document.getElementById('atividadesFooterResumo');
 
-            let totalResolvidas = historicoGlobal.length;
-            let totalAcertos = historicoGlobal.filter(h => h.acertou).length;
+            let historicoFiltrado = obterHistoricoFiltrado();
+
+            let totalResolvidas = historicoFiltrado.length;
+            let totalAcertos = historicoFiltrado.filter(h => h.acertou).length;
             let totalErros = totalResolvidas - totalAcertos;
             let percentualAcerto = totalResolvidas > 0 ? Math.round((totalAcertos / totalResolvidas) * 100) : 0;
 
@@ -394,6 +505,19 @@
                 metaStatus.style.color = "#ef4444";
             }
 
+            // Atualiza Painel de Previsão Espaçada
+            let est = calcularEstimativasAgenda();
+            document.getElementById('fcHoje').innerText = est.hoje;
+            document.getElementById('fcAmanha').innerText = est.amanha;
+            document.getElementById('fc3d').innerText = est.d3;
+            document.getElementById('fc7d').innerText = est.d7;
+            document.getElementById('fc15d').innerText = est.d15;
+            document.getElementById('fc30d').innerText = est.d30;
+
+            let total7d = est.hoje + est.amanha + est.d3 + est.d7;
+            document.getElementById('kpiProjecao7d').innerText = `${total7d} cards`;
+
+            // Tabela Consolidada
             let htmlTabela = `
                 <table class="data-table">
                     <thead>
@@ -409,7 +533,7 @@
             `;
 
             let agrupado = {};
-            historicoGlobal.forEach(h => {
+            historicoFiltrado.forEach(h => {
                 let chaveAgrupamento = `[${h.deck}] ${h.topicoPrincipal}`;
                 if(!agrupado[chaveAgrupamento]) agrupado[chaveAgrupamento] = { total: 0, acertos: 0, erros: 0 };
                 agrupado[chaveAgrupamento].total++;
@@ -444,11 +568,44 @@
         }
 
         function renderizarGraficos() {
+            let historicoFiltrado = obterHistoricoFiltrado();
+
+            // 1. Renderiza Gráfico de Pizza (Donut Chart)
+            let totalAcertos = historicoFiltrado.filter(h => h.acertou).length;
+            let totalErros = historicoFiltrado.length - totalAcertos;
+            let naoEstudados = Math.max(0, totalBancoFiltrado - historicoFiltrado.length);
+
+            const ctxPizza = document.getElementById('chartPizza').getContext('2d');
+            if (graficoPizza) graficoPizza.destroy();
+            graficoPizza = new Chart(ctxPizza, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Acertos', 'Erros', 'Não Estudados'],
+                    datasets: [{
+                        data: [totalAcertos, totalErros, naoEstudados],
+                        backgroundColor: ['#10b981', '#ef4444', '#334155'],
+                        borderWidth: 2,
+                        borderColor: '#1e293b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#94a3b8', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+
+            // 2. Renderiza Radar
             let labelsTopicos = [];
             let dadosRadar = [];
 
             let agrupadoRadar = {};
-            historicoGlobal.forEach(h => {
+            historicoFiltrado.forEach(h => {
                 if(!agrupadoRadar[h.topicoPrincipal]) agrupadoRadar[h.topicoPrincipal] = { total: 0, acertos: 0 };
                 agrupadoRadar[h.topicoPrincipal].total++;
                 if(h.acertou) agrupadoRadar[h.topicoPrincipal].acertos++;
@@ -494,8 +651,8 @@
                 }
             });
 
-            let totalAcertos = historicoGlobal.filter(h => h.acertou).length;
-            let percTotal = historicoGlobal.length > 0 ? Math.round((totalAcertos / historicoGlobal.length) * 100) : 0;
+            // 3. Renderiza Linha de Evolução
+            let percTotal = historicoFiltrado.length > 0 ? Math.round((totalAcertos / historicoFiltrado.length) * 100) : 0;
 
             const ctxEvolucao = document.getElementById('chartEvolucao').getContext('2d');
             if (meuGraficoEvolucao) meuGraficoEvolucao.destroy();
@@ -516,6 +673,7 @@
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
+            // 4. Renderiza Barra de Volume
             const ctxResolucao = document.getElementById('chartResolucoes').getContext('2d');
             if (meuGraficoResolucao) meuGraficoResolucao.destroy();
             meuGraficoResolucao = new Chart(ctxResolucao, {
@@ -524,7 +682,7 @@
                     labels: ['Hoje'],
                     datasets: [{
                         label: 'Questões Processadas',
-                        data: [historicoGlobal.length],
+                        data: [historicoFiltrado.length],
                         backgroundColor: '#38bdf8',
                         borderRadius: 6
                     }]
@@ -534,7 +692,8 @@
         }
 
         function acaoExportarPlanilha() {
-            let csv = "Disciplina,Topico,Status\n" + historicoGlobal.map(h => `${h.deck},${h.topicoPrincipal},${h.acertou ? 'Acerto' : 'Erro'}`).join("\n");
+            let historicoFiltrado = obterHistoricoFiltrado();
+            let csv = "Disciplina,Topico,Status\n" + historicoFiltrado.map(h => `${h.deck},${h.topicoPrincipal},${h.acertou ? 'Acerto' : 'Erro'}`).join("\n");
             let blob = new Blob([csv], { type: 'text/csv' });
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
