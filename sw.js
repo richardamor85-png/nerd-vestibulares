@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nerd-vest-cache-v10';
+const CACHE_NAME = 'nerd-vest-cache-v14';
 const urlsToCache = [
   './index.html',
   './metricas.html',

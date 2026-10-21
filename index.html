@@ -119,49 +119,65 @@
         .case-accent-line { width: 4px; height: 38px; background: linear-gradient(180deg, #38bdf8, #818cf8); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
         .case-title { font-size: 15px; font-weight: 700; line-height: 1.3; color: #ffffff; }
 
-        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; }
+        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; }
 
         .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
         .option-card { padding: 14px 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; }
         .option-card.correct { background: #059669 !important; border-color: #10b981 !important; color: #fff !important; }
         .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; color: #fff !important; }
 
-        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; }
+        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; }
         .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 6px; font-weight: 800; }
 
-        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35); margin-top: 10px; }
+        /* PADRÃO DE BOTÕES EQUILIBRADO */
+        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px 24px; max-width: 380px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35); margin: 6px auto; display: block; text-align: center; }
         .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); }
         .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: none; color: #ffffff; }
-        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); display: none; }
+        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); display: none; max-width: 380px; margin: 6px auto; }
         .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35); }
         .btn-theory { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); }
-        .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; }
-        .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin-top: 16px; font-size: 13px; padding: 10px; box-shadow: none; font-weight: 700; }
+        .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; max-width: 380px; margin: 6px auto; }
+        .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin: 10px auto; font-size: 13px; padding: 12px 24px; box-shadow: none; font-weight: 700; max-width: 380px; display: block; }
 
-        input[type="text"], input[type="number"], select { width: 100%; max-width: 340px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
-        label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; margin-left: calc(50% - 170px); font-weight: 800; letter-spacing: 0.5px; }
+        input[type="text"], input[type="number"], select { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
+        label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; font-weight: 800; letter-spacing: 0.5px; }
 
         .stats-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); padding: 18px; border-radius: 12px; text-align: left; margin-bottom: 18px; font-size: 14px; max-height: 480px; overflow-y: auto; line-height: 1.6; color: #f8fafc; }
-        .menu-grid { display: flex; flex-direction: column; gap: 12px; max-width: 380px; margin: 0 auto; width: 100%; align-items: center; }
+        .menu-grid { display: flex; flex-direction: column; gap: 4px; max-width: 380px; margin: 0 auto; width: 100%; align-items: center; }
 
-        .config-card-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 18px auto; color: #f8fafc; }
-        .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; }
+        .config-card-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 14px auto; color: #f8fafc; }
+        .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; max-width: 100%; }
 
         .filter-panel-box { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
         .filter-panel-box select { margin-bottom: 0; max-width: 200px; padding: 8px 10px; font-size: 12px; }
 
-        /* RESUMOS TEÓRICOS */
-        .theory-layout { display: flex; gap: 20px; width: 100%; align-items: flex-start; }
-        .theory-sidebar { width: 280px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto; }
+        /* RESUMOS TEÓRICOS & EDITOR COMPLETO ESTILO WORD */
+        .theory-layout { display: flex; gap: 20px; width: 100%; align-items: flex-start; transition: all 0.3s ease; }
+        .theory-sidebar { width: 280px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto; transition: all 0.3s ease; }
+        .theory-sidebar.collapsed { display: none; }
         .theory-sidebar-item { padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: #cbd5e1; transition: 0.2s; text-align: left; border: 1px solid transparent; }
         .theory-sidebar-item:hover, .theory-sidebar-item.active { background: #0ea5e9; color: white; border-color: #38bdf8; }
-        .theory-content-box { flex: 1; padding: 25px; border-radius: 14px; line-height: 1.8; font-size: 15px; max-height: 550px; overflow-y: auto; text-align: left; color: #f8fafc; font-weight: 500; }
         
-        .bizu-card { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin: 18px 0; color: #fde68a; font-size: 14px; line-height: 1.6; }
+        .theory-main-area { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        
+        /* BARRA DE FERRAMENTAS ESTILO WORD */
+        .editor-toolbar { display: flex; gap: 5px; background: rgba(15, 23, 42, 0.95); padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); flex-wrap: wrap; align-items: center; }
+        .editor-btn { background: #1e293b; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .editor-btn:hover { background: #0ea5e9; border-color: #38bdf8; color: #fff; }
+        .editor-select { background: #1e293b; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); padding: 5px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; outline: none; margin-bottom: 0; max-width: 130px; }
+        .editor-color { background: #1e293b; border: 1px solid rgba(255,255,255,0.2); width: 32px; height: 30px; border-radius: 6px; cursor: pointer; padding: 2px; }
+
+        .theory-content-box { flex: 1; padding: 25px; border-radius: 14px; line-height: 1.8; font-size: 15px; max-height: 500px; overflow-y: auto; text-align: justify; color: #f8fafc; font-weight: 500; outline: none; }
+        
+        .bizu-card { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin: 18px 0; color: #fde68a; font-size: 14px; line-height: 1.6; text-align: justify; }
         .bizu-card b { color: #fbbf24; }
 
-        .fixar-card { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 18px; margin: 20px 0; }
+        .fixar-card { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 18px; margin: 20px 0; text-align: left; }
         .fixar-banner { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; padding: 8px 12px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 12px; display: inline-block; margin-bottom: 12px; }
+
+        /* MODO CONCENTRAÇÃO (TELA CHEIA) */
+        body.focus-mode .game-container { max-width: 100% !important; height: 95vh !important; }
+        body.focus-mode header, body.focus-mode .filter-panel-box, body.focus-mode .theory-sidebar { display: none !important; }
 
         @media (max-width: 768px) { .theory-layout { flex-direction: column; } .theory-sidebar { width: 100%; } .filter-panel-box select { max-width: 100%; } }
     </style>
@@ -177,7 +193,7 @@
 
     <div class="game-container">
         
-        <!-- TELA 1: MENU PRINCIPAL (SEM CAMPO DE CODINOME) -->
+        <!-- TELA 1: MENU PRINCIPAL -->
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
@@ -206,7 +222,6 @@
                         </select>
                     </div>
 
-                    <!-- SELETOR DE TAMANHO DA SESSÃO -->
                     <div style="width:100%;">
                         <label>Tamanho Máximo da Sessão:</label>
                         <select id="selectTamanhoSessao">
@@ -216,19 +231,24 @@
                         </select>
                     </div>
                     
-                    <!-- BOTÕES DO MENU PRINCIPAL -->
                     <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Revisão Espaçada)</button>
                     <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
                     <button class="btn-action btn-theory" onclick="abrirResumoTeorico()">📖 Resumos Teóricos Direcionados</button>
-                    <button class="btn-action btn-secondary" onclick="abrirProgresso()">📊 Dashboard de Métricas</button>
+                    <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
                     <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações Gerais</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA DE RESUMO TEÓRICO -->
+        <!-- TELA DE RESUMO TEÓRICO COM EDITOR ESTILO WORD COMPLETO -->
         <div id="screenTheory" class="screen">
-            <h2 style="color: #34d399; text-align: center; margin-top: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h2 style="color: #34d399; margin: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
+                <div style="display: flex; gap: 8px;">
+                    <button class="editor-btn" onclick="alternarSidebar()">📂 Menu</button>
+                    <button class="editor-btn" onclick="alternarModoConcentracao()" id="btnFocusMode">🎯 Foco</button>
+                </div>
+            </div>
             
             <div class="filter-panel-box">
                 <select id="theoryFilterDisc" onchange="filtrarResumosTeoricos()">
@@ -243,8 +263,37 @@
 
             <div class="theory-layout">
                 <div class="theory-sidebar" id="theorySidebar"></div>
-                <div class="theory-content-box" id="theoryContent">
-                    <p style="color: #cbd5e1;">Selecione um tópico na barra lateral para carregar a teoria completa.</p>
+                
+                <div class="theory-main-area">
+                    <!-- BARRA DE FERRAMENTAS ESTILO WORD COMPLETA -->
+                    <div class="editor-toolbar">
+                        <button class="editor-btn" title="Negrito" onclick="executarComandoEditor('bold')"><b>N</b></button>
+                        <button class="editor-btn" title="Itálico" onclick="executarComandoEditor('italic')"><i>I</i></button>
+                        <button class="editor-btn" title="Sublinhado" onclick="executarComandoEditor('underline')"><u>U</u></button>
+                        <button class="editor-btn" title="Tachado" onclick="executarComandoEditor('strikeThrough')"><s>S</s></button>
+                        <span style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px; margin: 0 2px;"></span>
+                        <button class="editor-btn" title="Alinhar à Esquerda" onclick="executarComandoEditor('justifyLeft')">⫷ Esq</button>
+                        <button class="editor-btn" title="Centralizar" onclick="executarComandoEditor('justifyCenter')">≡ Centro</button>
+                        <button class="editor-btn" title="Alinhar à Direita" onclick="executarComandoEditor('justifyRight')">⫸ Dir</button>
+                        <button class="editor-btn" title="Justificar" onclick="executarComandoEditor('justifyFull')">≣ Just</button>
+                        <span style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px; margin: 0 2px;"></span>
+                        <button class="editor-btn" title="Lista com Marcadores" onclick="executarComandoEditor('insertUnorderedList')">• Lista</button>
+                        <button class="editor-btn" title="Lista Numerada" onclick="executarComandoEditor('insertOrderedList')">1. Lista</button>
+                        <span style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px; margin: 0 2px;"></span>
+                        <select class="editor-select" title="Tamanho da Fonte" onchange="executarComandoEditor('fontSize', this.value); this.value='';">
+                            <option value="" disabled selected>Tamanho</option>
+                            <option value="3">Normal</option>
+                            <option value="4">Médio</option>
+                            <option value="5">Grande</option>
+                            <option value="6">Muito Grande</option>
+                        </select>
+                        <input type="color" class="editor-color" title="Cor do Texto" onchange="executarComandoEditor('foreColor', this.value)">
+                        <button class="editor-btn" style="background: #059669; border-color: #10b981; margin-left: auto;" onclick="salvarAlteracoesEditor()">💾 Salvar</button>
+                    </div>
+
+                    <div class="theory-content-box" id="theoryContent" contenteditable="true">
+                        <p style="color: #cbd5e1;">Selecione um tópico na barra lateral para carregar a teoria completa.</p>
+                    </div>
                 </div>
             </div>
             <button class="btn-action btn-secondary" style="margin-top: 15px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
@@ -302,7 +351,8 @@
                 </div>
 
             </div>
-            <button class="btn-action btn-secondary" onclick="salvarConfiguracoesEVoltar()">Salvar Configurações e Voltar</button>
+            <button class="btn-action" onclick="salvarConfiguracoesEVoltar()">💾 Salvar Configurações</button>
+            <button class="btn-action btn-secondary" onclick="voltarMenu()">Voltar ao Menu Principal</button>
         </div>
 
         <!-- TELA DO JOGO / SIMULADO -->
@@ -340,9 +390,9 @@
         <div id="screenReport" class="screen" style="justify-content: center; text-align: center;">
             <h2 id="reportTitle" style="color: #38bdf8; font-weight: 800;">Resultado da Etapa</h2>
             <div class="stats-box" id="reportContent"></div>
-            <div style="display: flex; gap: 10px; flex-direction: column;">
+            <div style="display: flex; gap: 6px; flex-direction: column; align-items: center; width: 100%;">
                 <button class="btn-action" onclick="repetirUltimoModo()">🔄 Nova Sessão</button>
-                <button class="btn-action btn-secondary" onclick="voltarMenu()">Menu Principal</button>
+                <button class="btn-action btn-secondary" onclick="voltarMenu()">Voltar ao Menu Principal</button>
             </div>
         </div>
 
@@ -367,10 +417,13 @@
             erros: 0,
             historicoRevisao: {},
             questoesRespondidasHistorico: {},
+            resumosEditadosSalvos: {},
             tempoInicioSessao: 0,
             tempoInicioCard: 0,
             timerInterval: null
         };
+
+        let moduloSelecionadoAtualId = null;
 
         window.onload = function() {
             carregarConfiguracoesSalvas();
@@ -379,17 +432,22 @@
         };
 
         function carregarPerfilUsuario() {
-            const chaveStorage = 'nerd_vestibulares_perfil_usuario';
-            const salvo = localStorage.getItem(chaveStorage);
+            const salvo = localStorage.getItem('nerd_vestibulares_perfil_usuario');
             if(salvo) {
-                const dados = JSON.parse(salvo);
-                sessaoAtual.xp = dados.xp || 0;
-                sessaoAtual.historicoRevisao = dados.historicoRevisao || {};
-                sessaoAtual.questoesRespondidasHistorico = dados.questoesRespondidasHistorico || {};
+                try {
+                    const dados = JSON.parse(salvo);
+                    sessaoAtual.xp = dados.xp || 0;
+                    sessaoAtual.historicoRevisao = dados.historicoRevisao || {};
+                    sessaoAtual.questoesRespondidasHistorico = dados.questoesRespondidasHistorico || {};
+                    sessaoAtual.resumosEditadosSalvos = dados.resumosEditadosSalvos || {};
+                } catch(e) {
+                    console.error("Erro ao carregar perfil:", e);
+                }
             } else {
                 sessaoAtual.xp = 0;
                 sessaoAtual.historicoRevisao = {};
                 sessaoAtual.questoesRespondidasHistorico = {};
+                sessaoAtual.resumosEditadosSalvos = {};
             }
             atualizarTelaBoasVindas();
         }
@@ -455,11 +513,28 @@
             atualizarContadorFiltro();
         }
 
-        /* NAVEGAÇÃO DOS RESUMOS TEÓRICOS */
+        /* NAVEGAÇÃO DOS RESUMOS TEÓRICOS & EDITOR */
         function abrirResumoTeorico() {
             mudarTela('screenTheory');
             atualizarFiltrosResumosTeoricos();
             filtrarResumosTeoricos();
+        }
+
+        function alternarSidebar() {
+            const sidebar = document.getElementById('theorySidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        function alternarModoConcentracao() {
+            document.body.classList.toggle('focus-mode');
+            const btn = document.getElementById('btnFocusMode');
+            if (document.body.classList.contains('focus-mode')) {
+                btn.innerText = "❌ Sair";
+                btn.style.background = "#dc2626";
+            } else {
+                btn.innerText = "🎯 Foco";
+                btn.style.background = "#1e293b";
+            }
         }
 
         function atualizarFiltrosResumosTeoricos() {
@@ -508,20 +583,27 @@
                     });
                     renderizarConteudoTeorico(filtrados[0]);
                 } else {
-                    sidebar.innerHTML = '<div style="color:#cbd5e1; font-size:12px;">Nenhum resumo encontrado para esses filtros.</div>';
+                    sidebar.innerHTML = '<div style="color:#cbd5e1; font-size:12px;">Nenhum resumo encontrado.</div>';
                     document.getElementById('theoryContent').innerHTML = '<p style="color:#cbd5e1;">Nenhum conteúdo disponível.</p>';
                 }
             }
         }
 
         function renderizarConteudoTeorico(modulo) {
+            moduloSelecionadoAtualId = modulo.id;
             const box = document.getElementById('theoryContent');
-            let html = `<h3 style="color: #38bdf8; margin-top:0; font-size: 20px;">${modulo.tituloModulo}</h3>`;
+            
+            if (sessaoAtual.resumosEditadosSalvos && sessaoAtual.resumosEditadosSalvos[modulo.id]) {
+                box.innerHTML = sessaoAtual.resumosEditadosSalvos[modulo.id];
+                return;
+            }
+
+            let html = `<h3 style="color: #38bdf8; margin-top:0; font-size: 20px; text-align: justify;">${modulo.tituloModulo}</h3>`;
             html += `<p style="font-size:12px; color:#34d399; font-weight:700; margin-bottom:15px;">📌 ${modulo.disciplina} ➔ ${modulo.topico || ''} ➔ ${modulo.subtopico || ''}</p>`;
             
             modulo.conteudo.forEach((bloco, bIdx) => {
                 if (bloco.tipo === 'texto') {
-                    html += `<p style="margin-bottom: 18px; color: #f1f5f9;">${bloco.corpo}</p>`;
+                    html += `<p style="margin-bottom: 18px; color: #f1f5f9; text-align: justify;">${bloco.corpo}</p>`;
                 } else if (bloco.tipo === 'bizu') {
                     html += `
                         <div class="bizu-card">
@@ -532,7 +614,7 @@
                     html += `
                         <div class="fixar-card" id="fixar-${bIdx}">
                             <div class="fixar-banner">🎯 QUESTÃO MODELO PARA FIXAR (${bloco.estilo || 'Prática'})</div>
-                            <p style="font-weight: 700; color: #ffffff; margin-bottom: 12px; font-size: 15px;">${bloco.enunciado}</p>
+                            <p style="font-weight: 700; color: #ffffff; margin-bottom: 12px; font-size: 15px; text-align: justify;">${bloco.enunciado}</p>
                             <div style="display: flex; flex-direction: column; gap: 8px;">
                                 ${bloco.alternativas.map((alt) => {
                                     let letra = alt.charAt(0);
@@ -545,6 +627,20 @@
                 }
             });
             box.innerHTML = html;
+        }
+
+        function executarComandoEditor(comando, valor = null) {
+            document.execCommand(comando, false, valor);
+        }
+
+        function salvarAlteracoesEditor() {
+            if (!moduloSelecionadoAtualId) return;
+            const conteudoHtml = document.getElementById('theoryContent').innerHTML;
+            if (!sessaoAtual.resumosEditadosSalvos) sessaoAtual.resumosEditadosSalvos = {};
+            
+            sessaoAtual.resumosEditadosSalvos[moduloSelecionadoAtualId] = conteudoHtml;
+            salvarDadosLocais();
+            alert("💾 Alterações salvas com sucesso!");
         }
 
         function responderQuestaoFixar(bIdx, escolhida, gabarito, btnElement) {
@@ -575,7 +671,7 @@
 
         function abrirModalPersonalizado() { mudarTela('screenCustomMenu'); }
         function abrirConfiguracoesJogo() { mudarTela('screenConfig'); }
-        function abrirProgresso() { window.location.href = 'metricas.html'; }
+        function abrirDashboardMetricas() { window.location.href = 'metricas.html'; }
 
         function salvarConfiguracoesEVoltar() {
             const temaEscolhido = document.querySelector('input[name="temaApp"]:checked').value;
@@ -592,7 +688,7 @@
 
             localStorage.setItem('nerd_vestibulares_config_motor', JSON.stringify(configObj));
             aplicarTemaVisual(temaEscolhido);
-            voltarMenu();
+            alert("💾 Configurações salvas com sucesso!");
         }
 
         function carregarConfiguracoesSalvas() {
@@ -781,7 +877,8 @@
             salvarDadosHibrido({
                 xp: sessaoAtual.xp,
                 historicoRevisao: sessaoAtual.historicoRevisao,
-                questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico
+                questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico,
+                resumosEditadosSalvos: sessaoAtual.resumosEditadosSalvos
             });
         }
 
