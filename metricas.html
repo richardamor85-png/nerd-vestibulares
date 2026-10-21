@@ -8,6 +8,45 @@
     <link rel="manifest" href="manifest.json">
     <!-- Chart.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Firebase App, Auth e Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDN3Imzt0oULpKsttM-nc6q-TsDGNop09w",
+        authDomain: "nerd-vestibulares.firebaseapp.com",
+        databaseURL: "https://nerd-vestibulares-default-rtdb.firebaseio.com",
+        projectId: "nerd-vestibulares",
+        storageBucket: "nerd-vestibulares.firebasestorage.app",
+        messagingSenderId: "1069606816248",
+        appId: "1:1069606816248:web:9ebaa5a1ddacf602716e0d"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const database = firebase.database();
+
+      window.addEventListener('DOMContentLoaded', () => {
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            database.ref('users/' + user.uid).once('value').then((snapshot) => {
+              const dadosNuvem = snapshot.val();
+              if (dadosNuvem) {
+                let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
+                let nomeJogador = (config.nomeJogador || 'Richard').trim();
+                localStorage.setItem('nerd_vestibulares_perfil_' + nomeJogador, JSON.stringify(dadosNuvem));
+                carregarDadosLocalStorage();
+                renderizarPainel();
+                renderizarGraficos();
+              }
+            });
+          }
+        });
+      });
+    </script>
+
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #070913; color: #f8fafc; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.3s, color 0.3s; }
@@ -216,14 +255,9 @@
             const configSalva = localStorage.getItem('nerd_vestibulares_config_motor');
             if (configSalva) {
                 const conf = JSON.parse(configSalva);
-                if (conf.nomeJogador) {
-                    document.getElementById('filtroNomeJogador').value = conf.nomeJogador;
-                }
-                if (conf.tema === 'claro') {
-                    document.body.classList.add('light-theme');
-                } else {
-                    document.body.classList.remove('light-theme');
-                }
+                if (conf.nomeJogador) document.getElementById('filtroNomeJogador').value = conf.nomeJogador;
+                if (conf.tema === 'claro') document.body.classList.add('light-theme');
+                else document.body.classList.remove('light-theme');
             }
         }
 
@@ -379,11 +413,8 @@
                 let chaveAgrupamento = `[${h.deck}] ${h.topicoPrincipal}`;
                 if(!agrupado[chaveAgrupamento]) agrupado[chaveAgrupamento] = { total: 0, acertos: 0, erros: 0 };
                 agrupado[chaveAgrupamento].total++;
-                if(h.acertou) {
-                    agrupado[chaveAgrupamento].acertos++;
-                } else {
-                    agrupado[chaveAgrupamento].erros++;
-                }
+                if(h.acertou) agrupado[chaveAgrupamento].acertos++;
+                else agrupado[chaveAgrupamento].erros++;
             });
 
             for(let topico in agrupado) {

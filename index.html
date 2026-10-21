@@ -30,13 +30,66 @@
       };
 
       firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
       const database = firebase.database();
       let usuarioUid = null;
+      let isCadastroMode = false;
 
       function obterChavePerfilLocalStorage() {
         let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
         let nomeJogador = (config.nomeJogador || 'Richard').trim();
         return 'nerd_vestibulares_perfil_' + nomeJogador;
+      }
+
+      // Sincronização e autenticação ativa
+      auth.onAuthStateChanged((user) => {
+        const badge = document.getElementById('dbCounterBadge');
+        if (user) {
+          usuarioUid = user.uid;
+          document.getElementById('authContainer').style.display = 'none';
+          document.getElementById('menuContentGrid').style.display = 'flex';
+          
+          database.ref('users/' + usuarioUid).once('value').then((snapshot) => {
+            const dadosNuvem = snapshot.val();
+            if (dadosNuvem) {
+              let chaveLocal = obterChavePerfilLocalStorage();
+              localStorage.setItem(chaveLocal, JSON.stringify(dadosNuvem));
+            }
+            carregarPerfilUsuario();
+          });
+        } else {
+          usuarioUid = null;
+          document.getElementById('authContainer').style.display = 'block';
+          document.getElementById('menuContentGrid').style.display = 'none';
+          if(badge) badge.innerText = "⚠️ Faça Login para Sincronizar entre PC e Celular";
+        }
+      });
+
+      function alternarModoAuth() {
+        isCadastroMode = !isCadastroMode;
+        document.getElementById('authTitle').innerText = isCadastroMode ? "📝 Criar Novo Usuário" : "🔐 Sincronização em Nuvem";
+        document.getElementById('authBtnSubmit').innerText = isCadastroMode ? "Cadastrar e Entrar" : "Entrar";
+        document.getElementById('authToggleMode').innerText = isCadastroMode ? "Já tem conta? Faça Login" : "Não tem conta? Cadastre-se como novo usuário";
+      }
+
+      function submeterAutenticação() {
+        const email = document.getElementById('authEmail').value.trim();
+        const senha = document.getElementById('authSenha').value.trim();
+        if (!email || !senha) { alert("Preencha o e-mail e a senha."); return; }
+
+        if (isCadastroMode) {
+          auth.createUserWithEmailAndPassword(email, senha)
+            .then(() => alert("Conta criada e sincronizada!"))
+            .catch(err => alert("Erro: " + err.message));
+        } else {
+          auth.signInWithEmailAndPassword(email, senha)
+            .then(() => alert("Conectado! Seus dados foram sincronizados."))
+            .catch(err => alert("Erro: " + err.message));
+        }
+      }
+
+      function fazerLogout() {
+        auth.signOut().then(() => window.location.reload());
       }
 
       function salvarDadosHibrido(dadosSalvar) {
@@ -51,27 +104,18 @@
     <style>
         * { box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         
-        /* TEMA 1: GLASSMORPHISM 3D SUAVE */
-        body.theme-glass3d {
-            background-color: #05070c; color: #ffffff; margin: 0; padding: 20px 15px;
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
-        }
+        body.theme-glass3d { background-color: #05070c; color: #ffffff; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         body.theme-glass3d .bg-orb { display: block; }
-        body.theme-glass3d .game-container {
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
-        }
+        body.theme-glass3d .game-container { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
         body.theme-glass3d .case-desc, body.theme-glass3d .theory-content-box { background: rgba(11, 17, 32, 0.9); border: 1px solid rgba(255,255,255,0.12); color: #f8fafc; }
         body.theme-glass3d .option-card { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; font-weight: 600; }
 
-        /* TEMA 2: AZUL NEON CLÁSSICO */
         body.theme-neon { background-color: #070913; color: #f8fafc; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         body.theme-neon .bg-orb { display: none; }
         body.theme-neon .game-container { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid #334155; }
         body.theme-neon .case-desc, body.theme-neon .theory-content-box { background: #0f172a; border-left: 4px solid #38bdf8; color: #f8fafc; }
         body.theme-neon .option-card { background: #1e293b; border: 1px solid #475569; color: #ffffff; font-weight: 600; }
 
-        /* TEMA 3: BRANCO SUAVE / CLEAN */
         body.theme-clean { background-color: #f1f5f9; color: #0f172a; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         body.theme-clean .bg-orb { display: none; }
         body.theme-clean .game-container { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
@@ -90,13 +134,13 @@
         body.theme-clean h1 { color: #0f172a; }
         .subtitle { color: #cbd5e1; font-size: 13px; font-weight: 600; }
 
-        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; }
+        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; text-align: center; }
 
-        .game-container { border-radius: 20px; padding: 28px; max-width: 960px; width: 100%; position: relative; min-height: 540px; display: flex; flex-direction: column; justify-content: space-between; }
-        .screen { display: none; flex-direction: column; width: 100%; height: 100%; }
+        .game-container { border-radius: 20px; padding: 28px; max-width: 960px; width: 100%; position: relative; min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .screen { display: none; flex-direction: column; width: 100%; height: 100%; align-items: center; }
         .screen.active { display: flex; }
 
-        .rpg-hud { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.12); margin-bottom: 20px; font-size: 13px; }
+        .rpg-hud { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.12); margin-bottom: 20px; font-size: 13px; width: 100%; }
         .rpg-hud div { display: flex; flex-direction: column; align-items: center; }
         .hud-val { font-weight: 800; color: #38bdf8; font-size: 16px; }
         .hud-label { font-size: 10px; color: #cbd5e1; text-transform: uppercase; margin-top: 2px; font-weight: 700; }
@@ -108,18 +152,18 @@
         .tag-historia { background: rgba(217, 119, 6, 0.3); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.5); }
         .tag-biologia { background: rgba(16, 185, 129, 0.3); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.5); }
 
-        .case-header-box { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+        .case-header-box { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; width: 100%; }
         .case-accent-line { width: 4px; height: 38px; background: linear-gradient(180deg, #38bdf8, #818cf8); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
         .case-title { font-size: 15px; font-weight: 700; line-height: 1.3; color: #ffffff; }
 
-        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; }
+        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; width: 100%; }
 
-        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; width: 100%; }
         .option-card { padding: 14px 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; }
         .option-card.correct { background: #059669 !important; border-color: #10b981 !important; color: #fff !important; }
         .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; color: #fff !important; }
 
-        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; }
+        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; width: 100%; }
         .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 6px; font-weight: 800; }
 
         .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px 24px; max-width: 380px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35); margin: 6px auto; display: block; text-align: center; }
@@ -131,19 +175,21 @@
         .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; max-width: 380px; margin: 6px auto; }
         .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin: 10px auto; font-size: 13px; padding: 12px 24px; box-shadow: none; font-weight: 700; max-width: 380px; display: block; }
 
-        input[type="text"], input[type="number"], select { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"], select { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
         label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; font-weight: 800; letter-spacing: 0.5px; }
 
-        .stats-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); padding: 18px; border-radius: 12px; text-align: left; margin-bottom: 18px; font-size: 14px; max-height: 480px; overflow-y: auto; line-height: 1.6; color: #f8fafc; }
+        .auth-box-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 20px; max-width: 380px; width: 100%; margin: 15px auto; text-align: center; }
+        .auth-toggle-link { font-size: 12px; color: #38bdf8; cursor: pointer; margin-top: 10px; font-weight: 700; display: block; }
+
+        .stats-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); padding: 18px; border-radius: 12px; text-align: left; margin-bottom: 18px; font-size: 14px; max-height: 480px; overflow-y: auto; line-height: 1.6; color: #f8fafc; width: 100%; }
         .menu-grid { display: flex; flex-direction: column; gap: 4px; max-width: 380px; margin: 0 auto; width: 100%; align-items: center; }
 
         .config-card-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 14px auto; color: #f8fafc; }
         .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; max-width: 100%; }
 
-        .filter-panel-box { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
+        .filter-panel-box { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 15px; flex-wrap: wrap; justify-content: center; width: 100%; }
         .filter-panel-box select { margin-bottom: 0; max-width: 200px; padding: 8px 10px; font-size: 12px; }
 
-        /* RESUMOS TEÓRICOS & EDITOR ESTILO WORD COMPLETO */
         .theory-layout { display: flex; gap: 20px; width: 100%; align-items: flex-start; transition: all 0.3s ease; }
         .theory-sidebar { width: 280px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto; transition: all 0.3s ease; }
         .theory-sidebar.collapsed { display: none; }
@@ -183,56 +229,72 @@
 
     <div class="game-container">
         
-        <!-- TELA 1: MENU PRINCIPAL -->
+        <!-- TELA 1: MENU PRINCIPAL & AUTENTICAÇÃO -->
         <div id="screenMenu" class="screen active">
-            <div style="text-align: center; margin-top: 5px;">
+            <div style="text-align: center; margin-top: 5px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
-                <div class="db-counter" id="dbCounterBadge">Carregando banco de dados...</div>
-                <p id="welcomeMsg" style="color: #cbd5e1; font-size: 13px; margin-bottom: 16px; font-weight: 600;"></p>
+                <div class="db-counter" id="dbCounterBadge">Verificando sincronização...</div>
                 
-                <div class="menu-grid">
-                    <div style="width:100%;">
-                        <label>1. Disciplina / Tema:</label>
-                        <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
-                            <option value="Todos" selected>🌐 Todas as Disciplinas</option>
-                            <option value="Historia">🏛️ História</option>
-                            <option value="Biologia">🧬 Biologia</option>
-                        </select>
-                    </div>
-                    <div style="width:100%;">
-                        <label>2. Tópico Principal:</label>
-                        <select id="selectTopico" onchange="atualizarSubtopicosMenu()">
-                            <option value="Todos">📂 Todos os Tópicos</option>
-                        </select>
-                    </div>
-                    <div style="width:100%;">
-                        <label>3. Subtópico (Assunto Secundário):</label>
-                        <select id="selectSubtopico" onchange="atualizarContadorFiltro()">
-                            <option value="Todos">📌 Todos os Subtópicos</option>
-                        </select>
-                    </div>
+                <!-- CAIXA DE LOGIN/CADASTRO -->
+                <div id="authContainer" class="auth-box-card" style="display: none;">
+                    <h3 style="color: #34d399; margin-top: 0; font-size: 15px;" id="authTitle">🔐 Sincronização em Nuvem</h3>
+                    <label>E-mail:</label>
+                    <input type="email" id="authEmail" placeholder="seu-email@provedor.com">
+                    <label>Senha:</label>
+                    <input type="password" id="authSenha" placeholder="Sua senha">
+                    <button class="btn-action" id="authBtnSubmit" onclick="submeterAutenticação()">Entrar</button>
+                    <span class="auth-toggle-link" id="authToggleMode" onclick="alternarModoAuth()">Não tem conta? Cadastre-se como novo usuário</span>
+                </div>
 
-                    <div style="width:100%;">
-                        <label>Tamanho Máximo da Sessão:</label>
-                        <select id="selectTamanhoSessao">
-                            <option value="5">⚡ Rápido (5 Questões)</option>
-                            <option value="10" selected>🎯 Bloco Padrão (Até 10)</option>
-                            <option value="20">🔥 Maratona (20 Questões)</option>
-                        </select>
-                    </div>
+                <!-- CONTEÚDO DO MENU (CENTRALIZADO) -->
+                <div id="menuContentGrid" style="display: none; width: 100%; flex-direction: column; align-items: center;">
+                    <p id="welcomeMsg" style="color: #cbd5e1; font-size: 13px; margin-bottom: 16px; font-weight: 600; text-align: center; width: 100%;"></p>
                     
-                    <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Revisão Espaçada)</button>
-                    <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
-                    <button class="btn-action btn-theory" onclick="abrirResumoTeorico()">📖 Resumos Teóricos Direcionados</button>
-                    <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
-                    <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações Gerais</button>
+                    <div class="menu-grid">
+                        <div style="width:100%;">
+                            <label>1. Disciplina / Tema:</label>
+                            <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
+                                <option value="Todos" selected>🌐 Todas as Disciplinas</option>
+                                <option value="Historia">🏛️ História</option>
+                                <option value="Biologia">🧬 Biologia</option>
+                            </select>
+                        </div>
+                        <div style="width:100%;">
+                            <label>2. Tópico Principal:</label>
+                            <select id="selectTopico" onchange="atualizarSubtopicosMenu()">
+                                <option value="Todos">📂 Todos os Tópicos</option>
+                            </select>
+                        </div>
+                        <div style="width:100%;">
+                            <label>3. Subtópico (Assunto Secundário):</label>
+                            <select id="selectSubtopico" onchange="atualizarContadorFiltro()">
+                                <option value="Todos">📌 Todos os Subtópicos</option>
+                            </select>
+                        </div>
+
+                        <div style="width:100%;">
+                            <label>Tamanho Máximo da Sessão:</label>
+                            <select id="selectTamanhoSessao">
+                                <option value="5">⚡ Rápido (5 Questões)</option>
+                                <option value="10" selected>🎯 Bloco Padrão (Até 10)</option>
+                                <option value="20">🔥 Maratona (20 Questões)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Revisão Espaçada)</button>
+                        <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
+                        <button class="btn-action btn-theory" onclick="abrirResumoTeorico()">📖 Resumos Teóricos Direcionados</button>
+                        <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
+                        <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações Gerais</button>
+                        <button class="btn-action btn-danger" style="margin-top: 10px;" onclick="fazerLogout()">🚪 Sair / Trocar Conta</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- TELA DE RESUMO TEÓRICO -->
         <div id="screenTheory" class="screen">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; width: 100%;">
                 <h2 style="color: #34d399; margin: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
                 <div style="display: flex; gap: 8px;">
                     <button class="editor-btn" onclick="alternarSidebar()">📂 Menu</button>
@@ -290,7 +352,7 @@
 
         <!-- TELA SUBMENU PERSONALIZADO -->
         <div id="screenCustomMenu" class="screen">
-            <div style="text-align: center; margin-top: 10px;">
+            <div style="text-align: center; margin-top: 10px; width: 100%;">
                 <h2 style="color: #c084fc; margin-bottom: 6px; font-weight: 800;">⚡ Estudo Personalizado</h2>
                 <div class="menu-grid">
                     <div style="width:100%;">
@@ -307,7 +369,7 @@
             </div>
         </div>
 
-        <!-- TELA CONFIGURAÇÕES (COM NOME DO JOGADOR EMBUTIDO) -->
+        <!-- TELA CONFIGURAÇÕES -->
         <div id="screenConfig" class="screen">
             <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">⚙️ Configurações Gerais</h2>
             <div style="text-align: center; width: 100%;">
@@ -362,7 +424,7 @@
                 <div class="progress-bar" id="progressBar"></div>
             </div>
 
-            <div>
+            <div style="width: 100%;">
                 <span class="mission-badge" id="missionTag">História</span>
                 <div class="case-header-box">
                     <div class="case-accent-line"></div>
@@ -435,9 +497,7 @@
                     sessaoAtual.historicoRevisao = dados.historicoRevisao || {};
                     sessaoAtual.questoesRespondidasHistorico = dados.questoesRespondidasHistorico || {};
                     sessaoAtual.resumosEditadosSalvos = dados.resumosEditadosSalvos || {};
-                } catch(e) {
-                    console.error("Erro ao carregar perfil:", e);
-                }
+                } catch(e) { console.error(e); }
             } else {
                 sessaoAtual.xp = 0;
                 sessaoAtual.historicoRevisao = {};
@@ -466,13 +526,15 @@
             const topico = document.getElementById('selectTopico').value;
             const subtopico = document.getElementById('selectSubtopico').value;
 
-            let filtrados = masterDeck.filter(c => {
-                let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
-                let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
-                let matchSub = (subtopico === 'Todos' || c.subgrupo === subtopico);
-                return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
-            });
-            document.getElementById('dbCounterBadge').innerText = `📚 Cards para revisão hoje: ${filtrados.length} (Total: ${masterDeck.length})`;
+            if (typeof masterDeck !== 'undefined') {
+                let filtrados = masterDeck.filter(c => {
+                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                    let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
+                    let matchSub = (subtopico === 'Todos' || c.subgrupo === subtopico);
+                    return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
+                });
+                document.getElementById('dbCounterBadge').innerText = `📚 Cards para revisão hoje: ${filtrados.length} (Total: ${masterDeck.length})`;
+            }
         }
 
         function atualizarTopicosMenu() {
@@ -480,11 +542,13 @@
             const selectTopico = document.getElementById('selectTopico');
             selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
             let topicos = new Set();
-            masterDeck.forEach(c => {
-                if(disciplina === 'Todos' || c.deck === disciplina) {
-                    if(c.topicoPrincipal || c.subgrupo) topicos.add(c.topicoPrincipal || c.subgrupo);
-                }
-            });
+            if (typeof masterDeck !== 'undefined') {
+                masterDeck.forEach(c => {
+                    if(disciplina === 'Todos' || c.deck === disciplina) {
+                        if(c.topicoPrincipal || c.subgrupo) topicos.add(c.topicoPrincipal || c.subgrupo);
+                    }
+                });
+            }
             topicos.forEach(t => {
                 let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
                 selectTopico.appendChild(opt);
@@ -498,11 +562,13 @@
             const selectSub = document.getElementById('selectSubtopico');
             selectSub.innerHTML = '<option value="Todos">📌 Todos os Subtópicos</option>';
             let subs = new Set();
-            masterDeck.forEach(c => {
-                let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
-                let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
-                if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
-            });
+            if (typeof masterDeck !== 'undefined') {
+                masterDeck.forEach(c => {
+                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                    let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
+                    if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
+                });
+            }
             subs.forEach(s => {
                 let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
                 selectSub.appendChild(opt);
@@ -516,21 +582,13 @@
             filtrarResumosTeoricos();
         }
 
-        function alternarSidebar() {
-            const sidebar = document.getElementById('theorySidebar');
-            sidebar.classList.toggle('collapsed');
-        }
+        function alternarSidebar() { document.getElementById('theorySidebar').classList.toggle('collapsed'); }
 
         function alternarModoConcentracao() {
             document.body.classList.toggle('focus-mode');
             const btn = document.getElementById('btnFocusMode');
-            if (document.body.classList.contains('focus-mode')) {
-                btn.innerText = "❌ Sair";
-                btn.style.background = "#dc2626";
-            } else {
-                btn.innerText = "🎯 Foco";
-                btn.style.background = "#1e293b";
-            }
+            btn.innerText = document.body.classList.contains('focus-mode') ? "❌ Sair" : "🎯 Foco";
+            btn.style.background = document.body.classList.contains('focus-mode') ? "#dc2626" : "#1e293b";
         }
 
         function atualizarFiltrosResumosTeoricos() {
@@ -601,11 +659,7 @@
                 if (bloco.tipo === 'texto') {
                     html += `<p style="margin-bottom: 18px; color: #f1f5f9; text-align: justify;">${bloco.corpo}</p>`;
                 } else if (bloco.tipo === 'bizu') {
-                    html += `
-                        <div class="bizu-card">
-                            <b>💡 BIZU & PEGADINHA DE PROVA:</b><br>${bloco.corpo}
-                        </div>
-                    `;
+                    html += `<div class="bizu-card"><b>💡 BIZU & PEGADINHA DE PROVA:</b><br>${bloco.corpo}</div>`;
                 } else if (bloco.tipo === 'questao_fixar') {
                     html += `
                         <div class="fixar-card" id="fixar-${bIdx}">
@@ -625,9 +679,7 @@
             box.innerHTML = html;
         }
 
-        function executarComandoEditor(comando, valor = null) {
-            document.execCommand(comando, false, valor);
-        }
+        function executarComandoEditor(comando, valor = null) { document.execCommand(comando, false, valor); }
 
         function salvarAlteracoesEditor() {
             if (!moduloSelecionadoAtualId) return;
@@ -655,9 +707,7 @@
                 feedback.innerHTML = `<b>🎉 Resposta Correta!</b> Parabéns.`;
             } else {
                 btnElement.classList.add('wrong');
-                botoes.forEach(b => {
-                    if (b.innerText.charAt(0) === gabarito) b.classList.add('correct');
-                });
+                botoes.forEach(b => { if (b.innerText.charAt(0) === gabarito) b.classList.add('correct'); });
                 feedback.style.background = 'rgba(220, 38, 38, 0.25)';
                 feedback.style.border = '1px solid #ef4444';
                 feedback.style.color = '#fca5a5';
@@ -676,18 +726,11 @@
             const passos = document.getElementById('inputPassos').value;
             const maxIntervalo = document.getElementById('inputMaxIntervalo').value;
 
-            const configObj = {
-                nomeJogador: nomeJogador,
-                tema: temaEscolhido,
-                motor: motorEscolhido,
-                passos: passos,
-                maxIntervalo: maxIntervalo
-            };
-
+            const configObj = { nomeJogador: nomeJogador, tema: temaEscolhido, motor: motorEscolhido, passos: passos, maxIntervalo: maxIntervalo };
             localStorage.setItem('nerd_vestibulares_config_motor', JSON.stringify(configObj));
             aplicarTemaVisual(temaEscolhido);
             carregarPerfilUsuario();
-            alert("💾 Configurações salvas com sucesso!");
+            alert("💾 Configurações salvas!");
             voltarMenu();
         }
 
@@ -695,9 +738,7 @@
             const salvo = localStorage.getItem('nerd_vestibulares_config_motor');
             if (salvo) {
                 const config = JSON.parse(salvo);
-                if (config.nomeJogador) {
-                    document.getElementById('inputNomeJogador').value = config.nomeJogador;
-                }
+                if (config.nomeJogador) document.getElementById('inputNomeJogador').value = config.nomeJogador;
                 if (config.tema) {
                     const radio = document.querySelector(`input[name="temaApp"][value="${config.tema}"]`);
                     if(radio) radio.checked = true;
@@ -709,9 +750,7 @@
                 }
                 if (config.passos) document.getElementById('inputPassos').value = config.passos;
                 if (config.maxIntervalo) document.getElementById('inputMaxIntervalo').value = config.maxIntervalo;
-            } else {
-                aplicarTemaVisual('glass3d');
-            }
+            } else { aplicarTemaVisual('glass3d'); }
         }
 
         function aplicarTemaVisual(tema) {
@@ -730,9 +769,7 @@
             mudarTela('screenMenu');
         }
 
-        function confirmarAbandonoSessao() {
-            if(confirm("Deseja abandonar a sessão atual?")) voltarMenu();
-        }
+        function confirmarAbandonoSessao() { if(confirm("Deseja abandonar a sessão atual?")) voltarMenu(); }
 
         function calcularProximaRevisao(acertou) {
             let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
@@ -740,42 +777,23 @@
             let agora = Date.now();
             let umDiaMs = 24 * 60 * 60 * 1000;
 
-            if (!acertou) {
-                // Errou: revisa em 10 minutos
-                return agora + (10 * 60 * 1000);
-            }
-
-            if (motor === 'sm2') {
-                return agora + (1 * umDiaMs);
-            } else {
-                // Modo FSRS Fixo Dinâmico (exemplo progressivo 1d -> 3d -> 7d -> 15d)
-                return agora + (3 * umDiaMs);
-            }
+            if (!acertou) return agora + (10 * 60 * 1000);
+            return motor === 'sm2' ? agora + (1 * umDiaMs) : agora + (3 * umDiaMs);
         }
 
         function processarRespostaRevisao(cardId, acertou) {
-            // Se for estudo personalizado, NÃO altera o agendamento FSRS/SM-2
             if (sessaoAtual.modoPersonalizado) return;
-
             sessaoAtual.questoesRespondidasHistorico[cardId] = acertou ? 'acertou' : 'errou';
-            
             let proximaData = calcularProximaRevisao(acertou);
-            sessaoAtual.historicoRevisao[cardId] = {
-                proximaRevisao: proximaData,
-                ultimaResposta: acertou ? 'acertou' : 'errou'
-            };
+            sessaoAtual.historicoRevisao[cardId] = { proximaRevisao: proximaData, ultimaResposta: acertou ? 'acertou' : 'errou' };
         }
 
         function iniciarMissaoGeral() { sessaoAtual.modoPersonalizado = false; executarInicioSessao(); }
         function iniciarEstudoPersonalizado() { sessaoAtual.modoPersonalizado = true; executarInicioSessao(); }
 
         function executarInicioSessao() {
-            sessaoAtual.indice = 0;
-            sessaoAtual.vidas = 3;
-            sessaoAtual.acertos = 0;
-            sessaoAtual.erros = 0;
+            sessaoAtual.indice = 0; sessaoAtual.vidas = 3; sessaoAtual.acertos = 0; sessaoAtual.erros = 0;
             sessaoAtual.tempoInicioSessao = Date.now();
-
             let limiteDesejado = parseInt(document.getElementById('selectTamanhoSessao').value) || 10;
 
             if (sessaoAtual.modoPersonalizado) {
@@ -798,7 +816,7 @@
             }
 
             if(sessaoAtual.cardsSessao.length === 0) {
-                alert("Nenhuma questão disponível para revisão hoje com esses filtros. Experimente o Estudo Personalizado ou mude o filtro!");
+                alert("Nenhuma questão disponível para revisão hoje com esses filtros.");
                 return;
             }
 
@@ -818,9 +836,7 @@
             }, 1000);
         }
 
-        function pararTimer() {
-            if(sessaoAtual.timerInterval) { clearInterval(sessaoAtual.timerInterval); sessaoAtual.timerInterval = null; }
-        }
+        function pararTimer() { if(sessaoAtual.timerInterval) { clearInterval(sessaoAtual.timerInterval); sessaoAtual.timerInterval = null; } }
 
         function carregarCard() {
             if(sessaoAtual.indice >= sessaoAtual.cardsSessao.length || (!sessaoAtual.modoPersonalizado && sessaoAtual.vidas <= 0)) {
@@ -927,9 +943,6 @@
             
             let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
             html += `• XP Ganho: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
-            if (sessaoAtual.vidas <= 0 && !sessaoAtual.modoPersonalizado) {
-                html += `<br><div style="color: #fca5a5; font-size: 13px;">💡 Dica: Suas vidas acabaram. Recomendamos acessar o <b>Resumo Direcionado</b> na tela inicial para revisar a teoria!</div>`;
-            }
             document.getElementById('reportContent').innerHTML = html;
         }
     </script>
