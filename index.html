@@ -101,6 +101,7 @@
 
         .mission-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
         .tag-historia { background: #d97706; color: #fff; }
+        .tag-biologia { background: #059669; color: #fff; }
 
         .case-title { font-size: 16px; font-weight: bold; color: #38bdf8; margin-bottom: 10px; }
         .case-desc { font-size: 15px; line-height: 1.5; color: #cbd5e1; background: #0f172a; padding: 15px; border-radius: 10px; border-left: 4px solid #38bdf8; margin-bottom: 20px; font-weight: 500; }
@@ -300,6 +301,7 @@
                         <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
                             <option value="Todos" selected>🌐 Todas as Disciplinas</option>
                             <option value="Historia">🏛️ História</option>
+                            <option value="Biologia">🧬 Biologia</option>
                         </select>
                     </div>
                     <div style="width:100%;">
@@ -350,6 +352,7 @@
                         <select id="customFiltroTema" onchange="atualizarTopicosCustom()">
                             <option value="Todos" selected>🌐 Todas as Disciplinas</option>
                             <option value="Historia">🏛️ História</option>
+                            <option value="Biologia">🧬 Biologia</option>
                         </select>
                     </div>
                     <div style="width:100%;">
@@ -457,7 +460,9 @@
 
     </div>
 
-    <!-- Importa o banco de dados de questões -->
+    <!-- Importa os bancos de dados separados e o unificador -->
+    <script src="historia.js"></script>
+    <script src="biologia.js"></script>
     <script src="questoes.js"></script>
 
     <script>
