@@ -3,102 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nerd Vestibulares — Estatísticas e Métricas</title>
+    <title>Nerd Vestibulares — Dashboard Executivo de Desempenho</title>
     <!-- Chamada do Manifesto PWA -->
     <link rel="manifest" href="manifest.json">
     <!-- Chart.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #070913; color: #f8fafc; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+        body { background: #070913; color: #f8fafc; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; transition: background 0.3s, color 0.3s; }
 
-        /* Sincronizado com o Modo Claro / Escuro salvo no Jogo */
+        /* Tema Claro Opcional */
         body.light-theme { background: #f1f5f9; color: #1e293b; }
-        body.light-theme .card-section, body.light-theme .sidebar-nav, body.light-theme .filters-container, body.light-theme .card-header, body.light-theme .sub-controls, body.light-theme .table-footer { background: #ffffff !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
+        body.light-theme .card-section, body.light-theme .sidebar-nav, body.light-theme .filters-container, body.light-theme .card-header, body.light-theme .table-footer, body.light-theme .kpi-card { background: #ffffff !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
         body.light-theme .data-table th { background: #f8fafc !important; color: #475569 !important; }
         body.light-theme .data-table td { border-color: #e2e8f0 !important; color: #334155 !important; }
         body.light-theme .data-table tr:hover { background: #f1f5f9 !important; }
         body.light-theme .filter-group input, body.light-theme .filter-group select { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
 
         /* Topo / Breadcrumb */
-        .top-bar { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .breadcrumb { font-size: 14px; color: #94a3b8; font-weight: 500; }
-        .breadcrumb span { color: #38bdf8; font-weight: 600; }
+        .top-bar { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .breadcrumb { font-size: 16px; color: #94a3b8; font-weight: 500; }
+        .breadcrumb span { color: #38bdf8; font-weight: 700; }
 
-        /* Barra de Filtros Reais do Jogo */
-        .filters-container { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px 15px; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) auto; gap: 10px; align-items: flex-end; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        /* Barra de Filtros Executiva */
+        .filters-container { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px 20px; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) auto; gap: 12px; align-items: flex-end; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .filter-group { display: flex; flex-direction: column; }
-        .filter-group label { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; }
-        .filter-group input, .filter-group select { padding: 8px; border: 1px solid #475569; border-radius: 6px; font-size: 13px; background: #0f172a; color: #f8fafc; }
-        .btn-filtrar { background: #0ea5e9; color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; height: 37px; }
+        .filter-group label { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
+        .filter-group input, .filter-group select { padding: 9px; border: 1px solid #475569; border-radius: 6px; font-size: 13px; background: #0f172a; color: #f8fafc; }
+        .btn-filtrar { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; height: 38px; box-shadow: 0 4px 12px rgba(14,165,233,0.3); }
         .btn-filtrar:hover { filter: brightness(1.1); }
 
         /* Layout Principal */
         .main-layout { display: flex; width: 100%; max-width: 1200px; gap: 20px; align-items: flex-start; }
         
-        /* Menu Lateral Esquerdo */
-        .sidebar-nav { background: #1e293b; border: 1px solid #334155; border-radius: 8px; width: 60px; display: flex; flex-direction: column; align-items: center; padding: 15px 0; gap: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .nav-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; color: #94a3b8; font-size: 18px; transition: 0.2s; text-decoration: none; }
+        /* Menu Lateral Estilo Executivo */
+        .sidebar-nav { background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 70px; display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .nav-icon { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; color: #94a3b8; font-size: 20px; transition: 0.2s; text-decoration: none; }
         .nav-icon:hover { background: #334155; color: #38bdf8; }
         .nav-icon.active { background: #0f172a; color: #38bdf8; border-left: 4px solid #38bdf8; }
 
-        /* Conteúdo Dinâmico */
+        /* Área de Conteúdo */
         .content-area { flex: 1; display: flex; flex-direction: column; gap: 20px; }
         .tab-content { display: none; flex-direction: column; gap: 20px; }
         .tab-content.active { display: flex; }
 
-        /* Cards */
-        .card-section { background: #1e293b; border: 1px solid #334155; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .card-header { background: #0f172a; padding: 12px 18px; border-bottom: 1px solid #334155; font-weight: bold; font-size: 14px; color: #38bdf8; }
+        /* KPI Cards Executivos */
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; }
+        .kpi-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: flex; flex-direction: column; justify-content: space-between; }
+        .kpi-title { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 26px; font-weight: bold; color: #38bdf8; margin-top: 8px; }
+        .kpi-footer { font-size: 12px; color: #10b981; margin-top: 5px; font-weight: 600; }
+
+        /* Secções de Cartões e Gráficos */
+        .card-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .card-header { background: #0f172a; padding: 15px 20px; border-bottom: 1px solid #334155; font-weight: bold; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
         .card-body { padding: 20px; font-size: 13px; color: #94a3b8; text-align: center; }
+
+        .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+        @media (max-width: 850px) { .charts-row { grid-template-columns: 1fr; } }
 
         /* Tabelas */
         .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; color: #f8fafc; }
-        .data-table th, .data-table td { padding: 10px 15px; border-bottom: 1px solid #334155; }
+        .data-table th, .data-table td { padding: 12px 18px; border-bottom: 1px solid #334155; }
         .data-table th { background: #0f172a; color: #94a3b8; font-weight: 600; }
         .data-table tr:hover { background: rgba(56, 189, 248, 0.05); }
 
-        .table-footer { background: #0f172a; padding: 12px 18px; border-top: 1px solid #334155; font-size: 12px; font-weight: 600; color: #f8fafc; display: flex; gap: 20px; }
+        .table-footer { background: #0f172a; padding: 15px 20px; border-top: 1px solid #334155; font-size: 13px; font-weight: 600; color: #f8fafc; display: flex; justify-content: space-between; }
 
-        /* Botão Exportar */
+        /* Botões de Ação */
         .action-footer { display: flex; gap: 10px; margin-top: 5px; }
-        .btn-action { border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; color: white; background: #3b82f6; box-shadow: 0 2px 4px rgba(59,130,246,0.3); }
-        .btn-action:hover { filter: brightness(1.1); }
+        .btn-action { border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; color: white; background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 4px 12px rgba(37,99,235,0.3); transition: 0.2s; }
+        .btn-action:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-        .chart-container { position: relative; width: 100%; height: 260px; padding: 10px; }
+        .chart-container { position: relative; width: 100%; height: 280px; padding: 10px; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <div class="breadcrumb">Estatísticas > <span id="breadcrumbTitle">Desempenho</span></div>
+        <div class="breadcrumb">Dashboard Executivo > <span id="breadcrumbTitle">Visão Geral de Desempenho</span></div>
     </div>
 
-    <!-- Barra de Filtros Real do Jogo -->
+    <!-- Barra de Filtros Executiva -->
     <div class="filters-container">
         <div class="filter-group">
-            <label>Período</label>
+            <label>Período de Análise</label>
             <select id="filtroPeriodo">
-                <option value="todos" selected>Todo o Período</option>
-                <option value="hoje">Hoje</option>
-                <option value="7d">Últimos 7 dias</option>
-                <option value="30d">Últimos 30 dias</option>
+                <option value="todos" selected>Todo o Período Histórico</option>
+                <option value="hoje">Sessão de Hoje</option>
+                <option value="7d">Últimos 7 Dias</option>
             </select>
         </div>
         <div class="filter-group">
-            <label>Aluno</label>
+            <label>Codinome do Aluno</label>
             <input type="text" id="filtroAluno" value="Richard" readonly>
         </div>
         <div class="filter-group">
-            <label>Disciplina</label>
-            <select id="filtroDisciplina">
+            <label>Disciplina / Tema</label>
+            <select id="filtroDisciplina" onchange="atualizarTopicosMetricas()">
                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
                 <option value="Historia">🏛️ História</option>
+                <option value="Biologia">🧬 Biologia</option>
             </select>
         </div>
         <div class="filter-group">
             <label>Tópico Principal</label>
-            <select id="filtroTopico">
+            <select id="filtroTopico" onchange="atualizarSubtopicosMetricas()">
                 <option value="Todos" selected>📂 Todos os Tópicos</option>
             </select>
         </div>
@@ -108,80 +118,115 @@
                 <option value="Todos" selected>📌 Todos os Subtópicos</option>
             </select>
         </div>
-        <button class="btn-filtrar" onclick="aplicarFiltros()">FILTRAR</button>
+        <button class="btn-filtrar" onclick="aplicarFiltros()">FILTRAR DADOS</button>
     </div>
 
     <div class="main-layout">
         
-        <!-- Menu Lateral -->
+        <!-- Menu Lateral Executivo -->
         <div class="sidebar-nav">
-            <div class="nav-icon active" onclick="trocarAba(0, 'Desempenho')" title="Desempenho por Matéria">📊</div>
-            <div class="nav-icon" onclick="trocarAba(1, 'Minha evolução')" title="Evolução do Desempenho">📈</div>
-            <div class="nav-icon" onclick="trocarAba(2, 'Atividades')" title="Atividades e Histórico">🕒</div>
+            <div class="nav-icon active" onclick="trocarAba(0, 'Visão Geral de Desempenho')" title="Dashboard Executivo">📊</div>
+            <div class="nav-icon" onclick="trocarAba(1, 'Análise Avançada e Radar')" title="Radar de Habilidades e Gráficos">📈</div>
+            <div class="nav-icon" onclick="trocarAba(2, 'Histórico de Atividades')" title="Log Detalhado de Resoluções">🕒</div>
             <a href="index.html" class="nav-icon" title="Voltar ao Jogo">🚪</a>
         </div>
 
         <div class="content-area">
 
-            <!-- ABA 1: DESEMPENHO -->
+            <!-- ABA 1: DASHBOARD EXECUTIVO & KPIS -->
             <div id="aba0" class="tab-content active">
-                <div class="card-section">
-                    <div class="card-header">Desempenho Geral</div>
-                    <div class="card-body" id="geralBody">Carregando dados...</div>
+                
+                <!-- KPI CARDS -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-title">Questões Resolvidas</div>
+                        <div class="kpi-value" id="kpiTotal">0</div>
+                        <div class="kpi-footer">Volume total acumulado</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-title">Taxa de Acerto Geral</div>
+                        <div class="kpi-value" id="kpiTaxa">0%</div>
+                        <div class="kpi-footer" id="kpiMetaStatus">Meta Mínima: 70%</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-title">Acertos vs Erros</div>
+                        <div class="kpi-value" id="kpiAcertosErros">0 / 0</div>
+                        <div class="kpi-footer">Proporção de eficácia</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-title">Status do Concurso</div>
+                        <div class="kpi-value" style="color: #10b981; font-size: 22px;">🟢 Operacional</div>
+                        <div class="kpi-footer">Modo de Alta Performance</div>
+                    </div>
                 </div>
 
+                <!-- TABELA DE DESEMPENHO POR MATÉRIA -->
                 <div class="card-section">
-                    <div class="card-header">Desempenho por Matéria e Assunto</div>
+                    <div class="card-header">
+                        <span>Desempenho Consolidado por Matéria e Assunto</span>
+                        <span style="font-size: 12px; color: #94a3b8;">Filtro em 3 Níveis Ativo</span>
+                    </div>
                     <div id="tabelaMateriaContainer"></div>
                     <div class="table-footer" id="tabelaFooterResumo">Resolvidas: 0 | Acertos: 0 | Erros: 0</div>
                 </div>
 
                 <div class="action-footer">
-                    <button class="btn-action" onclick="acaoExportarPlanilha()">📥 EXPORTAR PARA PLANILHA</button>
+                    <button class="btn-action" onclick="acaoExportarPlanilha()">📥 EXPORTAR RELATÓRIO EXECUTIVO (CSV)</button>
                 </div>
             </div>
 
-            <!-- ABA 2: EVOLUÇÃO -->
+            <!-- ABA 2: ANÁLISE AVANÇADA & RADAR DE HABILIDADES -->
             <div id="aba1" class="tab-content">
-                <div class="card-section">
-                    <div class="card-header">Evolução do Desempenho (%)</div>
-                    <div class="chart-container"><canvas id="chartEvolucao"></canvas></div>
+                <div class="charts-row">
+                    <div class="card-section" style="flex: 1;">
+                        <div class="card-header">Radar de Domínio por Tópico</div>
+                        <div class="chart-container"><canvas id="chartRadar"></canvas></div>
+                    </div>
+                    <div class="card-section" style="flex: 1;">
+                        <div class="card-header">Evolução do Aproveitamento (%)</div>
+                        <div class="chart-container"><canvas id="chartEvolucao"></canvas></div>
+                    </div>
                 </div>
+
                 <div class="card-section">
-                    <div class="card-header">Evolução de Resoluções (Volume por Dia)</div>
-                    <div class="chart-container"><canvas id="chartResolucoes"></canvas></div>
+                    <div class="card-header">Volume de Resoluções por Dia</div>
+                    <div class="chart-container" style="height: 240px;"><canvas id="chartResolucoes"></canvas></div>
                 </div>
             </div>
 
-            <!-- ABA 3: ATIVIDADES -->
+            <!-- ABA 3: HISTÓRICO DE ATIVIDADES -->
             <div id="aba2" class="tab-content">
                 <div class="card-section">
-                    <div class="card-header">Atividades Recentes e Histórico</div>
+                    <div class="card-header">Log Detalhado de Resoluções e Auditoria</div>
                     <div id="tabelaAtividadesContainer"></div>
                     <div class="table-footer" id="atividadesFooterResumo">Resolvidas: 0 | Acertos: 0 | Erros: 0</div>
                 </div>
 
                 <div class="action-footer">
-                    <button class="btn-action" onclick="acaoExportarPlanilha()">📥 EXPORTAR PARA PLANILHA</button>
+                    <button class="btn-action" onclick="acaoExportarPlanilha()">📥 EXPORTAR LOG EM CSV</button>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- Importa o banco de questões -->
+    <!-- Importa os bancos separados e o unificador -->
+    <script src="historia.js"></script>
+    <script src="biologia.js"></script>
     <script src="questoes.js"></script>
 
     <script>
         let historicoGlobal = [];
+        let graficoRadar = null;
         let meuGraficoEvolucao = null;
         let meuGraficoResolucao = null;
 
         window.onload = function() {
             carregarConfiguracaoTema();
-            carregarOpcoesFiltros();
+            atualizarTopicosMetricas();
             carregarDadosLocalStorage();
             renderizarPainel();
+            renderizarGraficos();
         };
 
         function carregarConfiguracaoTema() {
@@ -196,27 +241,49 @@
             }
         }
 
-        function carregarOpcoesFiltros() {
+        function atualizarTopicosMetricas() {
+            const disciplina = document.getElementById('filtroDisciplina').value;
             const selTopico = document.getElementById('filtroTopico');
-            const selSub = document.getElementById('filtroSubtopico');
-            
-            let topicos = new Set();
-            let subs = new Set();
+            selTopico.innerHTML = '<option value="Todos" selected>📂 Todos os Tópicos</option>';
 
+            let topicosDisponiveis = new Set();
             if (typeof masterDeck !== 'undefined') {
                 masterDeck.forEach(c => {
-                    if (c.topicoPrincipal) topicos.add(c.topicoPrincipal);
-                    if (c.subgrupo) subs.add(c.subgrupo);
+                    if (disciplina === 'Todos' || c.deck === disciplina) {
+                        let topicoNome = c.topicoPrincipal || c.subgrupo;
+                        if(topicoNome) topicosDisponiveis.add(topicoNome);
+                    }
                 });
             }
 
-            topicos.forEach(t => {
+            topicosDisponiveis.forEach(t => {
                 let opt = document.createElement('option');
                 opt.value = t; opt.innerText = t;
                 selTopico.appendChild(opt);
             });
 
-            subs.forEach(s => {
+            atualizarSubtopicosMetricas();
+        }
+
+        function atualizarSubtopicosMetricas() {
+            const disciplina = document.getElementById('filtroDisciplina').value;
+            const topico = document.getElementById('filtroTopico').value;
+            const selSub = document.getElementById('filtroSubtopico');
+            selSub.innerHTML = '<option value="Todos" selected>📌 Todos os Subtópicos</option>';
+
+            let subsDisponiveis = new Set();
+            if (typeof masterDeck !== 'undefined') {
+                masterDeck.forEach(c => {
+                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                    let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
+
+                    if(matchDisc && matchTop) {
+                        if(c.subgrupo) subsDisponiveis.add(c.subgrupo);
+                    }
+                });
+            }
+
+            subsDisponiveis.forEach(s => {
                 let opt = document.createElement('option');
                 opt.value = s; opt.innerText = s;
                 selSub.appendChild(opt);
@@ -238,8 +305,9 @@
                                 
                                 historicoUnificado.push({
                                     questaoId: qId,
-                                    deck: cardObj ? cardObj.deck : "Historia",
+                                    deck: cardObj ? cardObj.deck : "Geral",
                                     topicoPrincipal: cardObj ? (cardObj.topicoPrincipal || cardObj.subgrupo) : "Geral",
+                                    subgrupo: cardObj ? cardObj.subgrupo : "Geral",
                                     acertou: (status === 'acertou'),
                                     data: new Date().toISOString().split('T')[0]
                                 });
@@ -248,13 +316,6 @@
                     } catch(e) { console.error(e); }
                 }
             });
-
-            if (historicoUnificado.length === 0) {
-                historicoUnificado = [
-                    { questaoId: 1, deck: "Historia", topicoPrincipal: "Historiografia", acertou: true, data: "2026-10-20" },
-                    { questaoId: 2, deck: "Historia", topicoPrincipal: "Revolução Francesa", acertou: false, data: "2026-10-20" }
-                ];
-            }
 
             historicoGlobal = historicoUnificado;
         }
@@ -273,22 +334,23 @@
         function aplicarFiltros() {
             const discFiltro = document.getElementById('filtroDisciplina').value;
             const topFiltro = document.getElementById('filtroTopico').value;
+            const subFiltro = document.getElementById('filtroSubtopico').value;
 
             carregarDadosLocalStorage();
 
             let filtrados = historicoGlobal.filter(h => {
                 let matchDisc = (discFiltro === 'Todos' || h.deck === discFiltro);
                 let matchTop = (topFiltro === 'Todos' || h.topicoPrincipal === topFiltro);
-                return matchDisc && matchTop;
+                let matchSub = (subFiltro === 'Todos' || h.subgrupo === subFiltro);
+                return matchDisc && matchTop && matchSub;
             });
 
             historicoGlobal = filtrados;
             renderizarPainel();
-            alert("Filtros aplicados com sucesso!");
+            renderizarGraficos();
         }
 
         function renderizarPainel() {
-            const corpoGeral = document.getElementById('geralBody');
             const containerTabela = document.getElementById('tabelaMateriaContainer');
             const containerAtiv = document.getElementById('tabelaAtividadesContainer');
             const footerResumo = document.getElementById('tabelaFooterResumo');
@@ -299,20 +361,26 @@
             let totalErros = totalResolvidas - totalAcertos;
             let percentualAcerto = totalResolvidas > 0 ? Math.round((totalAcertos / totalResolvidas) * 100) : 0;
 
-            corpoGeral.innerHTML = `
-                <div style="display: flex; justify-content: space-around; font-weight: bold; color: #f8fafc;">
-                    <div>Total Resolvidas: <span style="color:#38bdf8">${totalResolvidas}</span></div>
-                    <div>Acertos: <span style="color:#10b981">${totalAcertos} (${percentualAcerto}%)</span></div>
-                    <div>Erros: <span style="color:#ef4444">${totalErros} (${100 - percentualAcerto}%)</span></div>
-                </div>
-            `;
+            // Atualiza KPI Cards
+            document.getElementById('kpiTotal').innerText = totalResolvidas;
+            document.getElementById('kpiTaxa').innerText = percentualAcerto + '%';
+            document.getElementById('kpiAcertosErros').innerText = `${totalAcertos} / ${totalErros}`;
+            
+            const metaStatus = document.getElementById('kpiMetaStatus');
+            if (percentualAcerto >= 70) {
+                metaStatus.innerText = "🎯 Acima da Meta (70%)";
+                metaStatus.style.color = "#10b981";
+            } else {
+                metaStatus.innerText = "⚠️ Abaixo da Meta (70%)";
+                metaStatus.style.color = "#ef4444";
+            }
 
             let htmlTabela = `
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Matéria / Tópico</th>
-                            <th>Questões Resolvidas</th>
+                            <th>Disciplina / Tópico</th>
+                            <th>Resolvidas</th>
                             <th>Acertos</th>
                             <th>Erros</th>
                             <th>Desempenho</th>
@@ -323,10 +391,14 @@
 
             let agrupado = {};
             historicoGlobal.forEach(h => {
-                if(!agrupado[h.topicoPrincipal]) agrupado[h.topicoPrincipal] = { total: 0, acertos: 0, erros: 0 };
-                agrupado[h.topicoPrincipal].total++;
-                if(h.acertou) agrupado[h.topicoPrincipal].acertos++;
-                else agrupado[h.topicoPrincipal].erros++;
+                let chaveAgrupamento = `[${h.deck}] ${h.topicoPrincipal}`;
+                if(!agrupado[chaveAgrupamento]) agrupado[chaveAgrupamento] = { total: 0, acertos: 0, erros: 0 };
+                agrupado[chaveAgrupamento].total++;
+                if(h.acertou) {
+                    agrupado[chaveAgrupamento].acertos++;
+                } else {
+                    agrupado[chaveAgrupamento].erros++;
+                }
             });
 
             for(let topico in agrupado) {
@@ -338,9 +410,12 @@
                         <td>${item.total}</td>
                         <td style="color: #10b981;">${item.acertos}</td>
                         <td style="color: #ef4444;">${item.erros}</td>
-                        <td><span style="color:${perc >= 70 ? '#10b981':'#ef4444'}">${perc}%</span></td>
+                        <td><span style="color:${perc >= 70 ? '#10b981':'#ef4444'}; font-weight: bold;">${perc}%</span></td>
                     </tr>
                 `;
+            }
+            if (Object.keys(agrupado).length === 0) {
+                htmlTabela += `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding: 20px;">Nenhum registro de questão encontrado para os filtros selecionados.</td></tr>`;
             }
             htmlTabela += `</tbody></table>`;
             
@@ -353,27 +428,81 @@
         }
 
         function renderizarGraficos() {
+            let labelsTopicos = [];
+            let dadosRadar = [];
+
+            let agrupadoRadar = {};
+            historicoGlobal.forEach(h => {
+                if(!agrupadoRadar[h.topicoPrincipal]) agrupadoRadar[h.topicoPrincipal] = { total: 0, acertos: 0 };
+                agrupadoRadar[h.topicoPrincipal].total++;
+                if(h.acertou) agrupadoRadar[h.topicoPrincipal].acertos++;
+            });
+
+            for (let top in agrupadoRadar) {
+                labelsTopicos.push(top);
+                let taxa = Math.round((agrupadoRadar[top].acertos / agrupadoRadar[top].total) * 100);
+                dadosRadar.push(taxa);
+            }
+
+            if(labelsTopicos.length === 0) {
+                labelsTopicos = ['Historiografia', 'Biologia Geral'];
+                dadosRadar = [50, 50];
+            }
+
+            // Gráfico de Radar
+            const ctxRadar = document.getElementById('chartRadar').getContext('2d');
+            if (graficoRadar) graficoRadar.destroy();
+            graficoRadar = new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: labelsTopicos,
+                    datasets: [{
+                        label: 'Domínio por Tópico (%)',
+                        data: dadosRadar,
+                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                        borderColor: '#38bdf8',
+                        pointBackgroundColor: '#38bdf8',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            pointLabels: { color: '#94a3b8', font: { size: 11 } },
+                            ticks: { display: false, max: 100 }
+                        }
+                    }
+                }
+            });
+
             let totalAcertos = historicoGlobal.filter(h => h.acertou).length;
             let percTotal = historicoGlobal.length > 0 ? Math.round((totalAcertos / historicoGlobal.length) * 100) : 0;
 
+            // Gráfico de Evolução (Linha)
             const ctxEvolucao = document.getElementById('chartEvolucao').getContext('2d');
             if (meuGraficoEvolucao) meuGraficoEvolucao.destroy();
             meuGraficoEvolucao = new Chart(ctxEvolucao, {
                 type: 'line',
                 data: {
-                    labels: ['Início', 'Atual'],
+                    labels: ['Início', 'Sessão Atual'],
                     datasets: [{
-                        label: 'Desempenho Relativo (%)',
-                        data: [50, percTotal],
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                        label: 'Aproveitamento Relativo (%)',
+                        data: [60, percTotal],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         fill: true,
-                        tension: 0.3
+                        tension: 0.4,
+                        borderWidth: 3
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
+            // Gráfico de Resoluções (Barra)
             const ctxResolucao = document.getElementById('chartResolucoes').getContext('2d');
             if (meuGraficoResolucao) meuGraficoResolucao.destroy();
             meuGraficoResolucao = new Chart(ctxResolucao, {
@@ -381,9 +510,10 @@
                 data: {
                     labels: ['Hoje'],
                     datasets: [{
-                        label: 'Número de Resoluções',
+                        label: 'Questões Processadas',
                         data: [historicoGlobal.length],
-                        backgroundColor: '#10b981'
+                        backgroundColor: '#38bdf8',
+                        borderRadius: 6
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
@@ -391,12 +521,12 @@
         }
 
         function acaoExportarPlanilha() {
-            let csv = "Topico,Status\n" + historicoGlobal.map(h => `${h.topicoPrincipal},${h.acertou ? 'Acerto' : 'Erro'}`).join("\n");
+            let csv = "Disciplina,Topico,Status\n" + historicoGlobal.map(h => `${h.deck},${h.topicoPrincipal},${h.acertou ? 'Acerto' : 'Erro'}`).join("\n");
             let blob = new Blob([csv], { type: 'text/csv' });
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.setAttribute('href', url);
-            a.setAttribute('download', 'relatorio_nerd_vestibulares.csv');
+            a.setAttribute('download', 'dashboard_executivo_nerd_vestibulares.csv');
             a.click();
         }
     </script>
