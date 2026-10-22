@@ -62,7 +62,7 @@
         .breadcrumb { font-size: 16px; color: #94a3b8; font-weight: 500; }
         .breadcrumb span { color: #38bdf8; font-weight: 700; }
 
-        .filters-container { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px 20px; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) auto; gap: 12px; align-items: flex-end; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .filters-container { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px 20px; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) auto; gap: 12px; align-items: flex-end; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .filter-group { display: flex; flex-direction: column; }
         .filter-group label { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
         .filter-group input, .filter-group select { padding: 9px; border: 1px solid #475569; border-radius: 6px; font-size: 13px; background: #0f172a; color: #f8fafc; outline: none; }
@@ -121,12 +121,35 @@
         <div class="breadcrumb">Dashboard Executivo > <span id="breadcrumbTitle">Visão Geral de Desempenho</span></div>
     </div>
 
-    <!-- Barra de Filtros Executiva com Nome do Jogador -->
+    <!-- Barra de Filtros Executiva com Filtro de Data -->
     <div class="filters-container">
         <div class="filter-group">
             <label>Nome do Jogador</label>
             <input type="text" id="filtroNomeJogador" value="Richard">
         </div>
+
+        <div class="filter-group">
+            <label>Período de Estudo</label>
+            <select id="filtroPeriodo" onchange="alternarCamposDataCustom()">
+                <option value="todos" selected>♾️ Todo o Período</option>
+                <option value="hoje">📅 Hoje</option>
+                <option value="ontem">⏪ Ontem</option>
+                <option value="7dias">📊 Últimos 7 Dias</option>
+                <option value="30dias">📈 Últimos 30 Dias</option>
+                <option value="custom">⚙️ Personalizado</option>
+            </select>
+        </div>
+
+        <div class="filter-group" id="groupDataInicio" style="display: none;">
+            <label>Data Inicial</label>
+            <input type="date" id="filtroDataInicio">
+        </div>
+
+        <div class="filter-group" id="groupDataFim" style="display: none;">
+            <label>Data Final</label>
+            <input type="date" id="filtroDataFim">
+        </div>
+
         <div class="filter-group">
             <label>Disciplina / Tema</label>
             <select id="filtroDisciplina" onchange="atualizarTopicosMetricas()">
@@ -171,7 +194,7 @@
                     <div class="kpi-card">
                         <div class="kpi-title">Questões Resolvidas</div>
                         <div class="kpi-value" id="kpiTotal">0</div>
-                        <div class="kpi-footer">Volume total acumulado</div>
+                        <div class="kpi-footer" id="kpiSubtotalPeriodo">No período selecionado</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-title">Taxa de Acerto Geral</div>
@@ -190,7 +213,7 @@
                     </div>
                 </div>
 
-                <!-- SEÇÃO NOVAS ESTIMATIVAS DE REVISÃO FUTURA (FSRS / SM-2) -->
+                <!-- SEÇÃO ESTIMATIVAS DE REVISÃO FUTURA (FSRS / SM-2) -->
                 <div class="card-section" style="padding: 18px;">
                     <div class="card-header" style="background: transparent; padding: 0 0 12px 0; border: none;">
                         <span>📅 Estimativa de Retorno dos Cards (Sincronizado aos Filtros)</span>
@@ -230,7 +253,7 @@
                     </div>
                 </div>
 
-                <!-- ROW COM TABELA E NOVO GRÁFICO DE PIZZA -->
+                <!-- ROW COM TABELA E GRÁFICO DE PIZZA -->
                 <div class="charts-row">
                     <div class="card-section" style="flex: 1.3;">
                         <div class="card-header">
@@ -290,7 +313,7 @@
         </div>
     </div>
 
-    <!-- Importa os bancos separados e o unificador -->
+    <!-- Importa os bancos de questões -->
     <script src="historia.js"></script>
     <script src="biologia.js"></script>
     <script src="questoes.js"></script>
@@ -320,6 +343,20 @@
                 if (conf.nomeJogador) document.getElementById('filtroNomeJogador').value = conf.nomeJogador;
                 if (conf.tema === 'claro') document.body.classList.add('light-theme');
                 else document.body.classList.remove('light-theme');
+            }
+        }
+
+        function alternarCamposDataCustom() {
+            const modo = document.getElementById('filtroPeriodo').value;
+            const gIni = document.getElementById('groupDataInicio');
+            const gFim = document.getElementById('groupDataFim');
+            
+            if (modo === 'custom') {
+                gIni.style.display = 'flex';
+                gFim.style.display = 'flex';
+            } else {
+                gIni.style.display = 'none';
+                gFim.style.display = 'none';
             }
         }
 
@@ -387,13 +424,17 @@
                             let status = dados.questoesRespondidasHistorico[qId];
                             let cardObj = typeof masterDeck !== 'undefined' ? masterDeck.find(c => c.id == qId) : null;
                             
+                            // Se houver data gravada na resposta, utiliza; senão, considera a data atual
+                            let dataResposta = (typeof status === 'object' && status.data) ? status.data : new Date().toISOString().split('T')[0];
+                            let acertouBool = (typeof status === 'object') ? status.acertou : (status === 'acertou');
+
                             historicoUnificado.push({
                                 questaoId: qId,
                                 deck: cardObj ? cardObj.deck : "Geral",
                                 topicoPrincipal: cardObj ? (cardObj.topicoPrincipal || cardObj.subgrupo) : "Geral",
                                 subgrupo: cardObj ? cardObj.subgrupo : "Geral",
-                                acertou: (status === 'acertou'),
-                                data: new Date().toISOString().split('T')[0]
+                                acertou: acertouBool,
+                                data: dataResposta
                             });
                         }
                     }
@@ -424,16 +465,59 @@
             renderizarGraficos();
         }
 
+        function obterDataFormatada(d) {
+            return d.toISOString().split('T')[0];
+        }
+
         function obterHistoricoFiltrado() {
             const discFiltro = document.getElementById('filtroDisciplina').value;
             const topFiltro = document.getElementById('filtroTopico').value;
             const subFiltro = document.getElementById('filtroSubtopico').value;
+            const modoPeriodo = document.getElementById('filtroPeriodo').value;
+
+            let hojeObj = new Date();
+            let hojeStr = obterDataFormatada(hojeObj);
+
+            let ontemObj = new Date();
+            ontemObj.setDate(hojeObj.getDate() - 1);
+            let ontemStr = obterDataFormatada(ontemObj);
+
+            let d7Obj = new Date();
+            d7Obj.setDate(hojeObj.getDate() - 7);
+            let d7Str = obterDataFormatada(d7Obj);
+
+            let d30Obj = new Date();
+            d30Obj.setDate(hojeObj.getDate() - 30);
+            let d30Str = obterDataFormatada(d30Obj);
+
+            let dataIniCustom = document.getElementById('filtroDataInicio').value;
+            let dataFimCustom = document.getElementById('filtroDataFim').value;
 
             return historicoGlobal.filter(h => {
                 let matchDisc = (discFiltro === 'Todos' || h.deck === discFiltro);
                 let matchTop = (topFiltro === 'Todos' || h.topicoPrincipal === topFiltro);
                 let matchSub = (subFiltro === 'Todos' || h.subgrupo === subFiltro);
-                return matchDisc && matchTop && matchSub;
+
+                let matchData = true;
+                if (modoPeriodo === 'hoje') {
+                    matchData = (h.data === hojeStr);
+                } else if (modoPeriodo === 'ontem') {
+                    matchData = (h.data === ontemStr);
+                } else if (modoPeriodo === '7dias') {
+                    matchData = (h.data >= d7Str && h.data <= hojeStr);
+                } else if (modoPeriodo === '30dias') {
+                    matchData = (h.data >= d30Str && h.data <= hojeStr);
+                } else if (modoPeriodo === 'custom') {
+                    if (dataIniCustom && dataFimCustom) {
+                        matchData = (h.data >= dataIniCustom && h.data <= dataFimCustom);
+                    } else if (dataIniCustom) {
+                        matchData = (h.data >= dataIniCustom);
+                    } else if (dataFimCustom) {
+                        matchData = (h.data <= dataFimCustom);
+                    }
+                }
+
+                return matchDisc && matchTop && matchSub && matchData;
             });
         }
 
@@ -470,7 +554,6 @@
                         else if (diffDias <= 15) contadores.d15++;
                         else if (diffDias <= 30) contadores.d30++;
                     } else {
-                        // Cards nunca estudados contam como disponíveis hoje
                         contadores.hoje++;
                     }
                 });
@@ -580,7 +663,7 @@
             graficoPizza = new Chart(ctxPizza, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Acertos', 'Erros', 'Não Estudados'],
+                    labels: ['Acertos', 'Erros', 'Não Estudados/Pendentes'],
                     datasets: [{
                         data: [totalAcertos, totalErros, naoEstudados],
                         backgroundColor: ['#10b981', '#ef4444', '#334155'],
@@ -651,38 +734,54 @@
                 }
             });
 
-            // 3. Renderiza Linha de Evolução
-            let percTotal = historicoFiltrado.length > 0 ? Math.round((totalAcertos / historicoFiltrado.length) * 100) : 0;
+            // 3. Renderiza Linha de Evolução por Data
+            let agrupadoData = {};
+            historicoFiltrado.forEach(h => {
+                let d = h.data || 'Sem Data';
+                if (!agrupadoData[d]) agrupadoData[d] = { total: 0, acertos: 0 };
+                agrupadoData[d].total++;
+                if (h.acertou) agrupadoData[d].acertos++;
+            });
+
+            let datasOrdenadas = Object.keys(agrupadoData).sort();
+            let pontosEvolucao = datasOrdenadas.map(d => Math.round((agrupadoData[d].acertos / agrupadoData[d].total) * 100));
+            let pontosVolume = datasOrdenadas.map(d => agrupadoData[d].total);
+
+            if (datasOrdenadas.length === 0) {
+                datasOrdenadas = ['Sem Registros'];
+                pontosEvolucao = [0];
+                pontosVolume = [0];
+            }
 
             const ctxEvolucao = document.getElementById('chartEvolucao').getContext('2d');
             if (meuGraficoEvolucao) meuGraficoEvolucao.destroy();
             meuGraficoEvolucao = new Chart(ctxEvolucao, {
                 type: 'line',
                 data: {
-                    labels: ['Início', 'Sessão Atual'],
+                    labels: datasOrdenadas,
                     datasets: [{
-                        label: 'Aproveitamento Relativo (%)',
-                        data: [60, percTotal],
+                        label: 'Aproveitamento Diário (%)',
+                        data: pontosEvolucao,
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         fill: true,
-                        tension: 0.4,
+                        tension: 0.3,
                         borderWidth: 3
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // 4. Renderiza Barra de Volume
+            // 4. Renderiza Barra de Volume por Data
             const ctxResolucao = document.getElementById('chartResolucoes').getContext('2d');
             if (meuGraficoResolucao) meuGraficoResolucao.destroy();
             meuGraficoResolucao = new Chart(ctxResolucao, {
                 type: 'bar',
                 data: {
-                    labels: ['Hoje'],
+                    labels: datasOrdenadas,
                     datasets: [{
-                        label: 'Questões Processadas',
-                        data: [historicoFiltrado.length],
+                        label: 'Questões Resolvidas',
+                        data: pontosVolume,
                         backgroundColor: '#38bdf8',
                         borderRadius: 6
                     }]
@@ -693,7 +792,7 @@
 
         function acaoExportarPlanilha() {
             let historicoFiltrado = obterHistoricoFiltrado();
-            let csv = "Disciplina,Topico,Status\n" + historicoFiltrado.map(h => `${h.deck},${h.topicoPrincipal},${h.acertou ? 'Acerto' : 'Erro'}`).join("\n");
+            let csv = "Data,Disciplina,Topico,Status\n" + historicoFiltrado.map(h => `${h.data},${h.deck},${h.topicoPrincipal},${h.acertou ? 'Acerto' : 'Erro'}`).join("\n");
             let blob = new Blob([csv], { type: 'text/csv' });
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
