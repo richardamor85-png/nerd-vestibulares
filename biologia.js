@@ -366,5 +366,536 @@ const deckBiologia = [
       "Porque impede a ocorrência de mutações genéticas."
     ],
     explicacao: "Mesmo organismos hermafroditas (que têm os dois sexos) podem realizar fecundação cruzada. Misturar genes de dois indivíduos diferentes gera mais diversidade do que usar apenas os próprios gametas."
+  },
+  // ==========================================
+  // ÁGUA E SAIS MINERAIS
+  // ==========================================
+  {
+    id: 146,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Água — Coesão e Tensão Superficial",
+    q: "Qual propriedade da água permite que insetos andem sobre sua superfície?",
+    a: "A coesão entre as moléculas, causada pelas pontes de hidrogênio, que gera alta tensão superficial.",
+    erradas: ["O alto calor específico.", "A capilaridade.", "O poder solvente."],
+    explicacao: "As pontes de hidrogênio mantêm as moléculas de água unidas (coesão), criando uma 'película' resistente na superfície."
+  },
+  {
+    id: 147,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Água — Regulação Térmica",
+    q: "Por que o alto calor específico e o alto calor latente da água são vitais para os seres vivos?",
+    a: "Permitem a regulação térmica do organismo, evitando mudanças bruscas de temperatura e auxiliando no resfriamento pela transpiração.",
+    erradas: ["Aumentam a velocidade das reações enzimáticas.", "Impedem a evaporação da água em dias quentes.", "Tornam a água um solvente universal."],
+    explicacao: "O alto calor específico exige muita energia para variar a temperatura da água. O calor latente permite perder muito calor na evaporação (suor)."
+  },
+  {
+    id: 148,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Sais Minerais — Funções Vitais",
+    q: "Quais são as funções do Ferro, Cálcio, Iodo e Magnésio, respectivamente?",
+    a: "Ferro: transporte de O2; Cálcio: coagulação e contração; Iodo: hormônios da tireoide; Magnésio: clorofila.",
+    erradas: ["Ferro: coagulação; Cálcio: tireoide; Iodo: clorofila; Magnésio: transporte de O2.", "Ferro: clorofila; Cálcio: transporte de O2; Iodo: coagulação; Magnésio: tireoide.", "Ferro: tireoide; Cálcio: clorofila; Iodo: coagulação; Magnésio: transporte de O2."],
+    explicacao: "Ferro compõe a hemoglobina. Cálcio atua na coagulação e músculos. Iodo é essencial para T3 e T4. Magnésio compõe a clorofila."
+  },
+  {
+    id: 149,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Sais Minerais — Sódio e Hipertensão",
+    q: "Qual a relação entre o excesso de sódio na dieta e a hipertensão?",
+    a: "O sódio provoca retenção de água (aumento da volemia), elevando a pressão arterial.",
+    erradas: ["O sódio causa desnaturação das proteínas do sangue.", "O sódio impede a absorção de cálcio.", "O sódio obstrui fisicamente as artérias."],
+    explicacao: "Por osmose, o sódio retém água nos vasos. Mais líquido no vaso = maior pressão nas paredes das artérias."
+  },
+  {
+    id: 150,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Fibras Alimentares — Fitato",
+    q: "Qual o efeito negativo do consumo excessivo de fibras (fitatos) na dieta?",
+    a: "Podem reduzir a absorção de sais minerais (como cálcio, zinco e ferro) ao se ligarem a eles no intestino.",
+    erradas: ["Aumentam a absorção de vitaminas lipossolúveis.", "Impedem a digestão de proteínas no estômago.", "Aumentam a glicemia rapidamente."],
+    explicacao: "O fitato (presente em cereais) quelam os minerais, impedindo sua absorção. A enzima fitase quebra o fitato."
+  },
+
+  // ==========================================
+  // GLICÍDIOS
+  // ==========================================
+  {
+    id: 151,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Classificação Química",
+    q: "Qual a diferença entre aldoses e cetoses?",
+    a: "Aldoses possuem grupo aldeído (ex: glicose); cetoses possuem grupo cetona (ex: frutose).",
+    erradas: ["Aldoses são dissacarídeos; cetoses são polissacarídeos.", "Aldoses são de origem animal; cetoses de origem vegetal.", "Aldoses são digeríveis; cetoses são fibras."],
+    explicacao: "Ambos são monossacarídeos. A diferença está na posição do grupo carbonila (C=O): na ponta (aldeído) ou no meio (cetona)."
+  },
+  {
+    id: 152,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Polissacarídeos Estruturais",
+    q: "Quais são os dois principais polissacarídeos estruturais e onde são encontrados?",
+    a: "Celulose (parede celular de plantas) e Quitina (exoesqueleto de artrópodes e parede de fungos).",
+    erradas: ["Amido e Glicogênio.", "Sacarose e Lactose.", "Pectina e Lignina."],
+    explicacao: "Celulose e quitina são polímeros de glicose (ou derivados) que conferem rigidez e proteção estrutural."
+  },
+  {
+    id: 153,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Reserva Vegetal e Animal",
+    q: "Quais são as reservas energéticas de plantas e animais, respectivamente?",
+    a: "Amido (plantas) e Glicogênio (animais).",
+    erradas: ["Glicogênio (plantas) e Amido (animais).", "Celulose (plantas) e Quitina (animais).", "Sacarose (plantas) e Lactose (animais)."],
+    explicacao: "Amido é a reserva vegetal. Glicogênio é a reserva animal, armazenado no fígado e músculos."
+  },
+  {
+    id: 154,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Digestão da Celulose",
+    q: "Como os herbívoros (como bois e cupins) digerem a celulose se não produzem a enzima celulase?",
+    a: "Através de micro-organismos simbiontes presentes em seu intestino, que produzem a celulase.",
+    erradas: ["Produzindo amilase pancreática em grande quantidade.", "Pela ação do ácido clorídrico do estômago.", "Absorvendo a celulose intacta na corrente sanguínea."],
+    explicacao: "O ser humano não digere celulose (é fibra). Os herbívoros dependem de bactérias que quebram as ligações beta da celulose."
+  },
+  {
+    id: 155,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Índice Glicêmico",
+    q: "Por que alimentos ricos em carboidratos complexos (fibras, amido) têm menor índice glicêmico que os açúcares simples?",
+    a: "Porque sua digestão e absorção são mais lentas, liberando a glicose gradualmente no sangue.",
+    erradas: ["Porque não são transformados em glicose.", "Porque aumentam a produção de insulina rapidamente.", "Porque são absorvidos diretamente no estômago."],
+    explicacao: "Carboidratos complexos demoram mais para serem quebrados, evitando picos de glicose e insulina."
+  },
+  {
+    id: 156,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Intolerância à Lactose",
+    q: "Por que a intolerância à lactose causa diarreia osmótica?",
+    a: "Porque a lactose não digerida acumula-se no intestino, atraindo água por osmose e fermentando com bactérias.",
+    erradas: ["Porque a lactase destrói a parede do intestino.", "Porque a lactose se transforma em ácido lático nos músculos.", "Porque ocorre uma reação alérgica grave à proteína do leite."],
+    explicacao: "Sem lactase, a lactose fica no intestino, puxa água (osmose) e é fermentada por bactérias, causando gases e diarreia."
+  },
+
+  // ==========================================
+  // LIPÍDIOS
+  // ==========================================
+  {
+    id: 157,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipídios — Reserva Energética",
+    q: "Por que os lipídios são uma reserva energética mais eficiente que os carboidratos?",
+    a: "Porque são moléculas mais reduzidas (mais hidrogênio), liberando o dobro de energia, e são armazenados de forma anidra (sem água).",
+    erradas: ["Porque possuem mais oxigênio em sua estrutura.", "Porque são hidrofílicos e fáceis de quebrar.", "Porque são digeridos mais rapidamente no estômago."],
+    explicacao: "A alta quantidade de ligações C-H libera muita energia. Além disso, não precisam de água para armazenamento, economizando peso."
+  },
+  {
+    id: 158,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipídios — Saturados vs Insaturados",
+    q: "Qual a diferença estrutural entre gorduras saturadas e insaturadas?",
+    a: "Saturadas possuem apenas ligações simples (sólidas); insaturadas possuem ligações duplas (líquidas, como os óleos).",
+    erradas: ["Saturadas são vegetais; insaturadas são animais.", "Saturadas têm duplas ligações; insaturadas são lineares.", "Saturadas são solúveis em água; insaturadas não."],
+    explicacao: "As ligações duplas (insaturadas) criam dobras na cadeia, impedindo que se empacotem firmemente. Por isso os óleos são líquidos."
+  },
+  {
+    id: 159,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipídios — Esteroides e Anabolizantes",
+    q: "O que são os hormônios esteroides (como testosterona e colesterol)?",
+    a: "São lipídios derivados do colesterol, com estrutura de quatro anéis carbônicos.",
+    erradas: ["São proteínas formadas por cadeias de aminoácidos.", "São carboidratos de reserva energética.", "São enzimas que catalisam a digestão de gorduras."],
+    explicacao: "O colesterol é precursor dos hormônios esteroides, vitamina D e sais biliares. Os anabolizantes são derivados sintéticos da testosterona."
+  },
+  {
+    id: 160,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipídios — HDL vs LDL",
+    q: "Qual é a diferença funcional entre HDL e LDL?",
+    a: "HDL (bom) remove o colesterol das artérias para o fígado; LDL (ruim) transporta e deposita o colesterol nas artérias.",
+    erradas: ["HDL deposita colesterol; LDL remove.", "Ambos são exclusivamente ruins e causam infarto.", "HDL transporta triglicerídeos; LDL transporta vitaminas."],
+    explicacao: "HDL é a lipoproteína de alta densidade que faz o transporte reverso. LDL é a de baixa densidade, que causa aterosclerose em excesso."
+  },
+  {
+    id: 161,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipídios — Gorduras Trans",
+    q: "Por que as gorduras trans são prejudiciais à saúde?",
+    a: "Porque aumentam o LDL (colesterol ruim) e diminuem o HDL (colesterol bom), elevando o risco de doenças cardíacas.",
+    erradas: ["Porque são sempre de origem vegetal e não têm colesterol.", "Porque são rapidamente digeridas pelo corpo.", "Porque aumentam o HDL e diminuem o LDL."],
+    explicacao: "A gordura trans (hidrogenada) altera o perfil lipídico de forma negativa, sendo pior que a saturada para o sistema cardiovascular."
+  },
+  {
+    id: 162,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipídios — Aterosclerose",
+    q: "O que é a aterosclerose?",
+    a: "O acúmulo de placas de colesterol (ateromas) nas paredes das artérias, reduzindo o fluxo sanguíneo.",
+    erradas: ["A dilatação das artérias para aumentar o fluxo.", "O aumento do número de hemácias no sangue.", "A quebra das gorduras no fígado."],
+    explicacao: "O excesso de LDL se deposita nas artérias, causando inflamação, endurecimento (arteriosclerose) e risco de infarto/AVC."
+  },
+
+  // ==========================================
+  // PROTEÍNAS
+  // ==========================================
+  {
+    id: 163,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Proteínas — Estrutura do Aminoácido",
+    q: "O que diferencia um aminoácido de outro?",
+    a: "O radical (R) ligado ao carbono alfa, que varia em estrutura e propriedade (polar, apolar, ácido, básico).",
+    erradas: ["A quantidade de grupos amina.", "A presença de ligações peptídicas.", "O tipo de carboidrato que o compõe."],
+    explicacao: "Todos os aminoácidos têm um carbono alfa central ligado a um grupo amina, um carboxila, um hidrogênio e um radical R variável."
+  },
+  {
+    id: 164,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Proteínas — Ligação Peptídica",
+    q: "Como são formadas as ligações peptídicas entre aminoácidos?",
+    a: "Por reações de desidratação (síntese por desidratação), com liberação de uma molécula de água por ligação.",
+    erradas: ["Por hidrólise, com consumo de água.", "Por ligações de hidrogênio entre os radicais.", "Pela união dos grupos amino, sem liberar água."],
+    explicacao: "O grupo carboxila de um aminoácido reage com o grupo amina de outro, liberando água e formando o peptídeo."
+  },
+  {
+    id: 165,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Proteínas — Desnaturação",
+    q: "O que ocorre na desnaturação de uma proteína pelo calor ou pH extremo?",
+    a: "Há a perda da estrutura tridimensional (secundária e terciária) e da função biológica, mas a estrutura primária é mantida.",
+    erradas: ["As ligações peptídicas são quebradas, formando aminoácidos livres.", "A estrutura primária é destruída, mas a 3D é mantida.", "A proteína se torna mais ativa e resistente."],
+    explicacao: "A desnaturação quebra as ligações fracas (pontes de H, forças de Van der Waals). A sequência de aminoácidos (primária) não é afetada."
+  },
+  {
+    id: 166,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Proteínas — Anemia Falciforme",
+    q: "Qual a alteração molecular que causa a anemia falciforme?",
+    a: "Substituição do aminoácido ácido glutâmico (polar) por valina (apolar) na cadeia beta da hemoglobina.",
+    erradas: ["Falta de ferro na estrutura do grupo heme.", "Aumento na produção de cadeias alfa.", "Perda da estrutura primária da proteína."],
+    explicacao: "A troca de um aminoácido polar por um apolar faz a hemoglobina se agregar (cristalizar), deformando a hemácia em forma de foice."
+  },
+  {
+    id: 167,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Proteínas — Aminoácidos Essenciais",
+    q: "O que são aminoácidos essenciais?",
+    a: "Aminoácidos que o organismo não consegue sintetizar e precisam ser obtidos pela dieta.",
+    erradas: ["Aminoácidos produzidos em grande quantidade pelo corpo.", "Aminoácidos que não participam da síntese proteica.", "Aminoácidos encontrados apenas em proteínas vegetais."],
+    explicacao: "Nos humanos, existem 9 aminoácidos essenciais (ex: leucina, valina, triptofano) que devem vir da alimentação."
+  },
+
+  // ==========================================
+  // ENZIMAS
+  // ==========================================
+  {
+    id: 168,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Enzimas — Catálise",
+    q: "Como as enzimas aceleram as reações químicas?",
+    a: "Diminuindo a energia de ativação necessária para que a reação ocorra, sem alterar o produto final.",
+    erradas: ["Aumentando a temperatura local.", "Fornecendo energia extra para os reagentes.", "Consumindo-se na reação para formar o produto."],
+    explicacao: "As enzimas são catalisadores biológicos. Elas reduzem a barreira energética (energia de ativação) para a reação acontecer mais rápido."
+  },
+  {
+    id: 169,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Enzimas — Inibidor Competitivo",
+    q: "Como atua o inibidor competitivo e como reverter seu efeito?",
+    a: "Ele se liga ao sítio ativo da enzima, competindo com o substrato; o efeito é revertido aumentando-se a concentração de substrato.",
+    erradas: ["Ele se liga ao sítio alostérico, alterando a forma da enzima permanentemente.", "Ele destrói o substrato, impedindo a reação.", "Ele aumenta a energia de ativação da reação."],
+    explicacao: "O inibidor competitivo tem formato semelhante ao substrato. Aumentar o substrato aumenta a chance de ele 'ganhar a disputa' pelo sítio ativo."
+  },
+  {
+    id: 170,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Enzimas — Inibidor Não Competitivo",
+    q: "Como atua o inibidor não competitivo?",
+    a: "Liga-se a um sítio alostérico (diferente do sítio ativo), alterando a conformação da enzima e impedindo a catálise.",
+    erradas: ["Liga-se ao sítio ativo, competindo diretamente com o substrato.", "É revertido apenas aumentando a concentração de substrato.", "Acelera a reação sem ser consumido."],
+    explicacao: "Ele não disputa o sítio ativo. Ele muda a forma da enzima, de modo que o substrato não se encaixa mais. Aumentar o substrato não resolve."
+  },
+  {
+    id: 171,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Enzimas — Fatores de Atividade (pH e Temperatura)",
+    q: "Como o pH e a temperatura afetam a atividade enzimática?",
+    a: "Cada enzima tem um pH e temperatura ótimos; valores extremos causam desnaturação e perda de atividade.",
+    erradas: ["A atividade sempre aumenta com o aumento da temperatura.", "O pH não interfere na catálise enzimática.", "A temperatura só afeta enzimas de origem animal."],
+    explicacao: "Ex: a pepsina atua em pH ácido (estômago). A tripsina em pH básico (intestino). Fora das condições ótimas, a enzima desnatura."
+  },
+  {
+    id: 172,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Enzimas — Feedback Negativo",
+    q: "O que é a retroinibição (feedback negativo) em uma via metabólica?",
+    a: "O produto final da via inibe a primeira enzima da sequência, evitando acúmulo desnecessário.",
+    erradas: ["O substrato inicial inibe as enzimas finais.", "A enzima 1 ativa a enzima 2 em cascata contínua.", "O excesso de produto destrói o substrato."],
+    explicacao: "É um mecanismo de economia. Quando há muito produto, ele sinaliza para a célula parar de produzi-lo, inibindo a enzima do início da via."
+  },
+
+  // ==========================================
+  // VITAMINAS
+  // ==========================================
+  {
+    id: 173,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Antioxidantes (C e E)",
+    q: "Qual é a função das vitaminas C e E no organismo?",
+    a: "Atuam como antioxidantes, neutralizando radicais livres que causam envelhecimento e doenças.",
+    erradas: ["Atuam como principal fonte de energia.", "São precursoras dos hormônios esteroides.", "Atuam na coagulação do sangue."],
+    explicacao: "Doam elétrons para estabilizar os radicais livres, prevenindo danos celulares e doenças degenerativas."
+  },
+  {
+    id: 174,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Lipossolúveis vs Hidrossolúveis",
+    q: "Qual a diferença entre vitaminas lipossolúveis e hidrossolúveis em relação à absorção e excreção?",
+    a: "Lipossolúveis (A, D, E, K) precisam de gorduras para absorção e são armazenadas; hidrossolúveis (B, C) são absorvidas com água e excretadas na urina.",
+    erradas: ["Lipossolúveis são excretadas facilmente; hidrossolúveis acumulam no fígado.", "Ambas são armazenadas por longos períodos.", "Hidrossolúveis precisam de bile para absorção."],
+    explicacao: "O excesso de lipossolúveis pode ser tóxico (acumulam). Hidrossolúveis exigem consumo diário, pois o excesso é excretado."
+  },
+  {
+    id: 175,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Vitamina A",
+    q: "Qual a principal função e a doença causada pela deficiência de Vitamina A?",
+    a: "Formação de pigmentos visuais (rodopsina); a deficiência causa cegueira noturna (nictalopia) e xeroftalmia.",
+    erradas: ["Coagulação sanguínea; causa hemorragias.", "Absorção de cálcio; causa raquitismo.", "Síntese de colágeno; causa escorbuto."],
+    explicacao: "A vitamina A (retinol) é essencial para a retina. Carotenoides (cenoura) são precursores."
+  },
+  {
+    id: 176,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Vitamina D",
+    q: "Como a vitamina D é obtida e qual sua principal função?",
+    a: "É sintetizada na pele pela ação do sol (UV) e atua na absorção de cálcio; sua falta causa raquitismo.",
+    erradas: ["É obtida apenas de frutas cítricas e atua na coagulação.", "É sintetizada no fígado e atua na visão.", "Atua na síntese de colágeno e tem ação antioxidante."],
+    explicacao: "O sol converte o colesterol da pele em vitamina D, que estimula a absorção de cálcio no intestino, fortalecendo os ossos."
+  },
+  {
+    id: 177,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Vitamina C",
+    q: "Qual a principal função da Vitamina C (ácido ascórbico) e qual doença sua falta causa?",
+    a: "Atua na síntese de colágeno e é antioxidante; a falta causa o escorbuto.",
+    erradas: ["Atua na coagulação; a falta causa raquitismo.", "Atua na visão; a falta causa cegueira noturna.", "Atua no metabolismo de carboidratos; a falta causa beribéri."],
+    explicacao: "A vitamina C é essencial para a hidroxilação da prolina na formação do colágeno. Sem ela, as paredes dos vasos ficam frágeis (escorbuto)."
+  },
+  {
+    id: 178,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Vitamina K",
+    q: "Qual a principal função da Vitamina K?",
+    a: "Atua na coagulação sanguínea, sendo essencial para a síntese de protrombina pelo fígado.",
+    erradas: ["Atua na absorção de cálcio nos ossos.", "É essencial para a visão noturna.", "Atua na síntese de colágeno."],
+    explicacao: "A vitamina K é fundamental na cascata de coagulação. Sua deficiência causa hemorragias frequentes."
+  },
+  {
+    id: 179,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Complexo B (B1 e B12)",
+    q: "Quais as doenças causadas pela deficiência de Vitamina B1 e B12, respectivamente?",
+    a: "B1: beribéri (distúrbios neurológicos); B12: anemia perniciosa (maturação de hemácias).",
+    erradas: ["B1: escorbuto; B12: raquitismo.", "B1: cegueira noturna; B12: beribéri.", "B1: anemia perniciosa; B12: pelagra."],
+    explicacao: "A B1 é vital para o metabolismo de carboidratos nos neurônios. A B12 é essencial para a divisão celular e formação de hemácias."
+  },
+
+  // ==========================================
+  // METABOLISMO
+  // ==========================================
+  {
+    id: 180,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Anabolismo vs Catabolismo",
+    q: "Qual a diferença entre anabolismo e catabolismo?",
+    a: "Anabolismo constrói moléculas consumindo energia (endergônico); catabolismo quebra moléculas liberando energia (exergônico).",
+    erradas: ["Anabolismo quebra e libera energia; catabolismo constrói e consome.", "Ambos consomem energia para construir tecidos.", "Ambos liberam energia pela quebra de glicose."],
+    explicacao: "Fotossíntese é anabolismo (gasta luz para fazer glicose). Respiração celular é catabolismo (quebra glicose e libera ATP)."
+  },
+  {
+    id: 181,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Respiração Celular (Ácido Lático)",
+    q: "Na falta de oxigênio, o que acontece com a glicose nas células musculares?",
+    a: "Ocorre fermentação lática, convertendo o piruvato em ácido lático, que causa fadiga muscular.",
+    erradas: ["Ocorre fermentação alcoólica, produzindo etanol e CO2.", "A glicose é completamente quebrada em CO2 e água.", "A glicose é armazenada como glicogênio no músculo."],
+    explicacao: "Sem O2, a cadeia respiratória para. A célula usa a fermentação para gerar ATP rápido, acumulando ácido lático nos músculos."
+  },
+  {
+    id: 182,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Gliconeogênese",
+    q: "O que é a gliconeogênese e quando ela ocorre?",
+    a: "É a síntese de glicose a partir de aminoácidos e gorduras, ocorrendo em jejum prolongado.",
+    erradas: ["É a quebra de glicose para gerar energia.", "É a síntese de proteínas a partir de glicose.", "É a conversão de glicose em glicogênio."],
+    explicacao: "Para manter a glicemia no jejum, o fígado produz glicose a partir de outras fontes (como proteínas musculares e gorduras)."
+  },
+  {
+    id: 183,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Reservas Energéticas",
+    q: "Qual é a ordem de utilização das reservas energéticas pelo corpo em jejum?",
+    a: "Primeiro carboidratos (glicogênio), depois lipídios (gordura) e, por último, proteínas (músculos).",
+    erradas: ["Primeiro lipídios, depois proteínas, depois carboidratos.", "Primeiro proteínas, depois carboidratos, depois lipídios.", "Todas as reservas são utilizadas simultaneamente."],
+    explicacao: "O corpo prefere usar glicose (carboidrato). Quando acaba, usa gordura (catabolismo lipídico) para poupar as proteínas estruturais."
+  },
+  {
+    id: 184,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Ciclo da Ureia e Gota",
+    q: "O que causa a gota e qual sua relação com a dieta?",
+    a: "O acúmulo de ácido úrico nas articulações, causado pelo excesso de proteínas ricas em purinas (carnes).",
+    erradas: ["O acúmulo de colesterol, causado por dietas ricas em gorduras.", "O excesso de glicose, causado por dietas ricas em açúcar.", "A falta de cálcio, causada pela falta de laticínios."],
+    explicacao: "A quebra de purinas (DNA/RNA) gera ácido úrico. Dietas ricas em carnes e frutos do mar aumentam a produção, causando gota."
+  },
+  {
+    id: 185,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Insulina e Glucagon",
+    q: "Qual o papel da insulina e do glucagon na regulação da glicemia?",
+    a: "Insulina reduz a glicose (estimula entrada nas células e síntese de glicogênio); glucagon aumenta a glicose (quebra glicogênio).",
+    erradas: ["Insulina aumenta a glicose; glucagon reduz.", "Ambos aumentam a glicose no sangue.", "Ambos diminuem a glicose no sangue."],
+    explicacao: "São hormônios pancreáticos antagônicos. A insulina é hipoglicemiante; o glucagon é hiperglicemiante."
+  },
+  {
+    id: 186,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicídios — Função de Reserva vs Estrutural",
+    q: "Qual a diferença entre os polissacarídeos de reserva e os estruturais?",
+    a: "Reserva (amido e glicogênio) armazenam energia; estruturais (celulose e quitina) conferem rigidez e proteção.",
+    erradas: ["Reserva (celulose e quitina) dão estrutura; estruturais (amido e glicogênio) guardam energia.", "Ambos só existem em animais.", "Ambos são digeridos facilmente pelo ser humano."],
+    explicacao: "Amido (vegetal) e glicogênio (animal) são fontes de energia. Celulose (vegetal) e quitina (artrópodes/fungos) são estruturais."
+  },
+  {
+    id: 187,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Proteínas — Kwashiorkor",
+    q: "O que é o Kwashiorkor e qual sua principal causa?",
+    a: "É uma desnutrição proteica grave que causa edema (inchaço) abdominal, pois a falta de proteínas reduz a pressão osmótica do sangue.",
+    erradas: ["É a falta de carboidratos, causando perda de peso rápida.", "É o excesso de vitaminas lipossolúveis.", "É uma doença genética que altera a hemoglobina."],
+    explicacao: "Sem proteínas (albumina) no plasma, a água extravasa para os tecidos (edema). Ao tratar com dieta adequada, o edema diminui, causando perda de peso inicial."
   }
 ];

@@ -303,7 +303,7 @@
             </div>
             
             <div class="filter-panel-box">
-                <select id="theoryFilterDisc" onchange="filtrarResumosTeoricos()">
+                <select id="theoryFilterDisc" onchange="aoMudarDisciplinaResumo()">
                     <option value="Todos">🌐 Disciplina: Todas</option>
                     <option value="História">🏛️ História</option>
                     <option value="Biologia">🧬 Biologia</option>
@@ -591,22 +591,42 @@
             btn.style.background = document.body.classList.contains('focus-mode') ? "#dc2626" : "#1e293b";
         }
 
+        function normalizarTexto(str) {
+            return (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
+        function aoMudarDisciplinaResumo() {
+            document.getElementById('theoryFilterTopico').value = "Todos";
+            atualizarFiltrosResumosTeoricos();
+            filtrarResumosTeoricos();
+        }
+
         function atualizarFiltrosResumosTeoricos() {
             const discSelect = document.getElementById('theoryFilterDisc').value;
             const topicoSelect = document.getElementById('theoryFilterTopico');
+            const valorTopicoAtual = topicoSelect.value;
             topicoSelect.innerHTML = '<option value="Todos">📂 Tópico: Todos</option>';
 
             if (typeof moduloResumoDirecionado !== 'undefined') {
                 let topicos = new Set();
                 moduloResumoDirecionado.forEach(m => {
-                    if (discSelect === 'Todos' || m.disciplina === discSelect) {
+                    let mDiscNorm = normalizarTexto(m.disciplina);
+                    let selDiscNorm = normalizarTexto(discSelect);
+
+                    if (discSelect === 'Todos' || mDiscNorm === selDiscNorm) {
                         if (m.topico) topicos.add(m.topico);
                     }
                 });
                 topicos.forEach(t => {
-                    let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
+                    let opt = document.createElement('option'); 
+                    opt.value = t; 
+                    opt.innerText = t;
                     topicoSelect.appendChild(opt);
                 });
+
+                if ([...topicos].includes(valorTopicoAtual)) {
+                    topicoSelect.value = valorTopicoAtual;
+                }
             }
         }
 
@@ -618,9 +638,12 @@
 
             if (typeof moduloResumoDirecionado !== 'undefined' && moduloResumoDirecionado.length > 0) {
                 let filtrados = moduloResumoDirecionado.filter(m => {
-                    let mDisc = (disc === 'Todos' || m.disciplina === disc);
-                    let mTop = (topico === 'Todos' || m.topico === topico);
-                    return mDisc && mTop;
+                    let mDiscNorm = normalizarTexto(m.disciplina);
+                    let selDiscNorm = normalizarTexto(disc);
+
+                    let matchDisc = (disc === 'Todos' || mDiscNorm === selDiscNorm);
+                    let matchTop = (topico === 'Todos' || m.topico === topico);
+                    return matchDisc && matchTop;
                 });
 
                 if (filtrados.length > 0) {
@@ -637,8 +660,8 @@
                     });
                     renderizarConteudoTeorico(filtrados[0]);
                 } else {
-                    sidebar.innerHTML = '<div style="color:#cbd5e1; font-size:12px;">Nenhum resumo encontrado.</div>';
-                    document.getElementById('theoryContent').innerHTML = '<p style="color:#cbd5e1;">Nenhum conteúdo disponível.</p>';
+                    sidebar.innerHTML = '<div style="color:#cbd5e1; font-size:12px; padding:10px;">Nenhum resumo encontrado.</div>';
+                    document.getElementById('theoryContent').innerHTML = '<p style="color:#cbd5e1;">Nenhum conteúdo disponível para esta seleção.</p>';
                 }
             }
         }
