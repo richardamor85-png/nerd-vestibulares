@@ -88,7 +88,6 @@
         .kpi-value { font-size: 26px; font-weight: bold; color: #38bdf8; margin-top: 8px; }
         .kpi-footer { font-size: 12px; color: #10b981; margin-top: 5px; font-weight: 600; }
 
-        /* Estilos do Painel de Previsão */
         .forecast-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
         .forecast-card { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 12px; text-align: center; }
         .forecast-date { font-size: 11px; color: #94a3b8; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
@@ -154,8 +153,17 @@
             <label>Disciplina / Tema</label>
             <select id="filtroDisciplina" onchange="atualizarTopicosMetricas()">
                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
-                <option value="Historia">🏛️ História</option>
+                <option value="História Geral">🏛️ História Geral</option>
+                <option value="História do Brasil">👑 História do Brasil</option>
                 <option value="Biologia">🧬 Biologia</option>
+                <option value="Geografia">🌍 Geografia</option>
+                <option value="Filosofia">🤔 Filosofia</option>
+                <option value="Sociologia">👥 Sociologia</option>
+                <option value="Literatura">📚 Literatura</option>
+                <option value="Química">🧪 Química</option>
+                <option value="Física">⚡ Física</option>
+                <option value="Matemática">📐 Matemática</option>
+                <option value="Linguagens">📝 Linguagens</option>
             </select>
         </div>
         <div class="filter-group">
@@ -316,6 +324,17 @@
     <!-- Importa os bancos de questões -->
     <script src="historia.js"></script>
     <script src="biologia.js"></script>
+    <script src="historia_brasil.js"></script>
+    <script src="geografia.js"></script>
+    <script src="filosofia.js"></script>
+    <script src="sociologia.js"></script>
+    <script src="literatura.js"></script>
+    <script src="quimica.js"></script>
+    <script src="fisica.js"></script>
+    <script src="matematica.js"></script>
+    <script src="linguagens.js"></script>
+
+    <!-- Unificador -->
     <script src="questoes.js"></script>
 
     <script>
@@ -336,12 +355,16 @@
             renderizarGraficos();
         };
 
+        function normalizarTexto(str) {
+            return (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
         function carregarConfiguracaoInicial() {
             const configSalva = localStorage.getItem('nerd_vestibulares_config_motor');
             if (configSalva) {
                 const conf = JSON.parse(configSalva);
                 if (conf.nomeJogador) document.getElementById('filtroNomeJogador').value = conf.nomeJogador;
-                if (conf.tema === 'claro') document.body.classList.add('light-theme');
+                if (conf.tema === 'clean') document.body.classList.add('light-theme');
                 else document.body.classList.remove('light-theme');
             }
         }
@@ -368,7 +391,9 @@
             let topicosDisponiveis = new Set();
             if (typeof masterDeck !== 'undefined') {
                 masterDeck.forEach(c => {
-                    if (disciplina === 'Todos' || c.deck === disciplina) {
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(disciplina);
+                    if (disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia')) {
                         let topicoNome = c.topicoPrincipal || c.subgrupo;
                         if(topicoNome) topicosDisponiveis.add(topicoNome);
                     }
@@ -393,7 +418,9 @@
             let subsDisponiveis = new Set();
             if (typeof masterDeck !== 'undefined') {
                 masterDeck.forEach(c => {
-                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(disciplina);
+                    let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
                     let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
 
                     if(matchDisc && matchTop) {
@@ -424,7 +451,6 @@
                             let status = dados.questoesRespondidasHistorico[qId];
                             let cardObj = typeof masterDeck !== 'undefined' ? masterDeck.find(c => c.id == qId) : null;
                             
-                            // Se houver data gravada na resposta, utiliza; senão, considera a data atual
                             let dataResposta = (typeof status === 'object' && status.data) ? status.data : new Date().toISOString().split('T')[0];
                             let acertouBool = (typeof status === 'object') ? status.acertou : (status === 'acertou');
 
@@ -494,7 +520,9 @@
             let dataFimCustom = document.getElementById('filtroDataFim').value;
 
             return historicoGlobal.filter(h => {
-                let matchDisc = (discFiltro === 'Todos' || h.deck === discFiltro);
+                let hDiscNorm = normalizarTexto(h.deck);
+                let selDiscNorm = normalizarTexto(discFiltro);
+                let matchDisc = (discFiltro === 'Todos' || hDiscNorm === selDiscNorm || (selDiscNorm === 'historia geral' && hDiscNorm === 'historia'));
                 let matchTop = (topFiltro === 'Todos' || h.topicoPrincipal === topFiltro);
                 let matchSub = (subFiltro === 'Todos' || h.subgrupo === subFiltro);
 
@@ -533,9 +561,11 @@
 
             if (typeof masterDeck !== 'undefined') {
                 let filtradosDeck = masterDeck.filter(c => {
-                    let matchDisc = (discFiltro === 'Todos' || c.deck === discFiltro);
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(discFiltro);
+                    let matchDisc = (discFiltro === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
                     let matchTop = (topFiltro === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topFiltro);
-                    let matchSub = (subFiltro === 'Todos' || c.subgrupo === subFiltro);
+                    let matchSub = (subFiltro === 'Todos' || c.subgrupo === subtopico);
                     return matchDisc && matchTop && matchSub;
                 });
 
@@ -588,7 +618,6 @@
                 metaStatus.style.color = "#ef4444";
             }
 
-            // Atualiza Painel de Previsão Espaçada
             let est = calcularEstimativasAgenda();
             document.getElementById('fcHoje').innerText = est.hoje;
             document.getElementById('fcAmanha').innerText = est.amanha;
@@ -600,7 +629,6 @@
             let total7d = est.hoje + est.amanha + est.d3 + est.d7;
             document.getElementById('kpiProjecao7d').innerText = `${total7d} cards`;
 
-            // Tabela Consolidada
             let htmlTabela = `
                 <table class="data-table">
                     <thead>
@@ -653,7 +681,6 @@
         function renderizarGraficos() {
             let historicoFiltrado = obterHistoricoFiltrado();
 
-            // 1. Renderiza Gráfico de Pizza (Donut Chart)
             let totalAcertos = historicoFiltrado.filter(h => h.acertou).length;
             let totalErros = historicoFiltrado.length - totalAcertos;
             let naoEstudados = Math.max(0, totalBancoFiltrado - historicoFiltrado.length);
@@ -683,7 +710,6 @@
                 }
             });
 
-            // 2. Renderiza Radar
             let labelsTopicos = [];
             let dadosRadar = [];
 
@@ -701,8 +727,8 @@
             }
 
             if(labelsTopicos.length === 0) {
-                labelsTopicos = ['Historiografia', 'Biologia Geral'];
-                dadosRadar = [50, 50];
+                labelsTopicos = ['Geral'];
+                dadosRadar = [0];
             }
 
             const ctxRadar = document.getElementById('chartRadar').getContext('2d');
@@ -734,7 +760,6 @@
                 }
             });
 
-            // 3. Renderiza Linha de Evolução por Data
             let agrupadoData = {};
             historicoFiltrado.forEach(h => {
                 let d = h.data || 'Sem Data';
@@ -772,7 +797,6 @@
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // 4. Renderiza Barra de Volume por Data
             const ctxResolucao = document.getElementById('chartResolucoes').getContext('2d');
             if (meuGraficoResolucao) meuGraficoResolucao.destroy();
             meuGraficoResolucao = new Chart(ctxResolucao, {

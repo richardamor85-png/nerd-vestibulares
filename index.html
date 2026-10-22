@@ -41,7 +41,6 @@
         return 'nerd_vestibulares_perfil_' + nomeJogador;
       }
 
-      // Sincronização e autenticação ativa
       auth.onAuthStateChanged((user) => {
         const badge = document.getElementById('dbCounterBadge');
         if (user) {
@@ -149,8 +148,6 @@
         .progress-bar { height: 100%; background: linear-gradient(90deg, #38bdf8, #10b981); width: 0%; transition: width 0.4s ease; }
 
         .mission-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; }
-        .tag-historia { background: rgba(217, 119, 6, 0.3); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.5); }
-        .tag-biologia { background: rgba(16, 185, 129, 0.3); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.5); }
 
         .case-header-box { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; width: 100%; }
         .case-accent-line { width: 4px; height: 38px; background: linear-gradient(180deg, #38bdf8, #818cf8); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
@@ -255,8 +252,17 @@
                             <label>1. Disciplina / Tema:</label>
                             <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
                                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
-                                <option value="Historia">🏛️ História</option>
+                                <option value="História Geral">🏛️ História Geral</option>
+                                <option value="História do Brasil">👑 História do Brasil</option>
                                 <option value="Biologia">🧬 Biologia</option>
+                                <option value="Geografia">🌍 Geografia</option>
+                                <option value="Filosofia">🤔 Filosofia</option>
+                                <option value="Sociologia">👥 Sociologia</option>
+                                <option value="Literatura">📚 Literatura</option>
+                                <option value="Química">🧪 Química</option>
+                                <option value="Física">⚡ Física</option>
+                                <option value="Matemática">📐 Matemática</option>
+                                <option value="Linguagens">📝 Linguagens</option>
                             </select>
                         </div>
                         <div style="width:100%;">
@@ -305,8 +311,17 @@
             <div class="filter-panel-box">
                 <select id="theoryFilterDisc" onchange="aoMudarDisciplinaResumo()">
                     <option value="Todos">🌐 Disciplina: Todas</option>
-                    <option value="História">🏛️ História</option>
+                    <option value="História Geral">🏛️ História Geral</option>
+                    <option value="História do Brasil">👑 História do Brasil</option>
                     <option value="Biologia">🧬 Biologia</option>
+                    <option value="Geografia">🌍 Geografia</option>
+                    <option value="Filosofia">🤔 Filosofia</option>
+                    <option value="Sociologia">👥 Sociologia</option>
+                    <option value="Literatura">📚 Literatura</option>
+                    <option value="Química">🧪 Química</option>
+                    <option value="Física">⚡ Física</option>
+                    <option value="Matemática">📐 Matemática</option>
+                    <option value="Linguagens">📝 Linguagens</option>
                 </select>
                 <select id="theoryFilterTopico" onchange="filtrarResumosTeoricos()">
                     <option value="Todos">📂 Tópico: Todos</option>
@@ -454,12 +469,36 @@
 
     </div>
 
-    <!-- Scripts Modulares -->
+    <!-- Scripts de Questões por Disciplina -->
     <script src="historia.js"></script>
     <script src="biologia.js"></script>
+    <script src="historia_brasil.js"></script>
+    <script src="geografia.js"></script>
+    <script src="filosofia.js"></script>
+    <script src="sociologia.js"></script>
+    <script src="literatura.js"></script>
+    <script src="quimica.js"></script>
+    <script src="fisica.js"></script>
+    <script src="matematica.js"></script>
+    <script src="linguagens.js"></script>
+
+    <!-- Unificador do Banco de Questões -->
     <script src="questoes.js"></script>
+
+    <!-- Scripts de Resumos Teóricos por Disciplina -->
     <script src="resumo_historia.js"></script>
     <script src="resumo_biologia.js"></script>
+    <script src="resumo_historia_brasil.js"></script>
+    <script src="resumo_geografia.js"></script>
+    <script src="resumo_filosofia.js"></script>
+    <script src="resumo_sociologia.js"></script>
+    <script src="resumo_literatura.js"></script>
+    <script src="resumo_quimica.js"></script>
+    <script src="resumo_fisica.js"></script>
+    <script src="resumo_matematica.js"></script>
+    <script src="resumo_linguagens.js"></script>
+
+    <!-- Unificador do Banco de Resumos -->
     <script src="resumos.js"></script>
 
     <script>
@@ -521,6 +560,10 @@
             return agora >= infoRevisao.proximaRevisao;
         }
 
+        function normalizarTexto(str) {
+            return (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
         function atualizarContadorFiltro() {
             const disciplina = document.getElementById('selectFiltroTema').value;
             const topico = document.getElementById('selectTopico').value;
@@ -528,7 +571,10 @@
 
             if (typeof masterDeck !== 'undefined') {
                 let filtrados = masterDeck.filter(c => {
-                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(disciplina);
+                    let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia') || (selDiscNorm === 'historia do brasil' && discNorm === 'historia do brasil'));
+
                     let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
                     let matchSub = (subtopico === 'Todos' || c.subgrupo === subtopico);
                     return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
@@ -544,7 +590,9 @@
             let topicos = new Set();
             if (typeof masterDeck !== 'undefined') {
                 masterDeck.forEach(c => {
-                    if(disciplina === 'Todos' || c.deck === disciplina) {
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(disciplina);
+                    if(disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia')) {
                         if(c.topicoPrincipal || c.subgrupo) topicos.add(c.topicoPrincipal || c.subgrupo);
                     }
                 });
@@ -564,7 +612,9 @@
             let subs = new Set();
             if (typeof masterDeck !== 'undefined') {
                 masterDeck.forEach(c => {
-                    let matchDisc = (disciplina === 'Todos' || c.deck === disciplina);
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(disciplina);
+                    let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
                     let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
                     if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
                 });
@@ -591,10 +641,6 @@
             btn.style.background = document.body.classList.contains('focus-mode') ? "#dc2626" : "#1e293b";
         }
 
-        function normalizarTexto(str) {
-            return (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-        }
-
         function aoMudarDisciplinaResumo() {
             document.getElementById('theoryFilterTopico').value = "Todos";
             atualizarFiltrosResumosTeoricos();
@@ -613,7 +659,7 @@
                     let mDiscNorm = normalizarTexto(m.disciplina);
                     let selDiscNorm = normalizarTexto(discSelect);
 
-                    if (discSelect === 'Todos' || mDiscNorm === selDiscNorm) {
+                    if (discSelect === 'Todos' || mDiscNorm === selDiscNorm || (selDiscNorm === 'historia geral' && mDiscNorm === 'historia')) {
                         if (m.topico) topicos.add(m.topico);
                     }
                 });
@@ -641,7 +687,7 @@
                     let mDiscNorm = normalizarTexto(m.disciplina);
                     let selDiscNorm = normalizarTexto(disc);
 
-                    let matchDisc = (disc === 'Todos' || mDiscNorm === selDiscNorm);
+                    let matchDisc = (disc === 'Todos' || mDiscNorm === selDiscNorm || (selDiscNorm === 'historia geral' && mDiscNorm === 'historia'));
                     let matchTop = (topico === 'Todos' || m.topico === topico);
                     return matchDisc && matchTop;
                 });
@@ -806,7 +852,8 @@
 
         function processarRespostaRevisao(cardId, acertou) {
             if (sessaoAtual.modoPersonalizado) return;
-            sessaoAtual.questoesRespondidasHistorico[cardId] = acertou ? 'acertou' : 'errou';
+            let dataHoje = new Date().toISOString().split('T')[0];
+            sessaoAtual.questoesRespondidasHistorico[cardId] = { acertou: acertou, data: dataHoje };
             let proximaData = calcularProximaRevisao(acertou);
             sessaoAtual.historicoRevisao[cardId] = { proximaRevisao: proximaData, ultimaResposta: acertou ? 'acertou' : 'errou' };
         }
@@ -829,7 +876,9 @@
                 let sub = document.getElementById('selectSubtopico').value;
 
                 let deckFiltrado = masterDeck.filter(c => {
-                    let matchDisc = (disc === 'Todos' || c.deck === disc);
+                    let discNorm = normalizarTexto(c.deck);
+                    let selDiscNorm = normalizarTexto(disc);
+                    let matchDisc = (disc === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
                     let matchTop = (top === 'Todos' || (c.topicoPrincipal || c.subgrupo) === top);
                     let matchSub = (sub === 'Todos' || c.subgrupo === sub);
                     return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
