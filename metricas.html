@@ -66,6 +66,10 @@
         .filter-group { display: flex; flex-direction: column; }
         .filter-group label { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
         .filter-group input, .filter-group select { padding: 9px; border: 1px solid #475569; border-radius: 6px; font-size: 13px; background: #0f172a; color: #f8fafc; outline: none; }
+        
+        /* REGRA ADICIONADA: Espaçamento elegante para as opções */
+        select option { padding: 8px 12px; font-size: 14px; background-color: #0f172a; color: #ffffff; }
+
         .btn-filtrar { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; height: 38px; box-shadow: 0 4px 12px rgba(14,165,233,0.3); transition: 0.2s; }
         .btn-filtrar:hover { filter: brightness(1.1); }
 
@@ -151,19 +155,20 @@
 
         <div class="filter-group">
             <label>Disciplina / Tema</label>
+            <!-- ORGANIZAÇÃO POR ÁREAS DO CONHECIMENTO -->
             <select id="filtroDisciplina" onchange="atualizarTopicosMetricas()">
                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
+                <option value="Linguagens">📝 Linguagens</option>
+                <option value="Literatura">📚 Literatura</option>
                 <option value="História Geral">🏛️ História Geral</option>
                 <option value="História do Brasil">👑 História do Brasil</option>
-                <option value="Biologia">🧬 Biologia</option>
                 <option value="Geografia">🌍 Geografia</option>
                 <option value="Filosofia">🤔 Filosofia</option>
                 <option value="Sociologia">👥 Sociologia</option>
-                <option value="Literatura">📚 Literatura</option>
+                <option value="Biologia">🧬 Biologia</option>
                 <option value="Química">🧪 Química</option>
                 <option value="Física">⚡ Física</option>
                 <option value="Matemática">📐 Matemática</option>
-                <option value="Linguagens">📝 Linguagens</option>
             </select>
         </div>
         <div class="filter-group">

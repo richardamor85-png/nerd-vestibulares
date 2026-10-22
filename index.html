@@ -175,6 +175,9 @@
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], select { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
         label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; font-weight: 800; letter-spacing: 0.5px; }
 
+        /* REGRA ADICIONADA: Espaçamento elegante para as opções */
+        select option { padding: 8px 12px; font-size: 14px; background-color: #0f172a; color: #ffffff; }
+
         .auth-box-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 20px; max-width: 380px; width: 100%; margin: 15px auto; text-align: center; }
         .auth-toggle-link { font-size: 12px; color: #38bdf8; cursor: pointer; margin-top: 10px; font-weight: 700; display: block; }
 
@@ -250,19 +253,20 @@
                     <div class="menu-grid">
                         <div style="width:100%;">
                             <label>1. Disciplina / Tema:</label>
+                            <!-- ORGANIZAÇÃO POR ÁREAS DO CONHECIMENTO -->
                             <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
                                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
+                                <option value="Linguagens">📝 Linguagens</option>
+                                <option value="Literatura">📚 Literatura</option>
                                 <option value="História Geral">🏛️ História Geral</option>
                                 <option value="História do Brasil">👑 História do Brasil</option>
-                                <option value="Biologia">🧬 Biologia</option>
                                 <option value="Geografia">🌍 Geografia</option>
                                 <option value="Filosofia">🤔 Filosofia</option>
                                 <option value="Sociologia">👥 Sociologia</option>
-                                <option value="Literatura">📚 Literatura</option>
+                                <option value="Biologia">🧬 Biologia</option>
                                 <option value="Química">🧪 Química</option>
                                 <option value="Física">⚡ Física</option>
                                 <option value="Matemática">📐 Matemática</option>
-                                <option value="Linguagens">📝 Linguagens</option>
                             </select>
                         </div>
                         <div style="width:100%;">
@@ -309,19 +313,20 @@
             </div>
             
             <div class="filter-panel-box">
+                <!-- ORGANIZAÇÃO POR ÁREAS DO CONHECIMENTO -->
                 <select id="theoryFilterDisc" onchange="aoMudarDisciplinaResumo()">
                     <option value="Todos">🌐 Disciplina: Todas</option>
+                    <option value="Linguagens">📝 Linguagens</option>
+                    <option value="Literatura">📚 Literatura</option>
                     <option value="História Geral">🏛️ História Geral</option>
                     <option value="História do Brasil">👑 História do Brasil</option>
-                    <option value="Biologia">🧬 Biologia</option>
                     <option value="Geografia">🌍 Geografia</option>
                     <option value="Filosofia">🤔 Filosofia</option>
                     <option value="Sociologia">👥 Sociologia</option>
-                    <option value="Literatura">📚 Literatura</option>
+                    <option value="Biologia">🧬 Biologia</option>
                     <option value="Química">🧪 Química</option>
                     <option value="Física">⚡ Física</option>
                     <option value="Matemática">📐 Matemática</option>
-                    <option value="Linguagens">📝 Linguagens</option>
                 </select>
                 <select id="theoryFilterTopico" onchange="filtrarResumosTeoricos()">
                     <option value="Todos">📂 Tópico: Todos</option>
