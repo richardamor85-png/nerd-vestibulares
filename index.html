@@ -470,6 +470,13 @@
                     </div>
                 </div>
 
+                <!-- ZONA DE PERIGO: RESET TOTAL -->
+                <div class="config-card-box" style="border-color: rgba(239, 68, 68, 0.4);">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #ef4444;">🚨 Zona de Perigo:</label>
+                    <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 12px; text-align: left;">Apaga todo o progresso de questões, XP, histórico de revisões e edições de resumos salvos.</p>
+                    <button class="btn-action btn-danger" style="margin: 0 auto; max-width: 100%;" onclick="executarResetTotal()">🗑️ Zerar Todo o Progresso (Reset)</button>
+                </div>
+
             </div>
             <button class="btn-action" onclick="salvarConfiguracoesEVoltar()">💾 Salvar Configurações</button>
             <button class="btn-action btn-secondary" onclick="voltarMenu()">Voltar ao Menu Principal</button>
@@ -872,6 +879,39 @@
             voltarMenu();
         }
 
+        // --- NOVA FUNÇÃO: RESET TOTAL DO PROGRESSO ---
+        function executarResetTotal() {
+            if (!confirm("⚠️ ATENÇÃO: Tem certeza absoluta que deseja zerar todo o seu progresso?\n\nIsso apagará seu XP, histórico de acertos/erros, revisões e notas editadas de forma irreversível!")) {
+                return;
+            }
+
+            // 1. Limpa os dados do perfil ativo no LocalStorage
+            let chaveLocal = obterChavePerfilLocalStorage();
+            localStorage.removeItem(chaveLocal);
+
+            // 2. Se estiver autenticado e online no Firebase, apaga os dados da nuvem também
+            if (navigator.onLine && usuarioUid && typeof database !== 'undefined') {
+                database.ref('users/' + usuarioUid).remove()
+                    .then(() => {
+                        console.log("Dados da nuvem apagados com sucesso.");
+                    })
+                    .catch(err => {
+                        console.error("Erro ao apagar dados da nuvem: ", err);
+                    });
+            }
+
+            // 3. Reseta o objeto local em memória da sessão atual
+            sessaoAtual.xp = 0;
+            sessaoAtual.historicoRevisao = {};
+            sessaoAtual.questoesRespondidasHistorico = {};
+            sessaoAtual.resumosEditadosSalvos = {};
+
+            alert("✨ Progresso zerado com sucesso! O sistema foi reiniciado.");
+            
+            // Retorna para o menu principal atualizado
+            voltarMenu();
+        }
+
         function carregarConfiguracoesSalvas() {
             const salvo = localStorage.getItem('nerd_vestibulares_config_motor');
             if (salvo) {
@@ -1059,7 +1099,7 @@
             document.getElementById('btn-confirm').style.display = 'none';
             document.getElementById('explanationBox').style.display = 'none';
             document.getElementById('nextCardBtn').style.display = 'none';
-            document.getElementById('skipCardBtn').style.display = 'block'; // Sempre visível ao carregar
+            document.getElementById('skipCardBtn').style.display = 'block';
 
             // Configurar botão Confirmar Resposta
             const btnConfirm = document.getElementById('btn-confirm');
@@ -1076,10 +1116,8 @@
             document.getElementById('btn-confirm').style.display = algumSelecionado ? 'block' : 'none';
         }
 
-        // --- CORREÇÃO: LÓGICA DE PULAR QUESTÃO (FUNCIONAL A QUALQUER MOMENTO) ---
         function pularCardAtual() {
             pararTimer();
-            // Remove o card da posição atual e o envia para o final do array da sessão
             let pulado = sessaoAtual.cardsSessao.splice(sessaoAtual.indice, 1)[0];
             sessaoAtual.cardsSessao.push(pulado);
             carregarCard();
@@ -1089,7 +1127,7 @@
             pararTimer();
             const botoes = document.querySelectorAll('.option-card');
             botoes.forEach(b => b.disabled = true);
-            document.getElementById('skipCardBtn').style.display = 'none'; // Oculta só após CONFIRMAR a resposta
+            document.getElementById('skipCardBtn').style.display = 'none';
             document.getElementById('btn-confirm').style.display = 'none';
 
             let acertou = (escolhida === correta);
