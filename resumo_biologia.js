@@ -344,5 +344,81 @@ const deckResumoBiologia = [
         justificativa: "A quebra (degradação) de uma molécula complexa (glicogênio) em moléculas mais simples para a produção de energia (ATP) é um processo de catabolismo (exergônico)."
       }
     ]
+  },
+ {
+    id: "RES-BIO-ORIGEM-01",
+    disciplina: "Biologia",
+    topico: "Origem da Vida",
+    subtopico: "Origem da Vida I",
+    tituloModulo: "Das Forças Vitais à Evolução Química",
+    conteudo: [
+      {
+        tipo: "texto",
+        corpo: "O debate sobre a origem da vida começou com a disputa entre a Abiogênese (Teoria da Geração Espontânea) e a Biogênese. A Abiogênese afirmava que a vida poderia surgir da matéria bruta (como larvas surgindo da carne podre ou ratos de camisas sujas). No entanto, cientistas como Francesco Redi (com frascos de carne cobertos por gaze) e Lazzaro Spallanzani (com frascos herméticos) começaram a derrubar essa ideia. O golpe final foi dado por Louis Pasteur, com seus famosos frascos de 'pescoço de cisne', provando que microrganismos vêm do ar e não de uma 'força vital' no caldo."
+      },
+      {
+        tipo: "texto",
+        corpo: "Superada a Abiogênese, surgiram as teorias modernas. A Panspermia (defendida por Arrhenius) sugere que a vida é extraterrestre e foi trazida por meteoritos. Já a Teoria da Evolução Química (ou Molecular), proposta por Oparin e Haldane, defende que a vida surgiu na Terra primitiva. A atmosfera era redutora (sem oxigênio, rica em metano, amônia, hidrogênio e vapor d'água). A radiação UV e as descargas elétricas (raios) quebraram essas moléculas, formando compostos orgânicos (aminoácidos) que se acumularam nos oceanos, formando a 'sopa primordial'."
+      },
+      {
+        tipo: "texto",
+        corpo: "O experimento de Stanley Miller e Harold Urey (1953) simulou essas condições em laboratório e conseguiu produzir aminoácidos. Mais tarde, Oparin sugeriu a formação de Coacervados: aglomerados de proteínas envoltos por uma película de água, capazes de trocar matéria com o meio, mas ainda não vivos. A partir desses coacervados, surgiram os primeiros seres vivos, que eram heterótrofos anaeróbios (fermentadores), pois não havia oxigênio para a respiração aeróbica."
+      },
+      {
+        tipo: "bizu",
+        corpo: "⚠️ BIZU DE PROVA: Pasteur derrubou de vez a Abiogênese com o pescoço de cisne (micróbios ficavam na curva, não chegavam ao caldo). Miller NÃO provou a origem da vida, apenas que moléculas orgânicas podem se formar. A primeira molécula a armazenar informação e catalisar reações provavelmente foi o RNA (Mundo do RNA)."
+      },
+      {
+        tipo: "questao_fixar",
+        estilo: "Banca",
+        enunciado: "Sobre as teorias da origem da vida, é correto afirmar que a hipótese de Oparin e Haldane propõe que:",
+        alternativas: [
+          "A) A vida foi trazida por esporos bacterianos do espaço exterior.",
+          "B) A vida surgiu de matéria inanimada por meio de uma força vital.",
+          "C) A vida originou-se a partir de reações químicas na atmosfera primitiva, gerando coacervados.",
+          "D) A vida surgiu a partir de seres autótrofos fotossintetizantes complexos."
+        ],
+        gabarito: "C",
+        justificativa: "Oparin e Haldane propuseram a Evolução Química. Na atmosfera primitiva (redutora), compostos inorgânicos transformaram-se em orgânicos, formando coacervados (precursores das células) nos oceanos."
+      }
+    ]
+  },
+  {
+    id: "RES-BIO-ORIGEM-02",
+    disciplina: "Biologia",
+    topico: "Origem da Vida",
+    subtopico: "Origem da Vida II",
+    tituloModulo: "Evolução Celular, Endossimbiose e Tempo Geológico",
+    conteudo: [
+      {
+        tipo: "texto",
+        corpo: "Os primeiros organismos eram anaeróbios (fermentação). Com a escassez de alimento, surgiram os autótrofos. A primeira fotossíntese era realizada por bactérias que usavam o H2S (sulfeto de hidrogênio). Depois, surgiram as cianobactérias, capazes de usar a água (H2O) para fotossintetizar, liberando Oxigênio (O2) como resíduo. Esse gás era tóxico para a maioria das formas de vida da época (o chamado 'Holocausto do Oxigênio'). Porém, ele permitiu o surgimento dos seres aeróbicos, que produzem muito mais energia."
+      },
+      {
+        tipo: "texto",
+        corpo: "A origem das células eucariontes é explicada pela Teoria da Endossimbiose, proposta por Lynn Margulis. Ela defende que uma célula hospedeira fagocitou bactérias aeróbias (que viraram as mitocôndrias) e cianobactérias (que viraram os cloroplastos). Essas bactérias não foram digeridas, mas passaram a viver em simbiose. As evidências disso são: essas organelas possuem DNA circular próprio, ribossomos 70S (do tipo bacteriano) e membrana dupla."
+      },
+      {
+        tipo: "texto",
+        corpo: "O Tempo Geológico divide a história da Terra em Éons e Eras. A Era Pré-Cambriana foi a mais longa, marcada pelo surgimento das primeiras células. A Era Paleozoica viu a explosão da vida marinha, a conquista do ambiente terrestre por plantas e anfíbios. A Era Mesozoica é conhecida como a Era dos Dinossauros e das grandes florestas de gimnospermas. A Era Cenozoica (atual) é caracterizada pela diversificação dos mamíferos, das angiospermas e o surgimento dos hominídeos, após a extinção dos dinossauros há 65 milhões de anos."
+      },
+      {
+        tipo: "bizu",
+        corpo: "⚠️ BIZU DE PROVA: O oxigênio NÃO foi o primeiro gás da atmosfera primitiva, ele foi a consequência da fotossíntese das cianobactérias. O 'Holocausto do Oxigênio' foi a extinção em massa dos organismos anaeróbios, que não suportavam esse gás. As mitocôndrias e cloroplastos têm DNA próprio e são autônomos!"
+      },
+      {
+        tipo: "questao_fixar",
+        estilo: "Banca",
+        enunciado: "A Teoria da Endossimbiose é amplamente aceita para explicar a origem das células eucarióticas. Qual das alternativas NÃO é uma evidência dessa teoria?",
+        alternativas: [
+          "A) Mitocôndrias e cloroplastos possuem DNA circular próprio.",
+          "B) Mitocôndrias e cloroplastos são capazes de se autoduplicar.",
+          "C) Mitocôndrias possuem ribossomos com coeficiente de sedimentação 80S, típicos de eucariotos.",
+          "D) Mitocôndrias e cloroplastos possuem membrana dupla."
+        ],
+        gabarito: "C",
+        justificativa: "As mitocôndrias e cloroplastos possuem ribossomos 70S, semelhantes às bactérias (procariontes), e não 80S (que são encontrados no citoplasma dos eucariontes). Essa é uma das fortes evidências da origem procariótica dessas organelas."
+      }
+    ]
   }
 ];
