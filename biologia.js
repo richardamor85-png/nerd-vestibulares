@@ -1053,5 +1053,624 @@ const deckBiologia = [
     a: "Humanos e dinossauros estão separados pelo tempo geológico: dinossauros viveram na Era Mesozoica e os humanos na Era Cenozoica.",
     erradas: ["Humanos e dinossauros estavam isolados geograficamente pela divisão da Pangeia.", "Os dinossauros eram herbívoros e não poderiam caçar humanos.", "Os dinossauros foram extintos pelo homem primitivo, por isso não coexistiram."],
     explicacao: "Os dinossauros foram extintos há cerca de 65 milhões de anos. Os primeiros ancestrais humanos só surgiram muito depois, no final do período Terciário e no Quaternário (Era Cenozoica)."
+  },
+ {
+    id: 230,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Abiogênese — Needham vs Spallanzani",
+    q: "Qual foi a principal divergência entre os experimentos de Needham e Spallanzani?",
+    a: "Needham defendeu a abiogênese (força vital), pois não aquecia o suficiente; Spallanzani refutou ao ferver mais e vedar os frascos, mas alegaram que ele havia destruído a 'força vital'.",
+    erradas: ["Needham provou a biogênese com o pescoço de cisne; Spallanzani defendeu a panspermia.", "Spallanzani defendia a geração espontânea e Needham a biogênese.", "Ambos provaram que os microrganismos vinham do ar, mas discordaram sobre a temperatura."],
+    explicacao: "Needham aqueceu o caldo por pouco tempo e deixou os frascos abertos, surgindo micróbios. Spallanzani ferveu por mais tempo e vedou os frascos. Os defensores da abiogênese disseram que Spallanzani havia matado a 'força vital' com o calor excessivo e o vedamento."
+  },
+  {
+    id: 231,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Biogênese — Pasteur",
+    q: "Como o experimento do 'pescoço de cisne' de Louis Pasteur derrubou definitivamente a Abiogênese?",
+    a: "Ele permitia a entrada de ar, mas retinha os micróbios na curvatura do gargalo, provando que a vida vem do ar e não da matéria bruta.",
+    erradas: ["Ele vedou completamente os frascos, provando que a vida não precisa de ar.", "Ele mostrou que o oxigênio era o responsável por gerar a vida espontaneamente.", "Ele utilizou calor extremo para provar que a 'força vital' não existe."],
+    explicacao: "O pescoço de cisne permitia a passagem de oxigênio (ar), refutando o argumento de que a vedação de Spallanzani impedia a 'força vital' de agir. Ao quebrar o gargalo, os micróbios caíam no caldo, provando que eles vêm do ambiente externo."
+  },
+  {
+    id: 232,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Panspermia vs Evolução Química",
+    q: "Quais são as duas teorias científicas modernas mais aceitas para a origem da vida na Terra?",
+    a: "Panspermia (origem extraterrestre) e Evolução Química (origem na própria Terra).",
+    erradas: ["Abiogênese e Biogênese.", "Criacionismo e Fixismo.", "Endossimbiose e Teoria Celular."],
+    explicacao: "Após a queda da abiogênese, as duas vertentes principais são a Panspermia (vida trazida por meteoritos) e a Evolução Química (vida sintetizada na Terra primitiva a partir de compostos inorgânicos)."
+  },
+  {
+    id: 233,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Evolução Química — Oparin e Haldane",
+    q: "Qual a diferença entre as propostas de Oparin e Haldane para a Evolução Química?",
+    a: "Haldane propôs a 'sopa quente e diluída' nos oceanos; Oparin focou na formação de coacervados.",
+    erradas: ["Oparin defendia a panspermia e Haldane a geração espontânea.", "Oparin propôs o experimento com gases e Haldane a origem extraterrestre.", "Ambos discordavam sobre a presença de oxigênio na atmosfera primitiva."],
+    explicacao: "Ambos propuseram que a vida surgiu de forma gradual a partir de compostos inorgânicos. Haldane focou no ambiente aquático ('sopa primordial'). Oparin aprofundou o estudo sobre como essas moléculas se organizaram em coacervados."
+  },
+  {
+    id: 234,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Experimento de Miller — Limitações",
+    q: "O experimento de Miller (1953) foi fundamental, mas qual foi a sua principal limitação?",
+    a: "Ele comprovou a formação de moléculas orgânicas, mas não conseguiu gerar um ser vivo (célula).",
+    erradas: ["Ele provou a abiogênese ao gerar bactérias vivas.", "Ele não obteve aminoácidos, apenas gases tóxicos.", "Ele utilizou oxigênio na mistura, o que invalidou o experimento."],
+    explicacao: "O experimento simulou a atmosfera primitiva e gerou aminoácidos. No entanto, a origem da vida envolve também a formação de membranas, material genético e metabolismo, o que não foi (e não é) possível recriar em um único experimento."
+  },
+  {
+    id: 235,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Hipótese Autotrófica vs Heterotrófica",
+    q: "Por que a Hipótese Heterotrófica é a mais aceita para a origem da vida?",
+    a: "Porque a atmosfera primitiva não tinha oxigênio (anaeróbia) e era rica em moléculas orgânicas (sopa primordial), permitindo a fermentação.",
+    erradas: ["Porque os primeiros seres vivos possuíam cloroplastos e realizavam fotossíntese.", "Porque a quimiossíntese é um processo mais complexo e exigia muita energia solar.", "Porque as primeiras células já eram eucariontes e capazes de respiração aeróbica."],
+    explicacao: "A hipótese heterotrófica sugere que os primeiros seres se alimentavam das moléculas orgânicas disponíveis no meio (sopa primordial) e realizavam fermentação (sem O2). A autotrófica exigiria uma complexidade metabólica maior desde o início."
+  },
+  {
+    id: 236,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Hipótese Autotrófica — Fontes Hidrotermais",
+    q: "Qual evidência atual tem dado suporte à Hipótese Autotrófica (Quimiossíntese) para a origem da vida?",
+    a: "A descoberta de comunidades de organismos que sobrevivem no fundo do oceano (fontes hidrotermais), na escuridão, usando energia química (sulfetos).",
+    erradas: ["A descoberta de água líquida em Marte.", "A presença de aminoácidos em meteoritos.", "A existência de fósseis de dinossauros na Antártida."],
+    explicacao: "Nas fontes hidrotermais, bactérias quimiossintetizantes produzem matéria orgânica a partir de reações entre gases (como H2S), sem luz solar. Isso mostra que a vida pode ter surgido em ambientes extremos."
+  },
+  {
+    id: 237,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida I",
+    tag: "tag-biologia",
+    topico: "Coacervados",
+    q: "O que diferencia os coacervados das células primitivas?",
+    a: "Os coacervados não possuem material genético nem metabolismo próprio; são apenas aglomerados de proteínas e água.",
+    erradas: ["Os coacervados possuem DNA e são capazes de se reproduzir.", "Os coacervados são células procariontes completas.", "Os coacervados não possuem membrana externa, apenas organelas."],
+    explicacao: "Oparin chamou de coacervados as estruturas proteicas que se formam espontaneamente na água. Elas possuem uma película que as isola, mas não são seres vivos, pois não têm DNA nem maquinário metabólico."
+  },
+  {
+    id: 238,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida II",
+    tag: "tag-biologia",
+    topico: "Mundo do RNA — Ribozimas",
+    q: "Por que a hipótese do 'Mundo do RNA' é tão importante para a Origem da Vida?",
+    a: "Porque o RNA tem a capacidade de se autoduplicar e de atuar como enzima (ribozima), resolvendo o dilema do DNA (que não catalisa) e da proteína (que não armazena informação).",
+    erradas: ["Porque o RNA é mais estável e resistente que o DNA.", "Porque o RNA foi a primeira molécula a ser formada na sopa primordial.", "Porque o RNA é a única molécula presente nos vírus atuais."],
+    explicacao: "A descoberta de que o RNA pode agir como enzima (ribozima) sugere que ele foi o primeiro sistema capaz de armazenar informação genética e catalisar reações, antes do surgimento do DNA e das proteínas."
+  },
+  {
+    id: 239,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida II",
+    tag: "tag-biologia",
+    topico: "Cianobactérias e Holocausto do Oxigênio",
+    q: "O que foi o chamado 'Holocausto do Oxigênio' na história da Terra?",
+    a: "A extinção em massa de organismos anaeróbios, que eram intoxicados pelo oxigênio liberado pela fotossíntese das cianobactérias.",
+    erradas: ["A queima de florestas primitivas que dizimou os dinossauros.", "A extinção das cianobactérias por causa da radiação UV.", "A morte de todos os peixes pela poluição dos mares primitivos."],
+    explicacao: "Antes das cianobactérias, a Terra não tinha oxigênio livre. Quando elas passaram a realizá-la, o O2 (altamente tóxico para os anaeróbios) se acumulou na atmosfera, causando a maior extinção em massa da história do planeta."
+  },
+  {
+    id: 240,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida II",
+    tag: "tag-biologia",
+    topico: "Endossimbiose — Mitocôndrias",
+    q: "De acordo com a Teoria da Endossimbiose, qual foi o evento que originou as mitocôndrias?",
+    a: "Uma célula ancestral fagocitou uma bactéria aeróbia, que passou a viver em simbiose, fornecendo energia em troca de proteção.",
+    erradas: ["Uma cianobactéria fagocitou uma célula eucarionte.", "A invaginação da membrana plasmática formou uma organela dupla.", "O núcleo celular englobou uma bactéria fotossintetizante."],
+    explicacao: "A mitocôndria surgiu da endocitose de uma bactéria aeróbia. Já o cloroplasto surgiu da endocitose de uma cianobactéria fotossintetizante por uma célula que já possuía mitocôndrias."
+  },
+  {
+    id: 241,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida II",
+    tag: "tag-biologia",
+    topico: "Endossimbiose vs Invaginação",
+    q: "Qual das alternativas NÃO é uma evidência da Teoria Endossimbiótica?",
+    a: "A presença de uma membrana simples (única) envolvendo as mitocôndrias e cloroplastos.",
+    erradas: ["A presença de DNA circular próprio nas organelas.", "A presença de ribossomos 70S (tipo bacteriano).", "A capacidade de autoduplicação independente da célula."],
+    explicacao: "A evidência é a presença de uma membrana DUPLA. A membrana interna seria da própria bactéria fagocitada, e a externa viria da vesícula formada pela célula hospedeira durante a fagocitose."
+  },
+  {
+    id: 242,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida II",
+    tag: "tag-biologia",
+    topico: "Endossimbiose — Invaginação",
+    q: "A Teoria da Invaginação da Membrana (Autógena) é usada para explicar a origem de qual estrutura?",
+    a: "Do envoltório nuclear (carioteca) e do retículo endoplasmático.",
+    erradas: ["Das mitocôndrias e cloroplastos.", "Dos ribossomos e lisossomos.", "Dos peroxissomos e centríolos."],
+    explicacao: "A invaginação da membrana plasmática para dentro da célula ancestral formou os canais internos (retículo endoplasmático) e acabou por envolver o material genético, criando o núcleo (carioteca)."
+  },
+  {
+    id: 243,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Tempo Geológico",
+    tag: "tag-biologia",
+    topico: "Era Pré-Cambriana",
+    q: "Qual foi o principal evento biológico ocorrido na Era Pré-Cambriana?",
+    a: "O surgimento das primeiras células (procariontes) e das cianobactérias, além da formação dos primeiros eucariontes.",
+    erradas: ["A explosão da vida marinha e a conquista do ambiente terrestre.", "O apogeu dos dinossauros e o surgimento das aves.", "A diversificação dos mamíferos e o surgimento dos hominídeos."],
+    explicacao: "A Era Pré-Cambriana durou cerca de 4 bilhões de anos. Foi nela que a vida surgiu na água e evoluiu de procariontes para eucariontes simples, além da grande oxigenação do planeta."
+  },
+  {
+    id: 244,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Tempo Geológico",
+    tag: "tag-biologia",
+    topico: "Era Paleozoica",
+    q: "Quais foram os principais eventos da Era Paleozoica?",
+    a: "A 'explosão' de invertebrados marinhos, o surgimento dos primeiros peixes, anfíbios e a conquista do ambiente terrestre por plantas e animais.",
+    erradas: ["O domínio dos grandes répteis e o surgimento das primeiras angiospermas.", "O surgimento dos mamíferos e a separação dos continentes.", "O surgimento das células eucariontes e a formação da atmosfera redutora."],
+    explicacao: "A Era Paleozoica (vida antiga) é marcada pela transição da vida aquática para a terrestre. Foi quando as primeiras plantas (briófitas e pteridófitas) e os primeiros animais (anfíbios e répteis primitivos) saíram da água."
+  },
+  {
+    id: 245,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Tempo Geológico",
+    tag: "tag-biologia",
+    topico: "Era Mesozoica",
+    q: "Por que a Era Mesozoica é conhecida como a 'Era dos Répteis'?",
+    a: "Porque foi o período de apogeu dos dinossauros, pterossauros e répteis marinhos, dominando todos os ambientes terrestres.",
+    erradas: ["Porque os mamíferos eram os únicos animais existentes.", "Porque os anfíbios dominavam os oceanos.", "Porque as cianobactérias proliferaram nos mares."],
+    explicacao: "A Era Mesozoica (Triássico, Jurássico e Cretáceo) foi dominada pelos répteis de grande porte. As gimnospermas eram a vegetação predominante. A era terminou com a extinção dos dinossauros."
+  },
+  {
+    id: 246,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Tempo Geológico",
+    tag: "tag-biologia",
+    topico: "Era Cenozoica",
+    q: "Quais grupos de animais e plantas dominam a Era Cenozoica?",
+    a: "Mamíferos e Angiospermas (plantas com flores).",
+    erradas: ["Répteis e Gimnospermas (plantas sem flores).", "Anfíbios e Briófitas.", "Aves e Pteridófitas."],
+    explicacao: "Após a extinção dos dinossauros, a Era Cenozoica (vida recente) permitiu a grande expansão e diversificação dos mamíferos e das plantas com flores (angiospermas)."
+  },
+  {
+    id: 247,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Origem da Vida II",
+    tag: "tag-biologia",
+    topico: "O que é vida? (Definição Biológica)",
+    q: "Sob a ótica biológica moderna, qual é o conjunto de características que melhor define um ser vivo?",
+    a: "A capacidade de se reproduzir, transmitir material genético, ter metabolismo e evoluir (adaptar-se).",
+    erradas: ["A presença de uma 'alma' ou força vital que anima a matéria.", "A capacidade exclusiva de realizar movimentos visíveis a olho nu.", "O tamanho reduzido e a presença obrigatória de clorofila."],
+    explicacao: "Para a biologia, a vida é definida por um conjunto de propriedades: organização celular (exceto vírus), metabolismo, reprodução, hereditariedade, evolução e homeostase."
+  },
+  {
+    id: 248,
+    deck: "Biologia",
+    topicoPrincipal: "Origem da Vida",
+    subgrupo: "Tempo Geológico",
+    tag: "tag-biologia",
+    topico: "Estromatólitos",
+    q: "Qual é a importância dos estromatólitos para o estudo da Origem da Vida?",
+    a: "São fósseis de estruturas construídas por cianobactérias, evidências da vida mais antiga da Terra (cerca de 3,5 bilhões de anos).",
+    erradas: ["São os primeiros fósseis de dinossauros encontrados na Ásia.", "São rochas formadas pela queda de meteoros na Era Cenozoica.", "São conchas de moluscos marinhos que viveram no Paleozoico."],
+    explicacao: "Os estromatólitos são camadas de sedimento e calcário formadas por colônias de cianobactérias. Sua presença em rochas antigas prova que a vida fotossintetizante já existia no Pré-Cambriano."
+  },
+// ==========================================
+  // INTRODUÇÃO À BIOLOGIA E MÉTODO CIENTÍFICO
+  // ==========================================
+  {
+    id: 249,
+    deck: "Biologia",
+    topicoPrincipal: "Introdução à Biologia",
+    subgrupo: "Características Gerais dos Seres Vivos",
+    tag: "tag-biologia",
+    topico: "Vírus vs Antibióticos",
+    q: "Por que os antibióticos não são eficazes no combate a infecções virais (como gripes e resfriados)?",
+    a: "Porque os antibióticos atuam em estruturas celulares (como a parede bacteriana ou ribossomos 70S), e os vírus são acelulares e usam a maquinaria da célula hospedeira.",
+    erradas: ["Porque os vírus são maiores que as bactérias.", "Porque os antibióticos destroem as células de defesa do corpo.", "Porque os vírus possuem uma parede celular mais resistente."],
+    explicacao: "Os antibióticos matam bactérias (seres celulares). Como os vírus não têm célula e se multiplicam DENTRO das nossas células, o antibiótico não tem onde agir sem prejudicar o hospedeiro."
+  },
+  {
+    id: 250,
+    deck: "Biologia",
+    topicoPrincipal: "Introdução à Biologia",
+    subgrupo: "Características Gerais dos Seres Vivos",
+    tag: "tag-biologia",
+    topico: "Vírus — Bacteriófagos",
+    q: "O que é um bacteriófago?",
+    a: "É um tipo de vírus que infecta exclusivamente bactérias, injetando seu material genético no interior da célula bacteriana.",
+    erradas: ["Uma bactéria que causa doenças em fagos.", "Um fungo microscópico que se alimenta de bactérias.", "Um vírus que infecta apenas células eucariontes."],
+    explicacao: "Bacteriófagos (ou fagos) são vírus específicos de bactérias. Eles foram fundamentais para o desenvolvimento da biologia molecular, pois ajudaram a provar que o DNA é o material genético."
+  },
+  {
+    id: 251,
+    deck: "Biologia",
+    topicoPrincipal: "Introdução à Biologia",
+    subgrupo: "Método Científico",
+    tag: "tag-biologia",
+    topico: "Efeito Placebo e Estudo Duplo-Cego",
+    q: "Em um experimento clínico, o que é o 'Efeito Placebo' e por que o estudo deve ser 'duplo-cego'?",
+    a: "Placebo é a melhora do paciente por expectativa (mesmo sem remédio). O duplo-cego evita que médicos e pacientes saibam quem toma o remédio, eliminando a influência psicológica.",
+    erradas: ["Placebo é o remédio falso que causa efeitos colaterais. O estudo cego testa apenas em animais.", "Placebo é a dose máxima do remédio. O duplo-cego é feito com dois remédios diferentes.", "Placebo é a comparação entre dois remédios. O duplo-cego é feito sem o grupo controle."],
+    explicacao: "O grupo placebo (ex: pílula de farinha) mostra o poder da mente (sugestão). Para que o cientista não interfira nos resultados, nem ele nem o paciente sabem quem recebeu o remédio real."
+  },
+  {
+    id: 252,
+    deck: "Biologia",
+    topicoPrincipal: "Introdução à Biologia",
+    subgrupo: "Características Gerais dos Seres Vivos",
+    tag: "tag-biologia",
+    topico: "Homeostase — Exemplos Práticos",
+    q: "Quais são exemplos de processos fisiológicos que buscam a Homeostase no corpo humano?",
+    a: "Suor para baixar a temperatura, insulina para baixar a glicose e respiração acelerada para eliminar CO2.",
+    erradas: ["Crescimento ósseo, multiplicação celular e cicatrização.", "Digestão de proteínas, absorção de vitaminas e evacuação.", "Mutação genética, seleção natural e evolução da espécie."],
+    explicacao: "Homeostase é o equilíbrio dinâmico do meio interno (temperatura, pH, glicemia). O corpo usa mecanismos de feedback negativo para voltar ao estado normal quando há uma alteração."
+  },
+  {
+    id: 253,
+    deck: "Biologia",
+    topicoPrincipal: "Introdução à Biologia",
+    subgrupo: "Método Científico",
+    tag: "tag-biologia",
+    topico: "Variável Dependente vs Independente",
+    q: "Qual a diferença entre a Variável Independente e a Variável Dependente em um experimento?",
+    a: "A Independente é o que o pesquisador manipula (causa); a Dependente é o resultado que ele mede (efeito).",
+    erradas: ["A Independente é o resultado do experimento; a Dependente é o que o pesquisador altera.", "A Independente precisa ser mantida constante; a Dependente sofre variações externas.", "A Independente é o grupo controle; a Dependente é o grupo experimental."],
+    explicacao: "Exemplo: Testar um fertilizante. A quantidade de fertilizante é a Variável Independente (o que você muda). O crescimento da planta é a Variável Dependente (o que você observa se mudou)."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — ÁGUA E SAIS MINERAIS
+  // ==========================================
+  {
+    id: 254,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Osmose — Soluções Hipertônicas e Hipotônicas",
+    q: "O que acontece com uma hemácia colocada em uma solução hipotônica (ex: água destilada)?",
+    a: "A hemácia ganha água por osmose e pode se romper (hemólise), pois o meio externo está menos concentrado que o interno.",
+    erradas: ["A hemácia perde água e murcha (crenação).", "A hemácia não sofre alteração, pois há equilíbrio.", "A hemácia absorve os sais minerais da solução."],
+    explicacao: "Na solução hipotônica, a concentração de soluto fora da célula é menor. A água se desloca do meio menos concentrado para o mais concentrado, inchando a célula até estourar."
+  },
+  {
+    id: 255,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Água — Hidrólise e Desidratação",
+    q: "Qual o papel da água nas reações de Hidrólise e Desidratação?",
+    a: "Na hidrólise, a água é consumida para quebrar uma molécula; na desidratação (síntese), a água é liberada como produto da união de duas moléculas.",
+    erradas: ["A água é sempre liberada para quebrar moléculas.", "A água atua apenas como solvente, sem participar da reação.", "A água é produzida nas reações de quebra de proteínas."],
+    explicacao: "Hidrólise = quebra com água (digestão). Desidratação = síntese liberando água (ex: formação de ligação peptídica entre aminoácidos)."
+  },
+  {
+    id: 256,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Macronutrientes vs Micronutrientes",
+    q: "Qual a diferença entre macronutrientes e micronutrientes na dieta?",
+    a: "Macronutrientes (proteínas, carboidratos, lipídios) são necessários em grandes quantidades para energia/estrutura; micronutrientes (vitaminas e minerais) são necessários em pequenas quantidades para regulação.",
+    erradas: ["Macronutrientes são as vitaminas; micronutrientes são as gorduras.", "Macronutrientes fornecem apenas energia; micronutrientes constroem músculos.", "Macronutrientes são orgânicos; micronutrientes são apenas inorgânicos."],
+    explicacao: "Macronutrientes (macro = grande) incluem os 3 nutrientes energéticos e a água. Micronutrientes (micro = pequeno) são os sais minerais e as vitaminas, que atuam como coenzimas e reguladores."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — GLICÍDIOS
+  // ==========================================
+  {
+    id: 257,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Ligação Glicosídica (Alfa vs Beta)",
+    q: "Por que o ser humano consegue digerir o amido (ligação alfa) mas não a celulose (ligação beta)?",
+    a: "Porque nossas enzimas digestivas (amilase) são específicas para quebrar a ligação alfa da glicose, não a ligação beta.",
+    erradas: ["Porque a celulose não é feita de glicose.", "Porque a celulose está envolvida por uma parede de quitina.", "Porque a ligação beta é mais fraca e não pode ser quebrada."],
+    explicacao: "A celulose possui ligações do tipo beta (1,4) entre as glicoses. O corpo humano não produz a enzima celulase para quebrar essa ligação. Por isso ela age como fibra."
+  },
+  {
+    id: 258,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Função das Fibras Alimentares",
+    q: "Qual é a importância das fibras (celulose) na dieta humana, mesmo não sendo digeridas?",
+    a: "Elas absorvem água, aumentam o bolo fecal e estimulam os movimentos peristálticos (trânsito intestinal).",
+    erradas: ["Elas fornecem energia rápida para as células.", "Elas são absorvidas no intestino e transformadas em glicogênio.", "Elas digerem as gorduras ingeridas na refeição."],
+    explicacao: "Como não as digerimos, a celulose (fibra) serve de 'vassoura' para o intestino. Ela retém água e previne a prisão de ventre e doenças intestinais."
+  },
+  {
+    id: 259,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicogênio vs Amido",
+    q: "Qual a diferença entre amido e glicogênio?",
+    a: "Amido é o polissacarídeo de reserva energética vegetal; o glicogênio é a reserva energética animal (armazenado no fígado e músculos).",
+    erradas: ["Amido é a reserva animal; glicogênio é a reserva vegetal.", "Amido é estrutural (parede celular); glicogênio é enzimático.", "Amido é um monossacarídeo; glicogênio é um dissacarídeo."],
+    explicacao: "Ambos são polímeros de glicose, mas o amido é encontrado nas plantas (tubérculos, grãos) e o glicogênio é encontrado nos animais, servindo para manter a glicemia entre as refeições."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — LIPÍDIOS
+  // ==========================================
+  {
+    id: 260,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Emulsificação de Gorduras",
+    q: "O que é a emulsificação de gorduras e qual substância realiza esse processo no intestino?",
+    a: "É a quebra mecânica de grandes gotas de gordura em gotas menores, realizada pela ação dos sais biliares (bile).",
+    erradas: ["É a quebra química das gorduras pela lipase.", "É a transformação de gordura em carboidrato pelo fígado.", "É a absorção de gordura pelas vilosidades intestinais."],
+    explicacao: "A bile não digere (não quebra quimicamente) a gordura. Ela atua como um detergente, aumentando a área de contato para que a enzima lipase possa digeri-las com mais eficiência."
+  },
+  {
+    id: 261,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Lipoproteínas — Quilomícrons",
+    q: "Qual é a função dos quilomícrons no transporte de lipídios?",
+    a: "Transportar os lipídios absorvidos no intestino (da dieta) para os tecidos e o fígado, através da linfa e do sangue.",
+    erradas: ["Transportar o colesterol produzido no fígado para as artérias.", "Transportar exclusivamente as vitaminas hidrossolúveis.", "Quebrar as gorduras no interior da corrente sanguínea."],
+    explicacao: "Os quilomícrons são as lipoproteínas mais leves e maiores. Eles carregam os triglicerídeos da alimentação para serem usados como energia ou armazenados no tecido adiposo."
+  },
+  {
+    id: 262,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Lipídios",
+    tag: "tag-biologia",
+    topico: "Colesterol — Funções Essenciais",
+    q: "Apesar da má fama, o colesterol é essencial. Quais são as três principais funções dele no organismo?",
+    a: "Compor a membrana celular, ser precursor de hormônios esteroides (testosterona, estrogênio) e da vitamina D.",
+    erradas: ["Fornecer energia rápida para os músculos, compor enzimas e transportar oxigênio.", "Atuar como principal fonte de energia, ser precursor da insulina e dos sais minerais.", "Digirir gorduras, formar a hemoglobina e atuar na coagulação."],
+    explicacao: "O colesterol é um lipídio estrutural. Ele estabiliza a membrana plasmática animal, é matéria-prima para os hormônios sexuais e para a síntese de vitamina D na pele."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — PROTEÍNAS
+  // ==========================================
+  {
+    id: 263,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Cálculo de Ligações Peptídicas",
+    q: "Se uma proteína tem 100 aminoácidos, quantas ligações peptídicas ela possui?",
+    a: "99 ligações peptídicas.",
+    erradas: ["100 ligações peptídicas.", "101 ligações peptídicas.", "50 ligações peptídicas."],
+    explicacao: "A fórmula é: Número de aminoácidos - 1 = Número de ligações peptídicas. Isso ocorre porque cada ligação une dois aminoácidos, liberando uma molécula de água."
+  },
+  {
+    id: 264,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Estrutura Quaternária",
+    q: "O que caracteriza a estrutura quaternária de uma proteína?",
+    a: "A união de duas ou mais cadeias polipeptídicas dobradas e funcionais (ex: hemoglobina, que tem 4 cadeias).",
+    erradas: ["A sequência linear de aminoácidos (estrutura primária).", "As dobras em alfa-hélice ou beta-folha (estrutura secundária).", "O formato tridimensional de uma única cadeia (estrutura terciária)."],
+    explicacao: "Primária = colar de contas (sequência). Secundária = dobras. Terciária = forma 3D. Quaternária = várias bolinhas (subunidades) juntas formando o complexo proteico final."
+  },
+  {
+    id: 265,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Proteínas",
+    tag: "tag-biologia",
+    topico: "Anemia Falciforme — Consequência Estrutural",
+    q: "Como a troca de um único aminoácido (glutâmico por valina) causa a anemia falciforme?",
+    a: "A valina é apolar (hidrofóbica), o que faz as moléculas de hemoglobina se agruparem e distorcerem a hemácia para o formato de foice.",
+    erradas: ["A valina é polar, o que impede o transporte de oxigênio.", "A troca do aminoácido destrói a estrutura primária da proteína.", "A troca impede a ligação do ferro ao grupo heme."],
+    explicacao: "A substituição muda apenas a estrutura primária, mas isso altera a forma da proteína (terciária). A valina 'gruda' em outra hemoglobina, formando fibras rígidas e deformando a célula."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — ENZIMAS
+  // ==========================================
+  {
+    id: 266,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Cofatores e Coenzimas",
+    q: "Qual a diferença entre cofator e coenzima na ação enzimática?",
+    a: "Cofator é geralmente um íon metálico (ex: zinco, magnésio); coenzima é uma molécula orgânica (frequentemente vitaminas) que auxilia a enzima.",
+    erradas: ["Cofator é a proteína principal; coenzima é o substrato.", "Cofator é a vitamina; coenzima é o metal.", "Ambos são proteínas que destroem o substrato."],
+    explicacao: "Muitas enzimas precisam de 'ajudantes'. Se o ajudante é inorgânico (metal), é cofator. Se é orgânico (como as vitaminas do complexo B), é coenzima."
+  },
+  {
+    id: 267,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Enzimas",
+    tag: "tag-biologia",
+    topico: "Desnaturação vs Inibição Enzimática",
+    q: "Qual a diferença entre desnaturar uma enzima e inibi-la competitivamente?",
+    a: "A desnaturação destrói a forma 3D da enzima (irreversível pelo calor); a inibição competitiva apenas bloqueia o sítio ativo temporariamente (reversível com mais substrato).",
+    erradas: ["A desnaturação quebra a estrutura primária; a inibição quebra a ligação peptídica.", "A desnaturação é reversível; a inibição competitiva é irreversível.", "Não há diferença, ambos destroem a enzima permanentemente."],
+    explicacao: "O calor desnatura a proteína (perde a função). O inibidor competitivo 'senta' no lugar do substrato, mas se você colocar mais substrato, ele volta a funcionar (não houve destruição)."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — VITAMINAS
+  // ==========================================
+  {
+    id: 268,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Toxicidade de Vitaminas Lipossolúveis",
+    q: "Por que o excesso de vitaminas lipossolúveis (A, D, E, K) é mais perigoso que o excesso de hidrossolúveis?",
+    a: "Porque as lipossolúveis acumulam-se no tecido adiposo e no fígado, podendo causar intoxicação (hipervitaminose); as hidrossolúveis são excretadas na urina.",
+    erradas: ["Porque as lipossolúveis são transformadas em gordura corporal.", "Porque as hidrossolúveis não podem ser consumidas em excesso.", "Porque as lipossolúveis atuam como veneno nas células nervosas."],
+    explicacao: "A solubilidade define o destino: as hidrossolúveis (B e C) são filtradas pelos rins e vão embora na urina. As lipossolúveis ficam armazenadas no corpo, e o excesso pode ser tóxico."
+  },
+  {
+    id: 269,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitaminas — Complexo B (Pelagra)",
+    q: "Qual vitamina do complexo B, quando deficiente, causa a Pelagra (doença dos 3 D's: dermatite, diarreia e demência)?",
+    a: "Vitamina B3 (Niacina).",
+    erradas: ["Vitamina B1 (Tiamina).", "Vitamina B9 (Ácido fólico).", "Vitamina B12 (Cobalamina)."],
+    explicacao: "A B1 causa beribéri. A B3 (niacina) causa pelagra. A B9 causa problemas no tubo neural em fetos. A B12 causa anemia perniciosa."
+  },
+  {
+    id: 270,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Vitaminas",
+    tag: "tag-biologia",
+    topico: "Vitamina C — Escorbuto",
+    q: "Por que a falta de Vitamina C causa o escorbuto (gengivas sangrando e feridas que não cicatrizam)?",
+    a: "Porque a Vitamina C é essencial para a síntese de colágeno, a proteína que dá resistência aos vasos sanguíneos e à pele.",
+    erradas: ["Porque a Vitamina C é essencial para a coagulação do sangue.", "Porque a falta de Vitamina C destrói os glóbulos brancos.", "Porque a Vitamina C atua na formação óssea direta."],
+    explicacao: "Sem vitamina C, o colágeno não é produzido corretamente (as cadeias de prolina não são hidroxiladas). Isso torna os vasos frágeis, causando sangramentos."
+  },
+
+  // ==========================================
+  // BIOQUÍMICA — METABOLISMO
+  // ==========================================
+  {
+    id: 271,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Glicólise",
+    q: "A Glicólise (primeira etapa da respiração) é um processo anabólico ou catabólico?",
+    a: "Catabólico, pois quebra a glicose (6 carbonos) em duas moléculas de piruvato (3 carbonos), liberando energia (ATP).",
+    erradas: ["Anabólico, pois constrói piruvato a partir de glicose.", "Anabólico, pois gasta ATP para formar glicose.", "Catabólico, pois constrói ácido lático."],
+    explicacao: "Quebrar uma molécula maior (glicose) em menores (piruvato) para gerar energia é a definição de catabolismo. Ocorre no citoplasma."
+  },
+  {
+    id: 272,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Fermentação Alcoólica",
+    q: "Qual é o produto final da fermentação alcoólica realizada por leveduras?",
+    a: "Etanol (álcool etílico), CO2 e energia (ATP).",
+    erradas: ["Ácido lático e energia.", "Glicose e oxigênio.", "Ácido acético e metano."],
+    explicacao: "A fermentação alcoólica quebra a glicose em etanol e gás carbônico. É usada na produção de pães (o CO2 faz a massa crescer) e bebidas alcoólicas."
+  },
+  {
+    id: 273,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Corpos Cetônicos",
+    q: "Em dietas restritivas (jejum prolongado ou dieta cetogênica), o que acontece com o excesso de quebra de gorduras no fígado?",
+    a: "Ocorre a produção de corpos cetônicos, que são usados como fonte de energia alternativa (pelo cérebro) e podem causar acidose no sangue.",
+    erradas: ["As gorduras são transformadas em glicose diretamente.", "As gorduras são convertidas em proteínas musculares.", "As gorduras são excretadas intactas nas fezes."],
+    explicacao: "Quando falta glicose e o glicogênio acaba, o corpo queima muita gordura. O fígado produz corpos cetônicos. Em excesso, eles acidificam o sangue (cetoacidose), o que é perigoso."
+  },
+  {
+    id: 274,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Metabolismo — Ciclo da Ureia",
+    q: "Qual é o destino do grupo amina (nitrogênio) dos aminoácidos durante o catabolismo de proteínas?",
+    a: "É convertido em amônia e depois em ureia no fígado, sendo excretado na urina.",
+    erradas: ["É transformado em glicose para gerar energia.", "É excretado diretamente como gás carbônico pelos pulmões.", "É armazenado no tecido adiposo como gordura."],
+    explicacao: "A amônia é tóxica. O fígado transforma a amônia em ureia (menos tóxica e solúvel) para que os rins possam eliminá-la. A deficiência nesse processo ou excesso de proteínas pode causar gota (ácido úrico)."
+  },
+  {
+    id: 275,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Insulina vs Glucagon",
+    q: "Qual é a ação da Insulina e do Glucagon no controle da glicemia?",
+    a: "Insulina: reduz a glicose (hipoglicemiante), estimulando a entrada nas células. Glucagon: aumenta a glicose (hiperglicemiante), quebrando o glicogênio no fígado.",
+    erradas: ["Insulina aumenta a glicose; Glucagon reduz.", "Ambos atuam aumentando a glicose no sangue.", "Insulina é produzida no fígado; Glucagon no pâncreas."],
+    explicacao: "Eles são antagonistas. Após comer, a insulina é liberada para guardar a glicose. Em jejum, o glucagon é liberado para tirar a glicose do fígado e mandar para o sangue."
+  },
+  {
+    id: 276,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Metabolismo",
+    tag: "tag-biologia",
+    topico: "Diabetes Melito — Tipo 1 vs Tipo 2",
+    q: "Qual a diferença básica entre o Diabetes Tipo 1 e o Tipo 2?",
+    a: "Tipo 1: destruição das células beta do pâncreas (não produz insulina). Tipo 2: as células resistem à insulina (resistência periférica).",
+    erradas: ["Tipo 1: excesso de insulina. Tipo 2: falta de glucagon.", "Tipo 1 é causado por obesidade. Tipo 2 é genético.", "Ambos ocorrem por falha na tireoide."],
+    explicacao: "No tipo 1 (autoimune), o corpo não tem insulina, logo a glicose fica no sangue. No tipo 2, a insulina é produzida, mas o receptor celular não responde."
+  },
+  {
+    id: 277,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Glicídios",
+    tag: "tag-biologia",
+    topico: "Glicólise e Fadiga Muscular",
+    q: "Por que a fermentação lática ocorre nos músculos durante exercícios intensos?",
+    a: "Porque a demanda de oxigênio é maior que a oferta, forçando a célula a gerar energia (ATP) anaerobicamente, produzindo ácido lático.",
+    erradas: ["Porque o músculo precisa construir mais proteínas.", "Porque as mitocôndrias se multiplicam rapidamente.", "Porque a insulina impede a entrada de glicose na célula."],
+    explicacao: "Sem oxigênio suficiente, a cadeia respiratória para. Para não parar de gerar energia, a célula usa a fermentação lática, que gera menos ATP e acumula ácido lático, causando dor e fadiga."
+  },
+  {
+    id: 278,
+    deck: "Biologia",
+    topicoPrincipal: "Bioquímica",
+    subgrupo: "Constituintes Inorgânicos da Célula",
+    tag: "tag-biologia",
+    topico: "Flúor e Cálcio — Funções",
+    q: "Quais são as principais funções biológicas do Cálcio e do Flúor no corpo humano?",
+    a: "Cálcio: coagulação sanguínea, contração muscular e ossos. Flúor: formação do esmalte dentário e prevenção de cáries.",
+    erradas: ["Cálcio: transporte de oxigênio. Flúor: síntese de hormônios.", "Cálcio: visão noturna. Flúor: coagulação.", "Cálcio: produção de energia. Flúor: contração muscular."],
+    explicacao: "O cálcio é essencial para os ossos, mas também atua na coagulação e nos músculos (se faltar, dá cãibras). O flúor fortalece o esmalte dos dentes, evitando cáries."
   }
 ];

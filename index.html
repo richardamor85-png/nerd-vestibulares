@@ -128,7 +128,32 @@
 
         @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(25px, 35px) scale(1.05); } }
 
-        header { text-align: center; margin-bottom: 20px; z-index: 1; }
+        /* Estilo do Pomodoro Discreto no Topo */
+        #pomodoro-bar {
+            width: 100%;
+            background-color: #1e293b;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 16px;
+            font-size: 13px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        #pomodoro-bar.hidden { transform: translateY(-100%); }
+        .pomodoro-controls { display: flex; gap: 8px; align-items: center; margin-left: 15px; }
+        .pomodoro-controls select, .pomodoro-controls button { background: #334155; color: white; border: 1px solid #475569; padding: 3px 6px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .pomodoro-toggle-switch { background: #0f172a; color: #94a3b8; border: 1px solid #475569; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-left: 15px; font-weight: 700; }
+        .pomodoro-toggle-switch.active { background: #10b981; color: white; border-color: #059669; }
+        
+        #toggle-pomodoro-view { position: fixed; top: 6px; right: 12px; z-index: 1001; background: #334155; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-size: 11px; display: none; align-items: center; justify-content: center; }
+
+        header { text-align: center; margin-bottom: 20px; z-index: 1; margin-top: 15px; }
         h1 { color: #ffffff; margin: 0 0 6px 0; font-size: 28px; font-weight: 800; }
         body.theme-clean h1 { color: #0f172a; }
         .subtitle { color: #cbd5e1; font-size: 13px; font-weight: 600; }
@@ -153,10 +178,14 @@
         .case-accent-line { width: 4px; height: 38px; background: linear-gradient(180deg, #38bdf8, #818cf8); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
         .case-title { font-size: 15px; font-weight: 700; line-height: 1.3; color: #ffffff; }
 
-        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; width: 100%; }
+        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; width: 100%; user-select: text; }
 
+        /* Marca-Texto & Alternativas */
+        mark.custom-highlight { background-color: #fef08a !important; color: #1e293b !important; padding: 2px 4px; border-radius: 3px; cursor: pointer; }
+        
         .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; width: 100%; }
-        .option-card { padding: 14px 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; }
+        .option-card { padding: 14px 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; user-select: none; }
+        .option-card.crossed-out { text-decoration: line-through; color: #94a3b8; background: #334155 !important; opacity: 0.5; }
         .option-card.correct { background: #059669 !important; border-color: #10b981 !important; color: #fff !important; }
         .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; color: #fff !important; }
 
@@ -175,7 +204,6 @@
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], select { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
         label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; font-weight: 800; letter-spacing: 0.5px; }
 
-        /* REGRA ADICIONADA: Espaçamento elegante para as opções */
         select option { padding: 8px 12px; font-size: 14px; background-color: #0f172a; color: #ffffff; }
 
         .auth-box-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 20px; max-width: 380px; width: 100%; margin: 15px auto; text-align: center; }
@@ -222,6 +250,24 @@
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
 
+    <!-- Botão flutuante para recolher/expandir o Pomodoro se ativado -->
+    <button id="toggle-pomodoro-view" title="Ocultar/Exibir Barra Pomodoro">👁️</button>
+
+    <!-- Pomodoro Discreto no Topo (Com opção de ligar/desligar) -->
+    <div id="pomodoro-bar" class="hidden">
+        <span>⏱️ <span id="pomodoro-status">Modo Foco</span>: <strong id="pomodoro-timer">25:00</strong></span>
+        <div class="pomodoro-controls">
+            <select id="focus-time-select">
+                <option value="25">25 min</option>
+                <option value="50">50 min</option>
+                <option value="15">15 min</option>
+            </select>
+            <button id="pomodoro-start">Iniciar</button>
+            <button id="pomodoro-reset">Resetar</button>
+        </div>
+        <button id="pomodoro-master-toggle" class="pomodoro-toggle-switch">Pomodoro: Desligado</button>
+    </div>
+
     <header>
         <h1>Nerd Vestibulares</h1>
         <div class="subtitle">Plataforma de Alta Performance &bull; Teoria & Exercícios</div>
@@ -253,7 +299,6 @@
                     <div class="menu-grid">
                         <div style="width:100%;">
                             <label>1. Disciplina / Tema:</label>
-                            <!-- ORGANIZAÇÃO POR ÁREAS DO CONHECIMENTO -->
                             <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
                                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
                                 <option value="Linguagens">📝 Linguagens</option>
@@ -313,7 +358,6 @@
             </div>
             
             <div class="filter-panel-box">
-                <!-- ORGANIZAÇÃO POR ÁREAS DO CONHECIMENTO -->
                 <select id="theoryFilterDisc" onchange="aoMudarDisciplinaResumo()">
                     <option value="Todos">🌐 Disciplina: Todas</option>
                     <option value="Linguagens">📝 Linguagens</option>
@@ -445,18 +489,33 @@
             </div>
 
             <div style="width: 100%;">
-                <span class="mission-badge" id="missionTag">História</span>
+                <!-- Barra de ferramentas com caneta marca-texto -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span class="mission-badge" id="missionTag" style="margin-bottom: 0;">História</span>
+                    <button class="editor-btn" id="btn-highlighter" style="background: #1e293b; border-color: #475569;">
+                        ✏️ Marca-Texto (<span id="highlighter-status">OFF</span>)
+                    </button>
+                </div>
+
                 <div class="case-header-box">
                     <div class="case-accent-line"></div>
                     <div class="case-title" id="caseTitle">Tópico Principal</div>
                 </div>
+                
                 <div class="case-desc" id="caseDesc">Carregando pergunta...</div>
+                
                 <div class="options-grid" id="optionsGrid"></div>
-                <button class="btn-action btn-skip" id="skipCardBtn" onclick="pularCardAtual()">⏭️ Pular Questão</button>
+                
+                <div style="display: flex; gap: 10px; justify-content: center; width: 100%; margin-top: 5px;">
+                    <button class="btn-action" id="btn-confirm" style="display: none; margin: 0; max-width: 180px;">Confirmar Resposta</button>
+                    <button class="btn-action btn-skip" id="skipCardBtn" onclick="pularCardAtual()" style="margin: 0; max-width: 180px;">⏭️ Pular Questão</button>
+                </div>
+
                 <div class="explanation-box" id="explanationBox">
                     <strong id="expTitle">💡 Mini-Resumo Teórico:</strong>
                     <span id="expText">Explicação...</span>
                 </div>
+                
                 <button class="btn-action btn-warning" id="nextCardBtn" onclick="avancarCardComSeguranca()">Próximo Card ➔</button>
                 <button class="btn-action btn-danger" onclick="confirmarAbandonoSessao()">↩️ Abandonar Sessão</button>
             </div>
@@ -473,6 +532,9 @@
         </div>
 
     </div>
+
+    <!-- Elemento de Áudio para o Alerta do Pomodoro (15 segundos) -->
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
 
     <!-- Scripts de Questões por Disciplina -->
     <script src="historia.js"></script>
@@ -529,6 +591,8 @@
             carregarConfiguracoesSalvas();
             carregarPerfilUsuario();
             atualizarTopicosMenu();
+            initPomodoroLogic();
+            initHighlighterLogic();
         };
 
         function carregarPerfilUsuario() {
@@ -867,12 +931,32 @@
         function iniciarEstudoPersonalizado() { sessaoAtual.modoPersonalizado = true; executarInicioSessao(); }
 
         function executarInicioSessao() {
-            sessaoAtual.indice = 0; sessaoAtual.vidas = 3; sessaoAtual.acertos = 0; sessaoAtual.erros = 0;
+            sessaoAtual.indice = 0; 
+            sessaoAtual.acertos = 0; 
+            sessaoAtual.erros = 0;
             sessaoAtual.tempoInicioSessao = Date.now();
+            
             let limiteDesejado = parseInt(document.getElementById('selectTamanhoSessao').value) || 10;
 
+            if (limiteDesejado === 5) {
+                sessaoAtual.vidas = 2;
+            } else if (limiteDesejado === 10) {
+                sessaoAtual.vidas = 5;
+            } else if (limiteDesejado === 20) {
+                sessaoAtual.vidas = 8;
+            } else {
+                sessaoAtual.vidas = 5; 
+            }
+
             if (sessaoAtual.modoPersonalizado) {
-                let deckFiltrado = masterDeck.filter(c => sessaoAtual.questoesRespondidasHistorico[c.id] !== undefined);
+                let tipoFiltro = document.getElementById('customTipoFiltro').value;
+                let deckFiltrado = masterDeck.filter(c => {
+                    let historicoItem = sessaoAtual.questoesRespondidasHistorico[c.id];
+                    if (!historicoItem) return false;
+                    if (tipoFiltro === 'erradas') return !historicoItem.acertou;
+                    if (tipoFiltro === 'acertadas') return historicoItem.acertou;
+                    return true;
+                });
                 deckFiltrado.sort(() => Math.random() - 0.5);
                 sessaoAtual.cardsSessao = deckFiltrado.slice(0, limiteDesejado);
             } else {
@@ -937,7 +1021,7 @@
             tag.innerText = card.deck || "Estudo";
 
             document.getElementById('caseTitle').innerText = `${card.subgrupo || ''} — ${card.topico}`;
-            document.getElementById('caseDesc').innerText = card.q;
+            document.getElementById('caseDesc').innerHTML = card.q;
 
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
@@ -947,17 +1031,55 @@
                 const btn = document.createElement('button');
                 btn.className = 'option-card';
                 btn.innerText = alt;
-                btn.onclick = () => responderCard(alt, card.a, card.id, card.explicacao, btn);
+                
+                // Clique simples para selecionar (se não riscada)
+                btn.onclick = (e) => {
+                    if (btn.classList.contains('crossed-out')) return;
+                    document.querySelectorAll('.option-card').forEach(b => b.style.borderColor = 'transparent');
+                    btn.style.borderColor = '#38bdf8';
+                    btn.dataset.selected = "true";
+                    document.querySelectorAll('.option-card').forEach(b => { if(b !== btn) b.dataset.selected = "false"; });
+                    document.getElementById('btn-confirm').style.display = 'block';
+                };
+
+                // Duplo clique para riscar alternativa errada (Eliminar distrator)
+                btn.ondblclick = (e) => {
+                    e.preventDefault();
+                    btn.classList.toggle('crossed-out');
+                    if (btn.classList.contains('crossed-out')) {
+                        btn.dataset.selected = "false";
+                        btn.style.borderColor = 'transparent';
+                    }
+                    verificarSelecaoAtiva();
+                };
+
                 grid.appendChild(btn);
             });
 
+            document.getElementById('btn-confirm').style.display = 'none';
             document.getElementById('explanationBox').style.display = 'none';
             document.getElementById('nextCardBtn').style.display = 'none';
-            document.getElementById('skipCardBtn').style.display = 'block';
+            document.getElementById('skipCardBtn').style.display = 'block'; // Sempre visível ao carregar
+
+            // Configurar botão Confirmar Resposta
+            const btnConfirm = document.getElementById('btn-confirm');
+            btnConfirm.onclick = () => {
+                let selecionadaBtn = Array.from(grid.children).find(b => b.dataset.selected === "true");
+                if (!selecionadaBtn) return;
+                responderCard(selecionadaBtn.innerText, card.a, card.id, card.explicacao, selecionadaBtn);
+            };
         }
 
+        function verificarSelecaoAtiva() {
+            const grid = document.getElementById('optionsGrid');
+            let algumSelecionado = Array.from(grid.children).some(b => b.dataset.selected === "true");
+            document.getElementById('btn-confirm').style.display = algumSelecionado ? 'block' : 'none';
+        }
+
+        // --- CORREÇÃO: LÓGICA DE PULAR QUESTÃO (FUNCIONAL A QUALQUER MOMENTO) ---
         function pularCardAtual() {
             pararTimer();
+            // Remove o card da posição atual e o envia para o final do array da sessão
             let pulado = sessaoAtual.cardsSessao.splice(sessaoAtual.indice, 1)[0];
             sessaoAtual.cardsSessao.push(pulado);
             carregarCard();
@@ -967,7 +1089,8 @@
             pararTimer();
             const botoes = document.querySelectorAll('.option-card');
             botoes.forEach(b => b.disabled = true);
-            document.getElementById('skipCardBtn').style.display = 'none';
+            document.getElementById('skipCardBtn').style.display = 'none'; // Oculta só após CONFIRMAR a resposta
+            document.getElementById('btn-confirm').style.display = 'none';
 
             let acertou = (escolhida === correta);
             processarRespostaRevisao(cardId, acertou);
@@ -1021,6 +1144,174 @@
             let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
             html += `• XP Ganho: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
             document.getElementById('reportContent').innerHTML = html;
+        }
+
+        // --- LÓGICA DA CANETA MARCA-TEXTO ---
+        function initHighlighterLogic() {
+            let highlighterActive = false;
+            const btnHighlighter = document.getElementById('btn-highlighter');
+            const highlighterStatus = document.getElementById('highlighter-status');
+            const questionContent = document.getElementById('caseDesc');
+
+            btnHighlighter.addEventListener('click', () => {
+                highlighterActive = !highlighterActive;
+                if (highlighterActive) {
+                    btnHighlighter.style.background = '#fef08a';
+                    btnHighlighter.style.color = '#1e293b';
+                    highlighterStatus.textContent = 'ON';
+                } else {
+                    btnHighlighter.style.background = '#1e293b';
+                    btnHighlighter.style.color = '#f8fafc';
+                    highlighterStatus.textContent = 'OFF';
+                }
+            });
+
+            questionContent.addEventListener('mouseup', () => {
+                if (!highlighterActive) return;
+                const selection = window.getSelection();
+                if (!selection.isCollapsed && selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    const span = document.createElement('mark');
+                    span.className = 'custom-highlight';
+                    span.title = 'Clique para remover o destaque';
+                    try {
+                        range.surroundContents(span);
+                        selection.removeAllRanges();
+                    } catch (e) {
+                        console.log("Seleção complexa.");
+                    }
+                }
+            });
+
+            questionContent.addEventListener('click', (e) => {
+                if (e.target.tagName === 'MARK') {
+                    const parent = e.target.parentNode;
+                    parent.replaceChild(document.createTextNode(e.target.textContent), e.target);
+                    parent.normalize();
+                }
+            });
+        }
+
+        // --- LÓGICA DO POMODORO DISCRETO (COM OPÇÃO DE LIGAR/DESLIGAR) ---
+        function initPomodoroLogic() {
+            const pomodoroBar = document.getElementById('pomodoro-bar');
+            const togglePomodoroViewBtn = document.getElementById('toggle-pomodoro-view');
+            const masterToggleBtn = document.getElementById('pomodoro-master-toggle');
+            const timerDisplay = document.getElementById('pomodoro-timer');
+            const startBtn = document.getElementById('pomodoro-start');
+            const resetBtn = document.getElementById('pomodoro-reset');
+            const timeSelect = document.getElementById('focus-time-select');
+            const statusLabel = document.getElementById('pomodoro-status');
+            const alarmSound = document.getElementById('alarm-sound');
+
+            let totalSeconds = 25 * 60;
+            let timerInterval = null;
+            let isRunning = false;
+            let isBreak = false;
+            let alarmTimer = null;
+            let pomodoroEnabled = false;
+
+            function togglePomodoroState() {
+                pomodoroEnabled = !pomodoroEnabled;
+                if (pomodoroEnabled) {
+                    pomodoroBar.classList.remove('hidden');
+                    togglePomodoroViewBtn.style.display = 'flex';
+                    masterToggleBtn.classList.add('active');
+                    masterToggleBtn.textContent = 'Pomodoro: Ligado';
+                } else {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    startBtn.textContent = 'Iniciar';
+                    stopAlarm();
+                    pomodoroBar.classList.add('hidden');
+                    togglePomodoroViewBtn.style.display = 'none';
+                    masterToggleBtn.classList.remove('active');
+                    masterToggleBtn.textContent = 'Pomodoro: Desligado';
+                }
+            }
+
+            masterToggleBtn.addEventListener('click', togglePomodoroState);
+
+            togglePomodoroViewBtn.addEventListener('click', () => {
+                pomodoroBar.classList.toggle('hidden');
+                togglePomodoroViewBtn.textContent = pomodoroBar.classList.contains('hidden') ? '⏱️' : '👁️';
+            });
+
+            timeSelect.addEventListener('change', (e) => {
+                if (!isRunning) {
+                    totalSeconds = parseInt(e.target.value) * 60;
+                    updateDisplay();
+                }
+            });
+
+            function updateDisplay() {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            startBtn.addEventListener('click', () => {
+                if (!pomodoroEnabled) return;
+                if (!isRunning) {
+                    if (totalSeconds <= 0) resetTimerValues();
+                    isRunning = true;
+                    startBtn.textContent = 'Pausar';
+                    timerInterval = setInterval(() => {
+                        if (totalSeconds > 0) {
+                            totalSeconds--;
+                            updateDisplay();
+                        } else {
+                            clearInterval(timerInterval);
+                            isRunning = false;
+                            startBtn.textContent = 'Iniciar';
+                            triggerAlarmSequence();
+                        }
+                    }, 1000);
+                } else {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    startBtn.textContent = 'Iniciar';
+                }
+            });
+
+            resetBtn.addEventListener('click', () => {
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtn.textContent = 'Iniciar';
+                resetTimerValues();
+                stopAlarm();
+            });
+
+            function resetTimerValues() {
+                isBreak = false;
+                statusLabel.textContent = 'Modo Foco';
+                totalSeconds = parseInt(timeSelect.value) * 60;
+                updateDisplay();
+            }
+
+            function triggerAlarmSequence() {
+                statusLabel.textContent = '⏰ Tempo Esgotado!';
+                alarmSound.currentTime = 0;
+                alarmSound.play().catch(e => console.log("Áudio bloqueado pelo navegador."));
+                
+                alarmTimer = setTimeout(() => {
+                    stopAlarm();
+                    if (!isBreak) {
+                        isBreak = true;
+                        statusLabel.textContent = 'Descanso';
+                        totalSeconds = 5 * 60;
+                        updateDisplay();
+                    }
+                }, 15000);
+            }
+
+            function stopAlarm() {
+                if (alarmTimer) clearTimeout(alarmTimer);
+                alarmSound.pause();
+                alarmSound.currentTime = 0;
+            }
+
+            updateDisplay();
         }
     </script>
 </body>

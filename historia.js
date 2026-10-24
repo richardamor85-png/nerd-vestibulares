@@ -1450,5 +1450,136 @@ const deckHistoria = [
     a: "O choque e o diálogo entre a cultura profana (leiga/racional) e a cultura eclesiástica (religiosa).",
     erradas: ["A extinção total da fé cristã.", "A superioridade definitiva da ciência sobre a Igreja.", "O fim das universidades medievais."],
     explicacao: "O século XII viu o surgimento de uma cultura leiga, com a literatura de cavalaria e o direito romano, desafiando o monopólio cultural da Igreja."
+  },
+ // ==========================================
+  // PRÉ-HISTÓRIA E ANTIGUIDADE
+  // ==========================================
+  {
+    id: 279,
+    deck: "História",
+    topicoPrincipal: "Idade Antiga",
+    subgrupo: "Pré-História",
+    tag: "tag-historia",
+    topico: "Revolução Neolítica — Sedentarismo",
+    q: "Qual foi a principal consequência do desenvolvimento da agricultura no Neolítico para a organização humana?",
+    a: "O sedentarismo e a formação das primeiras aldeias, permitindo o acúmulo de excedentes e a divisão social do trabalho.",
+    erradas: ["A volta ao nomadismo devido ao esgotamento do solo.", "O fim imediato das crenças religiosas.", "A extinção dos grandes animais caçados no Paleolítico."],
+    explicacao: "A agricultura fixou o homem à terra. Com o excedente, alguns deixaram de produzir comida para se tornarem artesãos, sacerdotes ou guerreiros, criando hierarquias."
+  },
+  {
+    id: 280,
+    deck: "História",
+    topicoPrincipal: "Idade Antiga",
+    subgrupo: "Grécia Antiga",
+    tag: "tag-historia",
+    topico: "Democracia Ateniense — Mulheres e Metecos",
+    q: "Na democracia ateniense, quem eram os metecos e qual o seu status político?",
+    a: "Estrangeiros residentes que eram livres e podiam trabalhar, mas não tinham direitos políticos (não votavam e não eram cidadãos).",
+    erradas: ["Escravos libertos que podiam votar na Eclésia.", "Cidadãos atenienses que possuíam terras fora da cidade.", "Sacerdotes que controlavam a Assembleia do Povo."],
+    explicacao: "A democracia ateniense era restrita aos homens, filhos de pai e mãe atenienses. Mulheres, escravos e metecos (estrangeiros) estavam excluídos da cidadania."
+  },
+  {
+    id: 281,
+    deck: "História",
+    topicoPrincipal: "Idade Antiga",
+    subgrupo: "Roma Antiga",
+    tag: "tag-historia",
+    topico: "Roma — Lei das XII Tábuas",
+    q: "Qual foi a importância da Lei das XII Tábuas (450 a.C.) para os plebeus romanos?",
+    a: "Tornou o direito escrito e público, limitando o monopólio dos patrícios sobre as leis orais e garantindo maior segurança jurídica.",
+    erradas: ["Concedeu o direito de voto às mulheres romanas.", "Aboliu a escravidão por dívidas na República.", "Criou o Império Romano e deu poder absoluto a Otávio Augusto."],
+    explicacao: "Antes da lei, os patrícios interpretavam as leis orais da forma que queriam. A Lei das XII Tábuas escreveu as regras, limitando os abusos da aristocracia."
+  },
+  {
+    id: 282,
+    deck: "História",
+    topicoPrincipal: "Idade Antiga",
+    subgrupo: "Roma Antiga",
+    tag: "tag-historia",
+    topico: "Roma — Pax Romana",
+    q: "O que foi a Pax Romana, período iniciado por Otávio Augusto?",
+    a: "Um longo período de estabilidade política e militar no Império, que favoreceu o comércio, a construção de obras e a cultura.",
+    erradas: ["Uma guerra civil entre patrícios e plebeus.", "Uma aliança militar com os povos bárbaros.", "A expansão do cristianismo como religião oficial."],
+    explicacao: "Augusto centralizou o poder e pacificou as fronteiras. A 'paz romana' (cerca de 200 anos) permitiu o desenvolvimento econômico e a romanização das províncias."
+  },
+
+  // ==========================================
+  // IDADE MÉDIA, ISLÃ E BIZÂNCIO
+  // ==========================================
+  {
+    id: 283,
+    deck: "História",
+    topicoPrincipal: "Idade Média",
+    subgrupo: "Idade Média e Feudalismo",
+    tag: "tag-historia",
+    topico: "Feudalismo — Obrigações Servis",
+    q: "Quais eram as três principais obrigações dos servos em relação aos senhores feudais?",
+    a: "Corveia (trabalho gratuito), Talha (metade da produção) e Banalidades (pagamento pelo uso de moinhos, fornos, etc.).",
+    erradas: ["Dízimo (para o exército), Imposto de Renda e Aluguel.", "Serviço militar, casamento arranjado e educação dos filhos.", "Trabalho assalariado, fidelidade e voto."],
+    explicacao: "O servo era preso à terra (gleba). A exploração vinha através da Corveia (trabalhar nas terras do senhor), Talha (entregar parte do que produzia) e Banalidades (pagar taxas)."
+  },
+  {
+    id: 284,
+    deck: "História",
+    topicoPrincipal: "Idade Média",
+    subgrupo: "Cruzadas",
+    tag: "tag-historia",
+    topico: "Cruzadas — Objetivos",
+    q: "Quais foram os principais objetivos da Primeira Cruzada (1096)?",
+    a: "Recuperar a Terra Santa (Jerusalém) do domínio muçulmano e canalizar a violência dos nobres guerreiros para fora da Europa.",
+    erradas: ["Expulsar os bizantinos de Constantinopla.", "Criar rotas comerciais com a Ásia para a burguesia.", "Destruir o Império Carolíngio e unificar a França."],
+    explicacao: "O Papa Urbano II convocou os nobres para libertar Jerusalém. Além da fé, a Igreja queria a paz interna na Europa e os nobres buscavam terras e riquezas."
+  },
+  {
+    id: 285,
+    deck: "História",
+    topicoPrincipal: "Idade Média",
+    subgrupo: "Islamismo e Reinos Africanos",
+    tag: "tag-historia",
+    topico: "Islamismo — Hégira",
+    q: "O que foi a Hégira (622 d.C.) e qual sua importância para o islamismo?",
+    a: "A fuga de Maomé de Meca para Medina. Marca o início do calendário muçulmano e a consolidação da primeira comunidade islâmica.",
+    erradas: ["A conquista de Meca e a destruição dos ídolos politeístas.", "A fundação da cidade de Bagdá pelo califa Al-Mansur.", "A separação entre sunitas e xiitas."],
+    explicacao: "Maomé foi perseguido em Meca por pregar o monoteísmo. Ao ir para Medina (Hégira), ele pôde organizar o Estado islâmico, que depois voltou para conquistar Meca."
+  },
+  {
+    id: 286,
+    deck: "História",
+    topicoPrincipal: "Idade Média",
+    subgrupo: "Império Bizantino e Sacro Império",
+    tag: "tag-historia",
+    topico: "Bizâncio — Cisma do Oriente",
+    q: "O que foi o Cisma do Oriente (1054)?",
+    a: "A separação entre a Igreja Católica Apostólica Romana (Ocidente) e a Igreja Ortodoxa (Oriente), por disputas de poder e diferenças teológicas.",
+    erradas: ["A divisão do Império Romano em duas partes por Teodósio.", "A conversão dos povos bárbaros ao cristianismo.", "A Reforma Protestante liderada por Martinho Lutero."],
+    explicacao: "O Papa e o Patriarca de Constantinopla excomungaram-se mutuamente. Questões como o uso de ícones e a autoridade do Papa geraram a separação que perdura até hoje."
+  },
+  {
+    id: 287,
+    deck: "História",
+    topicoPrincipal: "Idade Média",
+    subgrupo: "Baixa Idade Média",
+    tag: "tag-historia",
+    topico: "Crise do Século XIV — Peste Negra",
+    q: "Como a Peste Negra (século XIV) contribuiu para o fim do feudalismo?",
+    a: "A morte de um terço da população gerou escassez de mão de obra, forçando os senhores a pagar salários, o que enfraqueceu a servidão.",
+    erradas: ["O aumento da produção agrícola fortaleceu os senhores feudais.", "A Igreja Católica ganhou mais poder e controlou a economia.", "Os camponeses fugiram para as cidades e abandonaram as plantações."],
+    explicacao: "Com menos trabalhadores, os servos sobreviventes puderam negociar melhores condições. O sistema servil entrou em colapso, acelerando a transição para o capitalismo."
+  },
+
+  // ==========================================
+  // TRANSIÇÃO PARA A MODERNIDADE
+  // ==========================================
+  {
+    id: 288,
+    deck: "História",
+    topicoPrincipal: "Idade Moderna",
+    subgrupo: "Renascimento",
+    tag: "tag-historia",
+    topico: "Renascimento — Antropocentrismo",
+    q: "Qual foi a principal mudança de mentalidade trazida pelo Renascimento?",
+    a: "A transição do Teocentrismo (Deus no centro) para o Antropocentrismo (o homem no centro), valorizando a razão e a ciência.",
+    erradas: ["O fim das monarquias e a criação das repúblicas modernas.", "A proibição da arte religiosa e a destruição das igrejas.", "A valorização da fé acima da ciência e da observação."],
+    explicacao: "O Renascimento resgatou a cultura greco-romana e valorizou o humanismo. O homem passou a ser visto como capaz de entender e transformar o mundo."
   }
 ];

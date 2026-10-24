@@ -346,5 +346,104 @@ const deckHistoriaBrasil = [
     a: "O acesso a terras baratas, localização geográfica privilegiada (próxima à ferrovia Carajás e portos) e incentivos governamentais.",
     erradas: ["A abundância de mão de obra qualificada na região.", "O solo fértil e o clima úmido do litoral maranhense.", "A proibição da pecuária extensiva no estado."],
     explicacao: "A expansão da fronteira agrícola (soja) transformou o sul do Maranhão (Gerais de Balsas), substituindo parte da pecuária extensiva."
+  },
+ // ==========================================
+  // HISTÓRIA DO MARANHÃO
+  // ==========================================
+  {
+    id: 289,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Período Colonial e Ocupação",
+    tag: "tag-historia",
+    topico: "Invasões Estrangeiras — França Equinocial",
+    q: "Qual foi o objetivo dos franceses ao fundarem a França Equinocial em São Luís (1612)?",
+    a: "Criar uma colônia francesa na linha do Equador para explorar as riquezas locais e garantir o domínio do território.",
+    erradas: ["Expulsar os portugueses e holandeses da região.", "Implantar a monocultura da cana-de-açúcar.", "Catequizar os indígenas para a Coroa Espanhola."],
+    explicacao: "Liderados por Daniel de La Touche, os franceses chegaram e fundaram o forte de São Luís (homenagem ao rei Luís XIII). Foram expulsos pelos portugueses na Batalha de Guaxenduba."
+  },
+  {
+    id: 290,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Revoltas Nativistas",
+    tag: "tag-historia",
+    topico: "Revolta de Beckman (1684)",
+    q: "Quais foram as principais causas da Revolta de Beckman no Maranhão?",
+    a: "O monopólio comercial da Companhia de Comércio (que cobrava preços abusivos) e a escravização indígena proibida pelos jesuítas.",
+    erradas: ["A cobrança de impostos sobre a extração de ouro.", "O desejo de independência do Brasil.", "A imposição do trabalho assalariado na indústria têxtil."],
+    explicacao: "Os colonos não tinham escravos africanos suficientes e não podiam escravizar índios (proibição dos jesuítas). Além disso, a Companhia de Comércio controlava os preços, gerando revolta."
+  },
+  {
+    id: 291,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Revoltas Regenciais",
+    tag: "tag-historia",
+    topico: "Balaiada — Causas",
+    q: "Qual foi a principal motivação popular para a adesão à Balaiada (1838-1841)?",
+    a: "A extrema pobreza, a crise econômica (queda do algodão) e a insatisfação com os abusos do governo e das elites locais.",
+    erradas: ["O desejo de separar o Maranhão do Brasil.", "A luta pela abolição imediata da escravidão.", "O apoio à volta de D. Pedro I ao trono."],
+    explicacao: "A Balaiada começou com disputas entre grupos políticos (bem-te-vis e conservadores), mas ganhou força quando a população pobre (vaqueiros, artesãos, escravos) se juntou contra a miséria."
+  },
+  {
+    id: 292,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Revoltas Regenciais",
+    tag: "tag-historia",
+    topico: "Balaiada — Líderes Populares",
+    q: "Quem foram os principais líderes populares da Balaiada e suas motivações iniciais?",
+    a: "Raimundo Gomes (Cara Preta) e Manuel dos Anjos (fabricante de balaios), que buscavam libertar presos e vingar injustiças pessoais.",
+    erradas: ["Manuel Beckman e Jorge Sampaio, líderes da Revolta de Beckman.", "Fidié e Lord Cochrane, líderes militares portugueses.", "Benedito Leite e Urbano Santos, líderes republicanos."],
+    explicacao: "Raimundo Gomes invadiu a cadeia para libertar seu irmão. Manuel dos Anjos se revoltou contra um soldado que desonrou sua filha. O movimento cresceu e se tornou uma revolta social."
+  },
+  {
+    id: 293,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Era Vargas e Populismo",
+    tag: "tag-historia",
+    topico: "Vitorinismo — Práticas Políticas",
+    q: "Quais eram as principais práticas políticas do Vitorinismo no Maranhão (1940-1960)?",
+    a: "O coronelismo, o clientelismo, a fraude eleitoral, o controle da máquina pública e a perseguição aos opositores.",
+    erradas: ["A defesa da democracia plena e da liberdade de imprensa.", "A distribuição igualitária de terras e riquezas.", "O incentivo à industrialização autônoma e à educação pública."],
+    explicacao: "Victorino Freire controlava o estado através do PSD. Ele usava a máquina pública para benefício próprio e dos aliados, além de fraudar eleições para manter o poder (ex: Greve de 1951)."
+  },
+  {
+    id: 294,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Era Vargas e Populismo",
+    tag: "tag-historia",
+    topico: "Greve de 1951 — Balaiada Urbana",
+    q: "O que motivou a Greve de 1951 em São Luís, também conhecida como 'Balaiada Urbana'?",
+    a: "A fraude eleitoral que garantiu a vitória de Eugênio de Barros (aliado de Victorino) sobre Saturnino Belo, gerando revolta popular.",
+    erradas: ["O aumento abusivo das passagens de transporte público.", "A falta de alimentos causada pela Segunda Guerra Mundial.", "A prisão de Manuel Beckman por autoridades portuguesas."],
+    explicacao: "A população de São Luís foi às ruas contra a manipulação do TRE. O movimento paralisou a cidade, queimou prédios e ficou conhecido como 'Ilha Rebelde'."
+  },
+  {
+    id: 295,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Economia Contemporânea",
+    tag: "tag-historia",
+    topico: "Economia — Babaçu",
+    q: "Qual é a importância econômica e social do babaçu para o estado do Maranhão?",
+    a: "O estado é o maior produtor nacional; o extrativismo do babaçu é a principal fonte de renda e subsistência para milhares de famílias (quebradeiras de coco).",
+    erradas: ["É a principal matéria-prima da indústria automobilística maranhense.", "Foi o produto responsável pelo surto industrial do século XIX.", "Substituiu o algodão na pauta de exportações do século XVIII."],
+    explicacao: "O babaçu é essencial para a sobrevivência das populações tradicionais do interior. A extração da amêndoa, do óleo e do carvão move uma economia local e enfrenta conflitos de terra."
+  },
+  {
+    id: 296,
+    deck: "História do Brasil",
+    topicoPrincipal: "História do Maranhão",
+    subgrupo: "Ditadura Militar",
+    tag: "tag-historia",
+    topico: "Era Sarney — Modernização",
+    q: "Qual foi a base do governo de José Sarney no Maranhão a partir de 1966?",
+    a: "O apoio da ditadura militar (ARENA) e a modernização conservadora ('Maranhão Novo'), com investimentos federais em infraestrutura e indústria (ALUMAR, Itaqui).",
+    erradas: ["O apoio dos movimentos sociais e a reforma agrária.", "A ruptura total com o governo militar e o alinhamento com o comunismo.", "A criação de uma democracia popular e participativa."],
+    explicacao: "Sarney rompeu com o Vitorinismo e se aliou aos militares. Com verbas federais, criou a TVE, SUDEMA, Hidrelétrica de Boa Esperança e o Porto de Itaqui, mas mantendo a estrutura oligárquica."
   }
 ];
