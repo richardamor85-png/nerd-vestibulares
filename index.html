@@ -132,7 +132,7 @@
 
         .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-        .game-container { border-radius: 24px; padding: 32px; max-width: 980px; width: 100%; position: relative; min-height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .game-container { border-radius: 24px; padding: 20px; max-width: 980px; width: 100%; position: relative; min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .screen { display: none; flex-direction: column; width: 100%; height: 100%; align-items: center; }
         .screen.active { display: flex; }
 
@@ -163,15 +163,15 @@
         .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; width: 100%; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
         .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 6px; font-weight: 800; }
 
-        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px 24px; max-width: 380px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 14px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4), inset 0 1px 0 rgba(255,255,255,0.3); margin: 6px auto; display: block; text-align: center; }
-        .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(14, 165, 233, 0.6); }
-        .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 6px 20px rgba(0,0,0,0.3); color: #ffffff; }
-        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); display: none; max-width: 380px; margin: 6px auto; }
-        .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4); }
-        .btn-ai { background: linear-gradient(135deg, #ec4899, #be185d); box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4); }
-        .btn-db { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); }
-        .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; max-width: 380px; margin: 6px auto; }
-        .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin: 10px auto; font-size: 13px; padding: 12px 24px; box-shadow: none; font-weight: 700; max-width: 380px; display: block; }
+        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 10px 16px; max-width: 320px; width: 100%; font-size: 13px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4), inset 0 1px 0 rgba(255,255,255,0.3); margin: 3px auto; display: block; text-align: center; }
+        .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(14, 165, 233, 0.6); }
+        .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.3); color: #ffffff; }
+        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); display: block; max-width: 320px; margin: 3px auto; }
+        .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4); }
+        .btn-ai { background: linear-gradient(135deg, #ec4899, #be185d); box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4); }
+        .btn-db { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+        .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; max-width: 320px; margin: 3px auto; }
+        .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin: 6px auto; font-size: 13px; padding: 10px 20px; box-shadow: none; font-weight: 700; max-width: 320px; display: block; }
 
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], select, textarea { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 14px; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); }
         
@@ -189,7 +189,7 @@
         .config-card-box { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 14px auto; color: #f8fafc; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
         .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; max-width: 100%; }
 
-        .preview-card-item { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 10px; text-align: left; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .preview-card-item { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 10px; margin-bottom: 6px; text-align: left; font-size: 12px; cursor: pointer; transition: all 0.2s; }
         .preview-card-item:hover, .preview-card-item.selected { border-color: #ec4899; background: rgba(236, 72, 153, 0.15); }
 
         .db-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -273,7 +273,6 @@
                         <button class="btn-action btn-ai" onclick="abrirGeradorIA()">🤖 Gerador de Cards por I.A.</button>
                         <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
                         <button class="btn-action btn-db" onclick="abrirPainelBancoDados()">🗂️ Banco de Dados (Navegar/Editar)</button>
-                        <!-- BOTÃO DE CONFIGURAÇÕES POSICIONADO EXATAMENTE ABAIXO DE BANCO DE DADOS -->
                         <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações & API</button>
                         <button class="btn-action btn-danger" style="margin-top: 10px;" onclick="fazerLogout()">🚪 Sair / Trocar Conta</button>
                     </div>
@@ -281,7 +280,7 @@
             </div>
         </div>
 
-        <!-- TELA DO PAINEL "BANCO DE DADOS" COM FILTRO "GERADOS HOJE" -->
+        <!-- TELA DO PAINEL "BANCO DE DADOS" -->
         <div id="screenBancoDados" class="screen">
             <h2 style="color: #10b981; text-align: center; margin-top: 0; font-weight: 800;">🗂️ Gerenciador de Banco de Dados</h2>
             <div style="width: 100%; max-width: 920px; display: flex; flex-direction: column; gap: 12px;">
@@ -343,9 +342,7 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyDadosDB">
-                            <!-- Preenchido via JS -->
-                        </tbody>
+                        <tbody id="tbodyDadosDB"></tbody>
                     </table>
                 </div>
 
@@ -353,12 +350,18 @@
             <button class="btn-action btn-secondary" style="margin-top: 15px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
         </div>
 
-        <!-- MODAL DE EDIÇÃO COMPLETA DE CARTÃO COM PRÉVIA VISUAL INTEGRADA -->
+        <!-- MODAL DE EDIÇÃO COMPLETA DE CARTÃO (COM BOTÃO SALVAR BEM VISÍVEL NO TOPO) -->
         <div id="screenEditorCard" class="screen">
             <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">✏️ Editor Completo de Cartão</h2>
-            <div style="width: 100%; max-width: 850px; display: flex; gap: 20px; align-items: flex-start; max-height: 480px; overflow-y: auto; padding: 15px; background: rgba(15, 23, 42, 0.9); border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3);">
+            
+            <!-- BARRA FIXA SUPERIOR COM OS BOTÕES DE SALVAR E CANCELAR GARANTIDOS -->
+            <div style="display: flex; gap: 15px; justify-content: center; width: 100%; max-width: 850px; margin-bottom: 12px; background: rgba(15, 23, 42, 0.98); padding: 12px; border-radius: 14px; border: 2px solid #10b981;">
+                <button class="btn-action btn-warning" style="margin: 0 !important; max-width: 220px !important; background: linear-gradient(135deg, #10b981, #047857) !important; font-size: 14px !important; padding: 10px 18px !important; display: block !important;" onclick="salvarEdicaoCardDB()">💾 Salvar Alterações</button>
+                <button class="btn-action btn-secondary" style="margin: 0 !important; max-width: 150px !important; font-size: 14px !important; padding: 10px 18px !important; display: block !important;" onclick="abrirPainelBancoDados()">❌ Cancelar</button>
+            </div>
+
+            <div style="width: 100%; max-width: 850px; display: flex; gap: 20px; align-items: flex-start; max-height: 400px; overflow-y: auto; padding: 15px; background: rgba(15, 23, 42, 0.9); border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3);">
                 
-                <!-- COLUNA DA ESQUERDA: FORMULÁRIO DE EDIÇÃO -->
                 <div style="flex: 1; display: flex; flex-direction: column; gap: 10px; text-align: left;">
                     <input type="hidden" id="editCardId">
 
@@ -388,14 +391,8 @@
 
                     <label>Comentário / Fundamentação:</label>
                     <textarea id="editCardExplicacao" rows="4" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;" oninput="atualizarPreviaModalEditor()"></textarea>
-
-                    <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
-                        <button class="btn-action btn-warning" style="margin: 0; max-width: 180px;" onclick="salvarEdicaoCardDB()">💾 Salvar Alterações</button>
-                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 180px;" onclick="abrirPainelBancoDados()">❌ Cancelar</button>
-                    </div>
                 </div>
 
-                <!-- COLUNA DA DIREITA: PRÉVIA VISUAL EM TEMPO REAL -->
                 <div style="flex: 1; background: rgba(11, 17, 32, 0.95); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; text-align: left; position: sticky; top: 0;">
                     <div style="font-size: 12px; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 8px;">👁️ Prévia em Tempo Real (Estilo Simulado):</div>
                     <span class="mission-badge" id="previewEditorDeck" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; width: fit-content;">Disciplina</span>
@@ -434,10 +431,10 @@
             </div>
         </div>
 
-        <!-- TELA DO GERADOR DE CARDS POR I.A. (COM PRÉVIA ESPELHADA EM LADO A LADO) -->
+        <!-- TELA DO GERADOR DE CARDS POR I.A. (BOTÃO SALVAR EM DESTAQUE ABSOLUTO NO TOPO) -->
         <div id="screenGeradorIA" class="screen">
-            <div style="text-align: center; margin-top: 5px; width: 100%;">
-                <h2 style="color: #ec4899; margin-bottom: 6px; font-weight: 800;">🤖 Gerador de Cards com I.A.</h2>
+            <div style="text-align: center; margin-top: 2px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2 style="color: #ec4899; margin-bottom: 4px; font-size: 17px; font-weight: 800;">🤖 Gerador de Cards com I.A.</h2>
                 
                 <div class="menu-grid" id="painelConfigGerador" style="max-width: 450px;">
                     <label>Cole o texto base (Resumo ou Teoria):</label>
@@ -488,36 +485,33 @@
                     </select>
 
                     <button class="btn-action btn-ai" onclick="executarGeradorIA()">✨ Processar e Gerar Prévia</button>
-                    <div id="statusGeradorIA" style="margin-top: 6px; font-size: 13px; color: #38bdf8; font-weight: 700;"></div>
-                    <button class="btn-action btn-secondary" style="margin-top: 10px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
+                    <div id="statusGeradorIA" style="margin-top: 4px; font-size: 13px; color: #38bdf8; font-weight: 700;"></div>
+                    <button class="btn-action btn-secondary" style="margin-top: 6px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
                 </div>
 
-                <!-- PAINEL DE PRÉVIA ESPELHADA DUPLEX (LADO A LADO) -->
-                <div id="painelPreviaIA" style="display: none; width: 100%; max-width: 900px; flex-direction: column; margin-top: 5px;">
+                <!-- PAINEL DE PRÉVIA COM O BOTÃO SALVAR EM DESTAQUE ABSOLUTO NO TOPO -->
+                <div id="painelPreviaIA" style="display: none; width: 100%; max-width: 950px; flex-direction: column; margin-top: 2px; align-items: center;">
                     
-                    <div style="display: flex; gap: 16px; width: 100%; align-items: stretch; max-height: 420px;">
+                    <div style="display: flex; gap: 10px; justify-content: center; width: 100%; margin-bottom: 12px; background: rgba(15, 23, 42, 0.98); padding: 14px; border-radius: 16px; border: 2px solid #10b981; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);">
+                        <button class="btn-action btn-warning" style="margin: 0 !important; max-width: 360px !important; font-size: 15px !important; padding: 12px 24px !important; background: linear-gradient(135deg, #10b981, #047857) !important; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important; display: block !important;" onclick="salvarCardsGeradosNoBanco()">💾 Salvar Cartões na Base (Oficial)</button>
+                        <button class="btn-action btn-secondary" style="margin: 0 !important; max-width: 170px !important; font-size: 12px !important; padding: 10px !important; display: block !important;" onclick="voltarConfigGeradorIA()">✏️ Ajustar Configs</button>
+                        <button class="btn-action btn-secondary" style="margin: 0 !important; max-width: 150px !important; font-size: 12px !important; padding: 10px !important; background: rgba(30,41,59,0.9) !important; display: block !important;" onclick="voltarMenu()">Voltar Menu</button>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; width: 100%; align-items: stretch; max-height: 310px;">
                         
-                        <!-- ESQUERDA: LISTA DE QUESTÕES GERADAS -->
                         <div style="flex: 1; display: flex; flex-direction: column; text-align: left;">
-                            <h3 style="color: #34d399; font-size: 14px; margin: 0 0 8px 0;">👀 Prévia dos Cartões Gerados (<span id="qtdCardsGeradosNum">0</span>)</h3>
-                            <div id="listaCardsPrevia" style="overflow-y: auto; max-height: 380px; padding-right: 6px;"></div>
+                            <h3 style="color: #34d399; font-size: 13px; margin: 0 0 6px 0;">👀 Prévia (<span id="qtdCardsGeradosNum">0</span>)</h3>
+                            <div id="listaCardsPrevia" style="overflow-y: auto; max-height: 270px; padding-right: 4px;"></div>
                         </div>
 
-                        <!-- DIREITA: PAINEL ESPELHADO DO CARD SELECIONADO (FORMATO SIMULADOR) -->
-                        <div style="flex: 1.2; background: rgba(11, 17, 32, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; text-align: left; overflow-y: auto; max-height: 380px;" id="painelEspelhoCard">
-                            <div style="font-size: 11px; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 6px;">🔍 Visualização Espelhada (Como aparecerá no Simulado)</div>
+                        <div style="flex: 1.3; background: rgba(11, 17, 32, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; text-align: left; overflow-y: auto; max-height: 270px;" id="painelEspelhoCard">
+                            <div style="font-size: 11px; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">🔍 Visualização no Simulado</div>
                             <div id="espelhoCardConteudo">
-                                <p style="color: #94a3b8; font-size: 13px; text-align: center; margin-top: 40px;">Clique em qualquer questão ao lado para visualizar aqui em tamanho grande.</p>
+                                <p style="color: #94a3b8; font-size: 12px; text-align: center; margin-top: 30px;">Clique em qualquer questão ao lado.</p>
                             </div>
                         </div>
 
-                    </div>
-
-                    <!-- BARRA INFERIOR DE AÇÕES ORGANIZADA COM BOTÃO SALVAR CLARO -->
-                    <div style="display: flex; gap: 12px; justify-content: center; width: 100%; margin-top: 15px; flex-wrap: wrap;">
-                        <button class="btn-action btn-warning" style="margin: 0; max-width: 260px;" onclick="salvarCardsGeradosNoBanco()">💾 Salvar Cartões na Base</button>
-                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 200px;" onclick="voltarConfigGeradorIA()">✏️ Ajustar Configs</button>
-                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 180px; background: rgba(30,41,59,0.9);" onclick="voltarMenu()">Voltar ao Menu</button>
                     </div>
 
                 </div>
@@ -660,7 +654,7 @@
 
     </div>
 
-    <!-- Scripts de Questões e Motor de I.A. -->
+    <!-- Scripts de Questões, Repositório de I.A. e Motor -->
     <script src="historia.js"></script>
     <script src="biologia.js"></script>
     <script src="historia_brasil.js"></script>
@@ -672,6 +666,7 @@
     <script src="fisica.js"></script>
     <script src="matematica.js"></script>
     <script src="linguagens.js"></script>
+    <script src="cards_ia.js"></script>
     <script src="questoes.js"></script>
     <script src="ia-engine.js"></script>
 
@@ -686,7 +681,6 @@
             erros: 0,
             historicoRevisao: {},
             questoesRespondidasHistorico: {},
-            cardsGeradosIA: [],
             tempoInicioSessao: 0,
             tempoInicioCard: 0,
             timerInterval: null
@@ -711,7 +705,6 @@
                     sessaoAtual.xp = dados.xp || 0;
                     sessaoAtual.historicoRevisao = dados.historicoRevisao || {};
                     sessaoAtual.questoesRespondidasHistorico = dados.questoesRespondidasHistorico || {};
-                    sessaoAtual.cardsGeradosIA = dados.cardsGeradosIA || [];
                 } catch(e) {}
             }
             atualizarTelaBoasVindas();
@@ -720,7 +713,7 @@
         function atualizarTelaBoasVindas() {
             let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
             let nomeJ = config.nomeJogador || 'Richard';
-            let totalCards = (typeof masterDeck !== 'undefined' ? masterDeck.length : 0) + sessaoAtual.cardsGeradosIA.length;
+            let totalCards = (typeof masterDeck !== 'undefined' ? masterDeck.length : 0) + (typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA.length : 0);
             document.getElementById('welcomeMsg').innerText = `Jogador: ${nomeJ} | XP: ${sessaoAtual.xp} XP | Banco: ${totalCards} Questões`;
             atualizarContadorMenu();
         }
@@ -734,7 +727,7 @@
             const top = document.getElementById('selectTopico').value;
             const sub = document.getElementById('selectSubtopico').value;
 
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             let agora = Date.now();
 
             let filtrados = deckCompleto.filter(c => {
@@ -764,7 +757,7 @@
             const selectTopico = document.getElementById('selectTopico');
             selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
             let topicos = new Set();
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             deckCompleto.forEach(c => {
                 let discNorm = normalizarTexto(c.deck);
                 let selDiscNorm = normalizarTexto(disciplina);
@@ -787,7 +780,7 @@
             const selectSub = document.getElementById('selectSubtopico');
             selectSub.innerHTML = '<option value="Todos">📌 Todos os Subtópicos</option>';
             let subs = new Set();
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             deckCompleto.forEach(c => {
                 let discNorm = normalizarTexto(c.deck);
                 let selDiscNorm = normalizarTexto(disciplina);
@@ -807,7 +800,7 @@
             const selectTopico = document.getElementById('inputTopicoDestino');
             selectTopico.innerHTML = '';
             let topicos = new Set();
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             deckCompleto.forEach(c => {
                 let discNorm = normalizarTexto(c.deck);
                 let selDiscNorm = normalizarTexto(disciplina);
@@ -830,7 +823,7 @@
             const selectSub = document.getElementById('inputSubDestino');
             selectSub.innerHTML = '';
             let subs = new Set();
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             deckCompleto.forEach(c => {
                 let discNorm = normalizarTexto(c.deck);
                 let selDiscNorm = normalizarTexto(disciplina);
@@ -856,7 +849,7 @@
             const selectTopico = document.getElementById('dbFiltroTopico');
             selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
             let topicos = new Set();
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             deckCompleto.forEach(c => {
                 let discNorm = normalizarTexto(c.deck);
                 let matchDisc = (disc === 'Todos' || discNorm === normalizarTexto(disc) || (disc === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
@@ -878,7 +871,7 @@
             const selectSub = document.getElementById('dbFiltroSub');
             selectSub.innerHTML = '<option value="Todos">📌 Todos os Assuntos</option>';
             let subs = new Set();
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             deckCompleto.forEach(c => {
                 let discNorm = normalizarTexto(c.deck);
                 let matchDisc = (disc === 'Todos' || discNorm === normalizarTexto(disc) || (disc === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
@@ -901,7 +894,7 @@
             const termoBusca = normalizarTexto(document.getElementById('inputBuscaDB').value);
             const dataHoje = obterDataHojeISO();
             
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             
             let filtrados = deckCompleto.filter(c => {
                 let discNorm = normalizarTexto(c.deck);
@@ -936,7 +929,7 @@
         }
 
         function abrirEditorCard(idCard) {
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             let card = deckCompleto.find(c => c.id == idCard);
             if(!card) return;
 
@@ -996,31 +989,37 @@
 
         function salvarEdicaoCardDB() {
             let idCard = document.getElementById('editCardId').value;
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             let card = deckCompleto.find(c => c.id == idCard);
             if(!card) return;
 
-            card.deck = document.getElementById('editCardDeck').value;
-            card.topicoPrincipal = document.getElementById('editCardTopico').value;
-            card.topico = card.topicoPrincipal;
-            card.subgrupo = document.getElementById('editCardSub').value;
-            card.q = document.getElementById('editCardQ').value;
-            
+            let novosDados = {
+                deck: document.getElementById('editCardDeck').value,
+                topicoPrincipal: document.getElementById('editCardTopico').value,
+                topico: document.getElementById('editCardTopico').value,
+                subgrupo: document.getElementById('editCardSub').value,
+                q: document.getElementById('editCardQ').value,
+                explicacao: document.getElementById('editCardExplicacao').value
+            };
+
             let corretaVal = document.getElementById('editCardCorreta').value;
             if(corretaVal === 'CERTO' || corretaVal === 'ERRADO') {
-                card.estilo = 'cebrape';
-                card.gabarito = corretaVal;
+                novosDados.estilo = 'cebrape';
+                novosDados.gabarito = corretaVal;
                 delete card.a;
                 delete card.erradas;
             } else {
-                card.estilo = 'multipla';
-                card.a = corretaVal;
+                novosDados.estilo = 'multipla';
+                novosDados.a = corretaVal;
                 let erradasStr = document.getElementById('editCardErradas').value;
-                card.erradas = erradasStr.split(',').map(e => e.trim()).filter(e => e.length > 0);
+                novosDados.erradas = erradasStr.split(',').map(e => e.trim()).filter(e => e.length > 0);
                 delete card.gabarito;
             }
 
-            card.explicacao = document.getElementById('editCardExplicacao').value;
+            Object.assign(card, novosDados);
+            if (typeof cardsGeradosIA !== 'undefined' && cardsGeradosIA.some(c => c.id == idCard)) {
+                atualizarCardIA(idCard, novosDados);
+            }
 
             salvarDadosLocais();
             alert("✅ Cartão atualizado com sucesso!");
@@ -1029,7 +1028,9 @@
 
         function excluirCardDB(idCard) {
             if(!confirm("Tem certeza que deseja excluir este cartão do banco?")) return;
-            sessaoAtual.cardsGeradosIA = sessaoAtual.cardsGeradosIA.filter(c => c.id != idCard);
+            if (typeof cardsGeradosIA !== 'undefined') {
+                removerCardIA(idCard);
+            }
             if(typeof masterDeck !== 'undefined') {
                 masterDeck = masterDeck.filter(c => c.id != idCard);
             }
@@ -1053,7 +1054,6 @@
         function abrirConfiguracoesJogo() { mudarTela('screenConfig'); }
         function abrirDashboardMetricas() { window.location.href = 'metricas.html'; }
 
-        // --- GERADOR DE CARDS POR I.A. COM VÍNCULO RIGOROSO AO FILTRO ESCOLHIDO ---
         async function executarGeradorIA() {
             const texto = document.getElementById('inputTextoGeradorIA').value.trim();
             let qtdSelect = document.getElementById('selectQtdGeradorIA').value;
@@ -1076,7 +1076,6 @@
             try {
                 const novosCards = await gerarCardsComIAPersonalizado(texto, formato, qtd, disciplinaDestino, topicoDestino, subDestino);
                 
-                // Força todos os cards gerados a assumirem exatamente os filtros escolhidos pelo usuário
                 novosCards.forEach(card => {
                     card.deck = disciplinaDestino;
                     card.topicoPrincipal = topicoDestino;
@@ -1124,22 +1123,22 @@
             if (card.estilo === 'cebrape') {
                 ['CERTO', 'ERRADO'].forEach(op => {
                     let isCorreta = (op === card.gabarito);
-                    altsHtml += `<div style="padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 6px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${op} ${isCorreta ? ' (Gabarito)' : ''}</div>`;
+                    altsHtml += `<div style="padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; margin-bottom: 4px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${op} ${isCorreta ? ' (Gabarito)' : ''}</div>`;
                 });
             } else {
                 let alts = [...(card.erradas || []), card.a];
                 alts.forEach(alt => {
                     let isCorreta = (alt === card.a);
-                    altsHtml += `<div style="padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 6px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${alt} ${isCorreta ? ' (Correta)' : ''}</div>`;
+                    altsHtml += `<div style="padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; margin-bottom: 4px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${alt} ${isCorreta ? ' (Correta)' : ''}</div>`;
                 });
             }
 
             container.innerHTML = `
-                <span class="mission-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; margin-bottom: 6px;">${card.deck}</span>
-                <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 8px;">${card.topicoPrincipal} — ${card.subgrupo}</div>
-                <div style="font-size: 14px; line-height: 1.6; background: rgba(30, 41, 59, 0.85); padding: 14px; border-radius: 12px; color: #ffffff; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);">${card.q}</div>
-                <div style="margin-bottom: 12px;">${altsHtml}</div>
-                <div style="background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 12px; font-size: 13px; color: #f0fdf4;">
+                <span class="mission-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; margin-bottom: 4px;">${card.deck}</span>
+                <div style="font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 6px;">${card.topicoPrincipal} — ${card.subgrupo}</div>
+                <div style="font-size: 13px; line-height: 1.5; background: rgba(30, 41, 59, 0.85); padding: 10px; border-radius: 10px; color: #ffffff; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1);">${card.q}</div>
+                <div style="margin-bottom: 10px;">${altsHtml}</div>
+                <div style="background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 10px; padding: 10px; font-size: 12px; color: #f0fdf4;">
                     <strong style="color: #38bdf8; display: block; margin-bottom: 4px;">💡 Comentário / Fundamentação:</strong>
                     ${card.explicacao}
                 </div>
@@ -1209,9 +1208,9 @@
                 alert("Nenhum card gerado para salvar.");
                 return;
             }
-            tempCardsGeradosPrevia.forEach(nc => sessaoAtual.cardsGeradosIA.push(nc));
+            adicionarCardsIA(tempCardsGeradosPrevia);
             salvarDadosLocais();
-            alert(`✅ ${tempCardsGeradosPrevia.length} cards salvos com sucesso na disciplina, tópico e subtópico correspondentes!`);
+            alert(`✅ ${tempCardsGeradosPrevia.length} cards salvos com sucesso no repositório de I.A. e disponíveis nos filtros!`);
             voltarMenu();
         }
 
@@ -1236,11 +1235,12 @@
             if (!confirm("⚠️ Tem a certeza absoluta que deseja zerar todo o seu progresso?")) return;
             let chaveLocal = obterChavePerfilLocalStorage();
             localStorage.removeItem(chaveLocal);
+            localStorage.removeItem('nerd_vestibulares_cards_ia_dedicado');
             if (navigator.onLine && usuarioUid) database.ref('users/' + usuarioUid).remove();
             sessaoAtual.xp = 0;
             sessaoAtual.historicoRevisao = {};
             sessaoAtual.questoesRespondidasHistorico = {};
-            sessaoAtual.cardsGeradosIA = [];
+            if (typeof cardsGeradosIA !== 'undefined') cardsGeradosIA = [];
             alert("✨ Progresso limpo com sucesso!");
             voltarMenu();
         }
@@ -1297,13 +1297,13 @@
                 limiteDesejado = parseInt(tamanhoVal) || 10;
             }
 
-            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             let agora = Date.now();
 
             if (sessaoAtual.modoPersonalizado) {
                 let tipoFiltro = document.getElementById('customTipoFiltro').value;
                 if (tipoFiltro === 'ia') {
-                    deckCompleto = [...sessaoAtual.cardsGeradosIA];
+                    deckCompleto = (typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : []);
                 } else {
                     deckCompleto = deckCompleto.filter(c => {
                         let h = sessaoAtual.questoesRespondidasHistorico[c.id];
@@ -1584,8 +1584,7 @@
             let dados = {
                 xp: sessaoAtual.xp,
                 historicoRevisao: sessaoAtual.historicoRevisao,
-                questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico,
-                cardsGeradosIA: sessaoAtual.cardsGeradosIA
+                questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico
             };
             salvarDadosHibrido(dados);
         }
@@ -1597,7 +1596,7 @@
             let percentual = totalResp > 0 ? Math.round((sessaoAtual.acertos / totalResp) * 100) : 0;
             document.getElementById('reportTitle').innerText = percentual >= 70 ? "🏆 Sessão Concluída!" : "⚠️ Desempenho Abaixo da Meta";
             let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
-            html += `• XP Ganho: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
+            html += `• XP Ganho: <b>+${sessaoAtual.xp} XP</b><br>`;
             document.getElementById('reportContent').innerHTML = html;
         }
     </script>
