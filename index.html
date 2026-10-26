@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nerd Vestibulares — RPG Acadêmico Pro</title>
+    <title>Nerd Vestibulares — RPG Acadêmico Pro 3D</title>
     
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-
-    <!-- Fonte Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,6 +38,14 @@
         return 'nerd_vestibulares_perfil_' + nomeJogador;
       }
 
+      function obterDataHojeISO() {
+        const d = new Date();
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+
       auth.onAuthStateChanged((user) => {
         const badge = document.getElementById('dbCounterBadge');
         if (user) {
@@ -60,21 +65,21 @@
           usuarioUid = null;
           document.getElementById('authContainer').style.display = 'block';
           document.getElementById('menuContentGrid').style.display = 'none';
-          if(badge) badge.innerText = "⚠️ Faça Login para Sincronizar entre PC e Celular";
+          if(badge) badge.innerText = "⚠️ Faça Login para Sincronizar entre Dispositivos";
         }
       });
 
       function alternarModoAuth() {
         isCadastroMode = !isCadastroMode;
-        document.getElementById('authTitle').innerText = isCadastroMode ? "📝 Criar Novo Usuário" : "🔐 Sincronização em Nuvem";
+        document.getElementById('authTitle').innerText = isCadastroMode ? "📝 Criar Novo Utilizador" : "🔐 Sincronização em Nuvem";
         document.getElementById('authBtnSubmit').innerText = isCadastroMode ? "Cadastrar e Entrar" : "Entrar";
-        document.getElementById('authToggleMode').innerText = isCadastroMode ? "Já tem conta? Faça Login" : "Não tem conta? Cadastre-se como novo usuário";
+        document.getElementById('authToggleMode').innerText = isCadastroMode ? "Já tem conta? Faça Login" : "Não tem conta? Cadastre-se como novo utilizador";
       }
 
       function submeterAutenticação() {
         const email = document.getElementById('authEmail').value.trim();
         const senha = document.getElementById('authSenha').value.trim();
-        if (!email || !senha) { alert("Preencha o e-mail e a senha."); return; }
+        if (!email || !senha) { alert("Preencha o e-mail e a palavra-passe."); return; }
 
         if (isCadastroMode) {
           auth.createUserWithEmailAndPassword(email, senha)
@@ -82,8 +87,7 @@
             .catch(err => alert("Erro: " + err.message));
         } else {
           auth.signInWithEmailAndPassword(email, senha)
-            .then(() => alert("Conectado! Seus dados foram sincronizados."))
-            .catch(err => alert("Erro: " + err.message));
+            .then(() => alert("Conectado! Dados sincronizados."));
         }
       }
 
@@ -101,176 +105,105 @@
     </script>
 
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        body.theme-glass3d { background-color: #05070c; color: #ffffff; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        body.theme-glass3d .bg-orb { display: block; }
-        body.theme-glass3d .game-container { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
-        body.theme-glass3d .case-desc, body.theme-glass3d .theory-content-box { background: rgba(11, 17, 32, 0.9); border: 1px solid rgba(255,255,255,0.12); color: #f8fafc; }
-        body.theme-glass3d .option-card { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; font-weight: 600; }
+        body.theme-cyber { background-color: #030712; color: #f8fafc; margin: 0; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body.theme-cyber .game-container { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9)); backdrop-filter: blur(30px); border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
 
-        body.theme-neon { background-color: #070913; color: #f8fafc; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        body.theme-neon .bg-orb { display: none; }
-        body.theme-neon .game-container { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid #334155; }
-        body.theme-neon .case-desc, body.theme-neon .theory-content-box { background: #0f172a; border-left: 4px solid #38bdf8; color: #f8fafc; }
-        body.theme-neon .option-card { background: #1e293b; border: 1px solid #475569; color: #ffffff; font-weight: 600; }
+        body.theme-emerald { background-color: #022c22; color: #f0fdf4; margin: 0; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body.theme-emerald .game-container { background: linear-gradient(135deg, rgba(6, 78, 59, 0.9), rgba(2, 44, 34, 0.95)); backdrop-filter: blur(30px); border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
 
-        body.theme-clean { background-color: #f1f5f9; color: #0f172a; margin: 0; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        body.theme-clean .bg-orb { display: none; }
-        body.theme-clean .game-container { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        body.theme-clean .rpg-hud, body.theme-clean .stats-box, body.theme-clean .config-card-box, body.theme-clean .theory-sidebar { background: #f8fafc; color: #0f172a; border-color: #cbd5e1; }
-        body.theme-clean .case-desc, body.theme-clean .theory-content-box { background: #f8fafc; color: #1e293b; border-left: 4px solid #0284c7; }
-        body.theme-clean .option-card { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; font-weight: 600; }
+        body.theme-gold { background-color: #0f0e0e; color: #fef08a; margin: 0; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body.theme-gold .game-container { background: linear-gradient(135deg, rgba(39, 39, 42, 0.95), rgba(24, 24, 27, 0.95)); backdrop-filter: blur(30px); border: 1px solid rgba(234, 179, 8, 0.35); box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(234, 179, 8, 0.2); }
 
-        .bg-orb { position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.45; animation: floatOrb 14s ease-in-out infinite alternate; }
-        .orb-1 { width: 350px; height: 350px; background: linear-gradient(135deg, #1d4ed8, #c026d3); top: -60px; left: -80px; }
-        .orb-2 { width: 380px; height: 380px; background: linear-gradient(135deg, #059669, #0284c7); bottom: -80px; right: -90px; animation-delay: -7s; }
+        body.theme-quartz { background-color: #f8fafc; color: #0f172a; margin: 0; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body.theme-quartz .game-container { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px); border: 1px solid #cbd5e1; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+        body.theme-quartz .rpg-hud, body.theme-quartz .stats-box, body.theme-quartz .config-card-box, body.theme-quartz .auth-box-card { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
+        body.theme-quartz input, body.theme-quartz select, body.theme-quartz textarea { background: #ffffff !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
 
-        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(25px, 35px) scale(1.05); } }
-
-        /* Estilo do Pomodoro Discreto no Topo */
-        #pomodoro-bar {
-            width: 100%;
-            background-color: #1e293b;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px 16px;
-            font-size: 13px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        #pomodoro-bar.hidden { transform: translateY(-100%); }
-        .pomodoro-controls { display: flex; gap: 8px; align-items: center; margin-left: 15px; }
-        .pomodoro-controls select, .pomodoro-controls button { background: #334155; color: white; border: 1px solid #475569; padding: 3px 6px; border-radius: 4px; cursor: pointer; font-size: 11px; }
-        .pomodoro-toggle-switch { background: #0f172a; color: #94a3b8; border: 1px solid #475569; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-left: 15px; font-weight: 700; }
-        .pomodoro-toggle-switch.active { background: #10b981; color: white; border-color: #059669; }
-        
-        #toggle-pomodoro-view { position: fixed; top: 6px; right: 12px; z-index: 1001; background: #334155; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-size: 11px; display: none; align-items: center; justify-content: center; }
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.4; pointer-events: none; }
+        .orb-1 { width: 400px; height: 400px; background: linear-gradient(135deg, #38bdf8, #9333ea); top: -80px; left: -100px; }
+        .orb-2 { width: 450px; height: 450px; background: linear-gradient(135deg, #10b981, #0284c7); bottom: -100px; right: -100px; }
 
         header { text-align: center; margin-bottom: 20px; z-index: 1; margin-top: 15px; }
-        h1 { color: #ffffff; margin: 0 0 6px 0; font-size: 28px; font-weight: 800; }
-        body.theme-clean h1 { color: #0f172a; }
-        .subtitle { color: #cbd5e1; font-size: 13px; font-weight: 600; }
+        h1 { color: #ffffff; margin: 0 0 6px 0; font-size: 30px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        body.theme-quartz h1 { color: #0f172a; text-shadow: none; }
+        .subtitle { color: #cbd5e1; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
 
-        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; text-align: center; }
+        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-        .game-container { border-radius: 20px; padding: 28px; max-width: 960px; width: 100%; position: relative; min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .game-container { border-radius: 24px; padding: 32px; max-width: 980px; width: 100%; position: relative; min-height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .screen { display: none; flex-direction: column; width: 100%; height: 100%; align-items: center; }
         .screen.active { display: flex; }
 
-        .rpg-hud { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.12); margin-bottom: 20px; font-size: 13px; width: 100%; }
+        .rpg-hud { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.85); padding: 14px 20px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.15); margin-bottom: 20px; font-size: 13px; width: 100%; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
         .rpg-hud div { display: flex; flex-direction: column; align-items: center; }
         .hud-val { font-weight: 800; color: #38bdf8; font-size: 16px; }
         .hud-label { font-size: 10px; color: #cbd5e1; text-transform: uppercase; margin-top: 2px; font-weight: 700; }
 
         .progress-container { width: 100%; background: rgba(15, 23, 42, 0.6); height: 8px; border-radius: 10px; margin-bottom: 22px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .progress-bar { height: 100%; background: linear-gradient(90deg, #38bdf8, #10b981); width: 0%; transition: width 0.4s ease; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #38bdf8, #10b981); width: 0%; transition: width 0.4s ease; box-shadow: 0 0 10px #38bdf8; }
 
         .mission-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; }
 
         .case-header-box { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; width: 100%; }
         .case-accent-line { width: 4px; height: 38px; background: linear-gradient(180deg, #38bdf8, #818cf8); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
         .case-title { font-size: 15px; font-weight: 700; line-height: 1.3; color: #ffffff; }
+        .case-desc { font-size: 16px; line-height: 1.6; padding: 22px; border-radius: 16px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; width: 100%; background: rgba(11, 17, 32, 0.85); border: 1px solid rgba(255,255,255,0.12); box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); user-select: text; }
 
-        .case-desc { font-size: 16px; line-height: 1.6; padding: 20px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; color: #ffffff; text-align: justify; width: 100%; user-select: text; }
-
-        /* Marca-Texto & Alternativas */
         mark.custom-highlight { background-color: #fef08a !important; color: #1e293b !important; padding: 2px 4px; border-radius: 3px; cursor: pointer; }
-        
-        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; width: 100%; }
-        .option-card { padding: 14px 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; user-select: none; }
-        .option-card.crossed-out { text-decoration: line-through; color: #94a3b8; background: #334155 !important; opacity: 0.5; }
-        .option-card.correct { background: #059669 !important; border-color: #10b981 !important; color: #fff !important; }
-        .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; color: #fff !important; }
 
-        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; width: 100%; }
+        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; width: 100%; }
+        .option-card { padding: 14px 18px; border-radius: 14px; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; transition: all 0.2s ease; width: 100%; margin-bottom: 6px; color: #ffffff; background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .option-card:hover { transform: translateY(-2px); border-color: #38bdf8; }
+        .option-card.crossed-out { text-decoration: line-through; color: #94a3b8; background: #334155 !important; opacity: 0.5; }
+        .option-card.correct { background: #059669 !important; border-color: #10b981 !important; color: #fff !important; box-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+        .option-card.wrong { background: #dc2626 !important; border-color: #ef4444 !important; color: #fff !important; box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+
+        .explanation-box { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 18px; margin-bottom: 18px; display: none; font-size: 14px; line-height: 1.6; color: #f0fdf4; text-align: justify; width: 100%; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
         .explanation-box strong { color: #38bdf8; display: block; margin-bottom: 6px; font-weight: 800; }
 
-        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px 24px; max-width: 380px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35); margin: 6px auto; display: block; text-align: center; }
-        .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); }
-        .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: none; color: #ffffff; }
-        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); display: none; max-width: 380px; margin: 6px auto; }
-        .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35); }
-        .btn-theory { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35); }
+        .btn-action { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 14px 24px; max-width: 380px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 14px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4), inset 0 1px 0 rgba(255,255,255,0.3); margin: 6px auto; display: block; text-align: center; }
+        .btn-action:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(14, 165, 233, 0.6); }
+        .btn-secondary { background: rgba(51, 65, 85, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 6px 20px rgba(0,0,0,0.3); color: #ffffff; }
+        .btn-warning { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); display: none; max-width: 380px; margin: 6px auto; }
+        .btn-custom { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4); }
+        .btn-ai { background: linear-gradient(135deg, #ec4899, #be185d); box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4); }
+        .btn-db { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); }
         .btn-skip { background: rgba(71, 85, 105, 0.7); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; font-weight: 700; max-width: 380px; margin: 6px auto; }
         .btn-danger { background: rgba(127, 29, 29, 0.85); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); margin: 10px auto; font-size: 13px; padding: 12px 24px; box-shadow: none; font-weight: 700; max-width: 380px; display: block; }
 
-        input[type="text"], input[type="email"], input[type="password"], input[type="number"], select { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 14px; text-align: center; outline: none; }
-        label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; font-weight: 800; letter-spacing: 0.5px; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"], select, textarea { width: 100%; max-width: 380px; padding: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 14px; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); }
+        
+        .menu-grid input, .menu-grid select, .menu-grid label { text-align: center; margin-left: auto; margin-right: auto; display: block; }
+        
+        label { font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+        select option { padding: 8px 12px; font-size: 14px; background-color: #0f172a; color: #ffffff; text-align: center; }
 
-        select option { padding: 8px 12px; font-size: 14px; background-color: #0f172a; color: #ffffff; }
-
-        .auth-box-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 20px; max-width: 380px; width: 100%; margin: 15px auto; text-align: center; }
+        .auth-box-card { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 20px; max-width: 380px; width: 100%; margin: 15px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .auth-toggle-link { font-size: 12px; color: #38bdf8; cursor: pointer; margin-top: 10px; font-weight: 700; display: block; }
 
-        .stats-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); padding: 18px; border-radius: 12px; text-align: left; margin-bottom: 18px; font-size: 14px; max-height: 480px; overflow-y: auto; line-height: 1.6; color: #f8fafc; width: 100%; }
+        .stats-box { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); padding: 18px; border-radius: 16px; text-align: left; margin-bottom: 18px; font-size: 14px; max-height: 480px; overflow-y: auto; line-height: 1.6; color: #f8fafc; width: 100%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); }
         .menu-grid { display: flex; flex-direction: column; gap: 4px; max-width: 380px; margin: 0 auto; width: 100%; align-items: center; }
 
-        .config-card-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 14px auto; color: #f8fafc; }
+        .config-card-box { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 14px auto; color: #f8fafc; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
         .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; max-width: 100%; }
 
-        .filter-panel-box { display: flex; gap: 10px; background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 15px; flex-wrap: wrap; justify-content: center; width: 100%; }
-        .filter-panel-box select { margin-bottom: 0; max-width: 200px; padding: 8px 10px; font-size: 12px; }
+        .preview-card-item { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 10px; text-align: left; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .preview-card-item:hover, .preview-card-item.selected { border-color: #ec4899; background: rgba(236, 72, 153, 0.15); }
 
-        .theory-layout { display: flex; gap: 20px; width: 100%; align-items: flex-start; transition: all 0.3s ease; }
-        .theory-sidebar { width: 280px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto; transition: all 0.3s ease; }
-        .theory-sidebar.collapsed { display: none; }
-        .theory-sidebar-item { padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: #cbd5e1; transition: 0.2s; text-align: left; border: 1px solid transparent; }
-        .theory-sidebar-item:hover, .theory-sidebar-item.active { background: #0ea5e9; color: white; border-color: #38bdf8; }
-        
-        .theory-main-area { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-        
-        .editor-toolbar { display: flex; gap: 5px; background: rgba(15, 23, 42, 0.95); padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); flex-wrap: wrap; align-items: center; }
-        .editor-btn { background: #1e293b; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .editor-btn:hover { background: #0ea5e9; border-color: #38bdf8; color: #fff; }
-        .editor-select { background: #1e293b; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); padding: 5px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; outline: none; margin-bottom: 0; max-width: 130px; }
-        .editor-color { background: #1e293b; border: 1px solid rgba(255,255,255,0.2); width: 32px; height: 30px; border-radius: 6px; cursor: pointer; padding: 2px; }
-
-        .theory-content-box { flex: 1; padding: 25px; border-radius: 14px; line-height: 1.8; font-size: 15px; max-height: 500px; overflow-y: auto; text-align: justify; color: #f8fafc; font-weight: 500; outline: none; }
-        
-        .bizu-card { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 10px; padding: 15px; margin: 18px 0; color: #fde68a; font-size: 14px; line-height: 1.6; text-align: justify; }
-        .bizu-card b { color: #fbbf24; }
-
-        .fixar-card { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 18px; margin: 20px 0; text-align: left; }
-        .fixar-banner { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; padding: 8px 12px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 12px; display: inline-block; margin-bottom: 12px; }
-
-        body.focus-mode .game-container { max-width: 100% !important; height: 95vh !important; }
-        body.focus-mode header, body.focus-mode .filter-panel-box, body.focus-mode .theory-sidebar { display: none !important; }
-
-        @media (max-width: 768px) { .theory-layout { flex-direction: column; } .theory-sidebar { width: 100%; } .filter-panel-box select { max-width: 100%; } }
+        .db-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .db-table th, .db-table td { border-bottom: 1px solid rgba(255, 255, 255, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.1); padding: 10px; text-align: left; background: rgba(15, 23, 42, 0.85); color: #f8fafc; }
+        .db-table th { background: rgba(56, 189, 248, 0.25); color: #38bdf8; font-weight: 800; text-transform: uppercase; }
     </style>
 </head>
-<body class="theme-glass3d">
+<body class="theme-cyber">
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
 
-    <!-- Botão flutuante para recolher/expandir o Pomodoro se ativado -->
-    <button id="toggle-pomodoro-view" title="Ocultar/Exibir Barra Pomodoro">👁️</button>
-
-    <!-- Pomodoro Discreto no Topo (Com opção de ligar/desligar) -->
-    <div id="pomodoro-bar" class="hidden">
-        <span>⏱️ <span id="pomodoro-status">Modo Foco</span>: <strong id="pomodoro-timer">25:00</strong></span>
-        <div class="pomodoro-controls">
-            <select id="focus-time-select">
-                <option value="25">25 min</option>
-                <option value="50">50 min</option>
-                <option value="15">15 min</option>
-            </select>
-            <button id="pomodoro-start">Iniciar</button>
-            <button id="pomodoro-reset">Resetar</button>
-        </div>
-        <button id="pomodoro-master-toggle" class="pomodoro-toggle-switch">Pomodoro: Desligado</button>
-    </div>
-
     <header>
         <h1>Nerd Vestibulares</h1>
-        <div class="subtitle">Plataforma de Alta Performance &bull; Teoria & Exercícios</div>
+        <div class="subtitle">Plataforma de Alta Performance &bull; Teoria & Exercícios com I.A.</div>
     </header>
 
     <div class="game-container">
@@ -279,26 +212,24 @@
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
-                <div class="db-counter" id="dbCounterBadge">Verificando sincronização...</div>
+                <div class="db-counter" id="dbCounterBadge">A carregar questões...</div>
                 
-                <!-- CAIXA DE LOGIN/CADASTRO -->
                 <div id="authContainer" class="auth-box-card" style="display: none;">
                     <h3 style="color: #34d399; margin-top: 0; font-size: 15px;" id="authTitle">🔐 Sincronização em Nuvem</h3>
                     <label>E-mail:</label>
                     <input type="email" id="authEmail" placeholder="seu-email@provedor.com">
-                    <label>Senha:</label>
-                    <input type="password" id="authSenha" placeholder="Sua senha">
+                    <label>Palavra-passe:</label>
+                    <input type="password" id="authSenha" placeholder="Sua palavra-passe">
                     <button class="btn-action" id="authBtnSubmit" onclick="submeterAutenticação()">Entrar</button>
-                    <span class="auth-toggle-link" id="authToggleMode" onclick="alternarModoAuth()">Não tem conta? Cadastre-se como novo usuário</span>
+                    <span class="auth-toggle-link" id="authToggleMode" onclick="alternarModoAuth()">Não tem conta? Cadastre-se como novo utilizador</span>
                 </div>
 
-                <!-- CONTEÚDO DO MENU (CENTRALIZADO) -->
                 <div id="menuContentGrid" style="display: none; width: 100%; flex-direction: column; align-items: center;">
                     <p id="welcomeMsg" style="color: #cbd5e1; font-size: 13px; margin-bottom: 16px; font-weight: 600; text-align: center; width: 100%;"></p>
                     
                     <div class="menu-grid">
                         <div style="width:100%;">
-                            <label>1. Disciplina / Tema:</label>
+                            <label>1. DISCIPLINA / TEMA:</label>
                             <select id="selectFiltroTema" onchange="atualizarTopicosMenu()">
                                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
                                 <option value="Linguagens">📝 Linguagens</option>
@@ -315,103 +246,172 @@
                             </select>
                         </div>
                         <div style="width:100%;">
-                            <label>2. Tópico Principal:</label>
+                            <label>2. TÓPICO PRINCIPAL:</label>
                             <select id="selectTopico" onchange="atualizarSubtopicosMenu()">
                                 <option value="Todos">📂 Todos os Tópicos</option>
                             </select>
                         </div>
                         <div style="width:100%;">
-                            <label>3. Subtópico (Assunto Secundário):</label>
-                            <select id="selectSubtopico" onchange="atualizarContadorFiltro()">
+                            <label>3. SUBTÓPICO (ASSUNTO):</label>
+                            <select id="selectSubtopico" onchange="atualizarContadorMenu()">
                                 <option value="Todos">📌 Todos os Subtópicos</option>
                             </select>
                         </div>
 
                         <div style="width:100%;">
-                            <label>Tamanho Máximo da Sessão:</label>
+                            <label>TAMANHO MÁXIMO DA SESSÃO:</label>
                             <select id="selectTamanhoSessao">
                                 <option value="5">⚡ Rápido (5 Questões)</option>
                                 <option value="10" selected>🎯 Bloco Padrão (Até 10)</option>
                                 <option value="20">🔥 Maratona (20 Questões)</option>
+                                <option value="aleatorio" style="color: #ec4899; font-weight: bold;">🤖 Aleatório (I.A. Escolhe a Quantidade)</option>
                             </select>
                         </div>
                         
-                        <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Revisão Espaçada)</button>
+                        <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Espaçado)</button>
                         <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
-                        <button class="btn-action btn-theory" onclick="abrirResumoTeorico()">📖 Resumos Teóricos Direcionados</button>
+                        <button class="btn-action btn-ai" onclick="abrirGeradorIA()">🤖 Gerador de Cards por I.A.</button>
                         <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
-                        <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações Gerais</button>
+                        <button class="btn-action btn-db" onclick="abrirPainelBancoDados()">🗂️ Banco de Dados (Navegar/Editar)</button>
+                        <!-- BOTÃO DE CONFIGURAÇÕES POSICIONADO EXATAMENTE ABAIXO DE BANCO DE DADOS -->
+                        <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações & API</button>
                         <button class="btn-action btn-danger" style="margin-top: 10px;" onclick="fazerLogout()">🚪 Sair / Trocar Conta</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TELA DE RESUMO TEÓRICO -->
-        <div id="screenTheory" class="screen">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; width: 100%;">
-                <h2 style="color: #34d399; margin: 0; font-weight: 800;">📖 Resumos Teóricos Direcionados</h2>
-                <div style="display: flex; gap: 8px;">
-                    <button class="editor-btn" onclick="alternarSidebar()">📂 Menu</button>
-                    <button class="editor-btn" onclick="alternarModoConcentracao()" id="btnFocusMode">🎯 Foco</button>
-                </div>
-            </div>
-            
-            <div class="filter-panel-box">
-                <select id="theoryFilterDisc" onchange="aoMudarDisciplinaResumo()">
-                    <option value="Todos">🌐 Disciplina: Todas</option>
-                    <option value="Linguagens">📝 Linguagens</option>
-                    <option value="Literatura">📚 Literatura</option>
-                    <option value="História Geral">🏛️ História Geral</option>
-                    <option value="História do Brasil">👑 História do Brasil</option>
-                    <option value="Geografia">🌍 Geografia</option>
-                    <option value="Filosofia">🤔 Filosofia</option>
-                    <option value="Sociologia">👥 Sociologia</option>
-                    <option value="Biologia">🧬 Biologia</option>
-                    <option value="Química">🧪 Química</option>
-                    <option value="Física">⚡ Física</option>
-                    <option value="Matemática">📐 Matemática</option>
-                </select>
-                <select id="theoryFilterTopico" onchange="filtrarResumosTeoricos()">
-                    <option value="Todos">📂 Tópico: Todos</option>
-                </select>
-            </div>
-
-            <div class="theory-layout">
-                <div class="theory-sidebar" id="theorySidebar"></div>
+        <!-- TELA DO PAINEL "BANCO DE DADOS" COM FILTRO "GERADOS HOJE" -->
+        <div id="screenBancoDados" class="screen">
+            <h2 style="color: #10b981; text-align: center; margin-top: 0; font-weight: 800;">🗂️ Gerenciador de Banco de Dados</h2>
+            <div style="width: 100%; max-width: 920px; display: flex; flex-direction: column; gap: 12px;">
                 
-                <div class="theory-main-area">
-                    <div class="editor-toolbar">
-                        <button class="editor-btn" title="Negrito" onclick="executarComandoEditor('bold')"><b>N</b></button>
-                        <button class="editor-btn" title="Itálico" onclick="executarComandoEditor('italic')"><i>I</i></button>
-                        <button class="editor-btn" title="Sublinhado" onclick="executarComandoEditor('underline')"><u>U</u></button>
-                        <button class="editor-btn" title="Tachado" onclick="executarComandoEditor('strikeThrough')"><s>S</s></button>
-                        <span style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px; margin: 0 2px;"></span>
-                        <button class="editor-btn" title="Alinhar à Esquerda" onclick="executarComandoEditor('justifyLeft')">⫷ Esq</button>
-                        <button class="editor-btn" title="Centralizar" onclick="executarComandoEditor('justifyCenter')">≡ Centro</button>
-                        <button class="editor-btn" title="Alinhar à Direita" onclick="executarComandoEditor('justifyRight')">⫸ Dir</button>
-                        <button class="editor-btn" title="Justificar" onclick="executarComandoEditor('justifyFull')">≣ Just</button>
-                        <span style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px; margin: 0 2px;"></span>
-                        <button class="editor-btn" title="Lista com Marcadores" onclick="executarComandoEditor('insertUnorderedList')">• Lista</button>
-                        <button class="editor-btn" title="Lista Numerada" onclick="executarComandoEditor('insertOrderedList')">1. Lista</button>
-                        <span style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px; margin: 0 2px;"></span>
-                        <select class="editor-select" title="Tamanho da Fonte" onchange="executarComandoEditor('fontSize', this.value); this.value='';">
-                            <option value="" disabled selected>Tamanho</option>
-                            <option value="3">Normal</option>
-                            <option value="4">Médio</option>
-                            <option value="5">Grande</option>
-                            <option value="6">Muito Grande</option>
+                <div style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap; background: rgba(15, 23, 42, 0.85); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);">
+                    <div style="flex: 1; min-width: 160px;">
+                        <label>Disciplina:</label>
+                        <select id="dbFiltroDisc" onchange="atualizarFiltrosTopicosDB(); renderizarTabelaDB();" style="max-width: 100%; margin: 0;">
+                            <option value="Todos" selected>🌐 Todas</option>
+                            <option value="História">🏛️ História Geral</option>
+                            <option value="História do Brasil">👑 História do Brasil</option>
+                            <option value="Biologia">🧬 Biologia</option>
+                            <option value="Geografia">🌍 Geografia</option>
+                            <option value="Filosofia">🤔 Filosofia</option>
+                            <option value="Sociologia">👥 Sociologia</option>
+                            <option value="Literatura">📚 Literatura</option>
+                            <option value="Química">🧪 Química</option>
+                            <option value="Física">⚡ Física</option>
+                            <option value="Matemática">📐 Matemática</option>
+                            <option value="Linguagens">📝 Linguagens</option>
                         </select>
-                        <input type="color" class="editor-color" title="Cor do Texto" onchange="executarComandoEditor('foreColor', this.value)">
-                        <button class="editor-btn" style="background: #059669; border-color: #10b981; margin-left: auto;" onclick="salvarAlteracoesEditor()">💾 Salvar</button>
                     </div>
-
-                    <div class="theory-content-box" id="theoryContent" contenteditable="true">
-                        <p style="color: #cbd5e1;">Selecione um tópico na barra lateral para carregar a teoria completa.</p>
+                    <div style="flex: 1; min-width: 160px;">
+                        <label>Tópico Principal:</label>
+                        <select id="dbFiltroTopico" onchange="atualizarFiltrosSubDB(); renderizarTabelaDB();" style="max-width: 100%; margin: 0;">
+                            <option value="Todos">📂 Todos os Tópicos</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 160px;">
+                        <label>Subtópico (Assunto):</label>
+                        <select id="dbFiltroSub" onchange="renderizarTabelaDB()" style="max-width: 100%; margin: 0;">
+                            <option value="Todos">📌 Todos os Assuntos</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 160px;">
+                        <label>Período / Filtro Rápido:</label>
+                        <select id="dbFiltroData" onchange="renderizarTabelaDB()" style="max-width: 100%; margin: 0;">
+                            <option value="Todos" selected>♾️ Todo o Histórico</option>
+                            <option value="hoje" style="color: #34d399; font-weight: bold;">📅 Cartões Gerados Hoje</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 180px;">
+                        <label>Pesquisar termo:</label>
+                        <input type="text" id="inputBuscaDB" placeholder="🔍 Enunciado ou palavra..." style="max-width: 100%; margin: 0;" oninput="renderizarTabelaDB()">
                     </div>
                 </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="contadorDBStatus" style="font-size: 13px; color: #38bdf8; font-weight: 700;"></span>
+                </div>
+
+                <div style="max-height: 340px; overflow-y: auto;">
+                    <table class="db-table" id="tabelaDadosDB">
+                        <thead>
+                            <tr>
+                                <th>Disciplina</th>
+                                <th>Tópico / Assunto</th>
+                                <th>Enunciado da Questão</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyDadosDB">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
             <button class="btn-action btn-secondary" style="margin-top: 15px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
+        </div>
+
+        <!-- MODAL DE EDIÇÃO COMPLETA DE CARTÃO COM PRÉVIA VISUAL INTEGRADA -->
+        <div id="screenEditorCard" class="screen">
+            <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">✏️ Editor Completo de Cartão</h2>
+            <div style="width: 100%; max-width: 850px; display: flex; gap: 20px; align-items: flex-start; max-height: 480px; overflow-y: auto; padding: 15px; background: rgba(15, 23, 42, 0.9); border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                
+                <!-- COLUNA DA ESQUERDA: FORMULÁRIO DE EDIÇÃO -->
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 10px; text-align: left;">
+                    <input type="hidden" id="editCardId">
+
+                    <div style="display: flex; gap: 8px;">
+                        <div style="flex: 1;">
+                            <label>Disciplina:</label>
+                            <input type="text" id="editCardDeck" style="max-width: 100%; margin: 0;" oninput="atualizarPreviaModalEditor()">
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Tópico Principal:</label>
+                            <input type="text" id="editCardTopico" style="max-width: 100%; margin: 0;" oninput="atualizarPreviaModalEditor()">
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Subtópico / Assunto:</label>
+                            <input type="text" id="editCardSub" style="max-width: 100%; margin: 0;" oninput="atualizarPreviaModalEditor()">
+                        </div>
+                    </div>
+
+                    <label>Enunciado da Questão (Pergunta):</label>
+                    <textarea id="editCardQ" rows="4" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;" oninput="atualizarPreviaModalEditor()"></textarea>
+
+                    <label>Alternativa Correta (ou Gabarito CERTO/ERRADO):</label>
+                    <input type="text" id="editCardCorreta" style="max-width: 100%; margin: 0;" oninput="atualizarPreviaModalEditor()">
+
+                    <label>Alternativas Erradas (separadas por vírgula):</label>
+                    <textarea id="editCardErradas" rows="3" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;" placeholder="Errada 1, Errada 2, Errada 3" oninput="atualizarPreviaModalEditor()"></textarea>
+
+                    <label>Comentário / Fundamentação:</label>
+                    <textarea id="editCardExplicacao" rows="4" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;" oninput="atualizarPreviaModalEditor()"></textarea>
+
+                    <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
+                        <button class="btn-action btn-warning" style="margin: 0; max-width: 180px;" onclick="salvarEdicaoCardDB()">💾 Salvar Alterações</button>
+                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 180px;" onclick="abrirPainelBancoDados()">❌ Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- COLUNA DA DIREITA: PRÉVIA VISUAL EM TEMPO REAL -->
+                <div style="flex: 1; background: rgba(11, 17, 32, 0.95); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; text-align: left; position: sticky; top: 0;">
+                    <div style="font-size: 12px; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 8px;">👁️ Prévia em Tempo Real (Estilo Simulado):</div>
+                    <span class="mission-badge" id="previewEditorDeck" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; width: fit-content;">Disciplina</span>
+                    
+                    <div style="font-size: 13px; font-weight: 700; color: #fff; margin: 6px 0;" id="previewEditorTitle">Tópico — Subtópico</div>
+                    <div style="font-size: 13px; line-height: 1.5; background: rgba(30, 41, 59, 0.8); padding: 12px; border-radius: 10px; color: #f8fafc; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1);" id="previewEditorQ">Enunciado da questão...</div>
+                    
+                    <div id="previewEditorOptions" style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;"></div>
+
+                    <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 10px; font-size: 12px; color: #f0fdf4;">
+                        <strong style="color: #34d399;">💡 Fundamentação / Comentário:</strong>
+                        <div id="previewEditorExplicacao" style="margin-top: 4px; line-height: 1.4;">Comentário aqui...</div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
         <!-- TELA SUBMENU PERSONALIZADO -->
@@ -424,6 +424,7 @@
                         <select id="customTipoFiltro">
                             <option value="erradas">❌ Somente as Erradas (Reforço)</option>
                             <option value="acertadas">✅ Somente as Acertadas (Revisão)</option>
+                            <option value="ia" style="color: #ec4899; font-weight: bold;">🤖 Somente Questões Geradas por I.A.</option>
                             <option value="ambas" selected>🔄 Todas as Respondidas</option>
                         </select>
                     </div>
@@ -433,9 +434,100 @@
             </div>
         </div>
 
+        <!-- TELA DO GERADOR DE CARDS POR I.A. (COM PRÉVIA ESPELHADA EM LADO A LADO) -->
+        <div id="screenGeradorIA" class="screen">
+            <div style="text-align: center; margin-top: 5px; width: 100%;">
+                <h2 style="color: #ec4899; margin-bottom: 6px; font-weight: 800;">🤖 Gerador de Cards com I.A.</h2>
+                
+                <div class="menu-grid" id="painelConfigGerador" style="max-width: 450px;">
+                    <label>Cole o texto base (Resumo ou Teoria):</label>
+                    <textarea id="inputTextoGeradorIA" rows="4" placeholder="Cole aqui o texto..." style="width:100%; max-width:450px; text-align:left;"></textarea>
+                    
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <div style="flex:1;">
+                            <label>Quantidade:</label>
+                            <select id="selectQtdGeradorIA">
+                                <option value="3">3 Questões</option>
+                                <option value="5" selected>5 Questões</option>
+                                <option value="10">10 Questões</option>
+                                <option value="aleatorio" style="color: #ec4899; font-weight: bold;">🤖 Aleatório (I.A.)</option>
+                            </select>
+                        </div>
+                        <div style="flex:1;">
+                            <label>Formato:</label>
+                            <select id="selectFormatoGeradorIA">
+                                <option value="multipla" selected>Múltipla Escolha</option>
+                                <option value="cebrape">Certo / Errado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>Disciplina de Destino:</label>
+                    <select id="inputDiscDestino" style="text-align: center;" onchange="atualizarTopicosGeradorIA()">
+                        <option value="História">🏛️ História / História Geral</option>
+                        <option value="História do Brasil">👑 História do Brasil</option>
+                        <option value="Geografia">🌍 Geografia</option>
+                        <option value="Biologia">🧬 Biologia</option>
+                        <option value="Química">🧪 Química</option>
+                        <option value="Física">⚡ Física</option>
+                        <option value="Matemática">📐 Matemática</option>
+                        <option value="Linguagens">📝 Linguagens</option>
+                        <option value="Literatura">📚 Literatura</option>
+                        <option value="Filosofia">🤔 Filosofia</option>
+                        <option value="Sociologia">👥 Sociologia</option>
+                    </select>
+
+                    <label>Tópico Principal:</label>
+                    <select id="inputTopicoDestino" style="text-align: center;" onchange="atualizarSubtopicosGeradorIA()">
+                        <option value="Geral">📂 Selecione o Tópico</option>
+                    </select>
+
+                    <label>Subtópico / Assunto Específico:</label>
+                    <select id="inputSubDestino" style="text-align: center;">
+                        <option value="Assunto">📌 Selecione o Subtópico</option>
+                    </select>
+
+                    <button class="btn-action btn-ai" onclick="executarGeradorIA()">✨ Processar e Gerar Prévia</button>
+                    <div id="statusGeradorIA" style="margin-top: 6px; font-size: 13px; color: #38bdf8; font-weight: 700;"></div>
+                    <button class="btn-action btn-secondary" style="margin-top: 10px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
+                </div>
+
+                <!-- PAINEL DE PRÉVIA ESPELHADA DUPLEX (LADO A LADO) -->
+                <div id="painelPreviaIA" style="display: none; width: 100%; max-width: 900px; flex-direction: column; margin-top: 5px;">
+                    
+                    <div style="display: flex; gap: 16px; width: 100%; align-items: stretch; max-height: 420px;">
+                        
+                        <!-- ESQUERDA: LISTA DE QUESTÕES GERADAS -->
+                        <div style="flex: 1; display: flex; flex-direction: column; text-align: left;">
+                            <h3 style="color: #34d399; font-size: 14px; margin: 0 0 8px 0;">👀 Prévia dos Cartões Gerados (<span id="qtdCardsGeradosNum">0</span>)</h3>
+                            <div id="listaCardsPrevia" style="overflow-y: auto; max-height: 380px; padding-right: 6px;"></div>
+                        </div>
+
+                        <!-- DIREITA: PAINEL ESPELHADO DO CARD SELECIONADO (FORMATO SIMULADOR) -->
+                        <div style="flex: 1.2; background: rgba(11, 17, 32, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; text-align: left; overflow-y: auto; max-height: 380px;" id="painelEspelhoCard">
+                            <div style="font-size: 11px; color: #38bdf8; font-weight: 800; text-transform: uppercase; margin-bottom: 6px;">🔍 Visualização Espelhada (Como aparecerá no Simulado)</div>
+                            <div id="espelhoCardConteudo">
+                                <p style="color: #94a3b8; font-size: 13px; text-align: center; margin-top: 40px;">Clique em qualquer questão ao lado para visualizar aqui em tamanho grande.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- BARRA INFERIOR DE AÇÕES ORGANIZADA -->
+                    <div style="display: flex; gap: 12px; justify-content: center; width: 100%; margin-top: 15px;">
+                        <button class="btn-action btn-warning" style="margin: 0; max-width: 280px;" onclick="salvarCardsGeradosNoBanco()">💾 Salvar na Base e Iniciar Sessão</button>
+                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 220px;" onclick="voltarConfigGeradorIA()">✏️ Ajustar Configurações</button>
+                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 200px; background: rgba(30,41,59,0.9);" onclick="voltarMenu()">Voltar ao Menu</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
         <!-- TELA CONFIGURAÇÕES -->
         <div id="screenConfig" class="screen">
-            <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">⚙️ Configurações Gerais</h2>
+            <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">⚙️ Configurações & Temas 3D</h2>
             <div style="text-align: center; width: 100%;">
                 
                 <div class="config-card-box">
@@ -443,12 +535,19 @@
                     <input type="text" id="inputNomeJogador" value="Richard" placeholder="Ex: Richard">
                 </div>
 
+                <div class="config-card-box" style="border-color: rgba(236, 72, 153, 0.4);">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #ec4899;">🔑 Chave API OpenRouter (sk-or-v1-...):</label>
+                    <input type="password" id="inputOpenRouterKey" placeholder="sk-or-v1-..." style="text-align: left;">
+                    <span style="font-size: 10px; color: #94a3b8; display: block; margin-top: -6px;">Necessária para o Gerador de Cards e Tutor de I.A.</span>
+                </div>
+
                 <div class="config-card-box">
-                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #38bdf8;">Tema Visual da Interface:</label>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #38bdf8;">Escolha o Tema & Paleta de Cores:</label>
                     <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
-                        <label><input type="radio" name="temaApp" value="glass3d" checked> <b>✨ Glassmorphism 3D Suave</b></label>
-                        <label><input type="radio" name="temaApp" value="neon"> <b>🌌 Azul Neon Clássico</b></label>
-                        <label><input type="radio" name="temaApp" value="clean"> <b>☀️ Branco Suave / Clean</b></label>
+                        <label><input type="radio" name="temaApp" value="cyber" checked> 🌌 <b>Cyber Obsidian 3D</b></label>
+                        <label><input type="radio" name="temaApp" value="emerald"> 🌲 <b>Midnight Emerald</b></label>
+                        <label><input type="radio" name="temaApp" value="gold"> 👑 <b>Royal Gold & Onyx</b></label>
+                        <label><input type="radio" name="temaApp" value="quartz"> ☀️ <b>Quartz Light Luxury</b></label>
                     </div>
                 </div>
 
@@ -459,21 +558,19 @@
                         <label><input type="radio" name="motorRevisao" value="sm2"> <b>Modo SuperMemo SM-2</b> (Passos Personalizados)</label>
                     </div>
                     
-                    <div style="margin-bottom: 10px;">
+                    <div style="margin-bottom: 10px; text-align: left;">
                         <label style="font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px;">Passos Iniciais (SM-2):</label>
-                        <input type="text" id="inputPassos" value="1m 10m 1d 4d">
+                        <input type="text" id="inputPassos" value="1m 10m 1d 4d" style="text-align: left;">
                     </div>
 
-                    <div>
+                    <div style="text-align: left;">
                         <label style="font-size: 11px; color: #cbd5e1; display: block; margin-bottom: 4px;">Intervalo Máximo (dias):</label>
-                        <input type="number" id="inputMaxIntervalo" value="90" min="1">
+                        <input type="number" id="inputMaxIntervalo" value="90" min="1" style="text-align: left;">
                     </div>
                 </div>
 
-                <!-- ZONA DE PERIGO: RESET TOTAL -->
                 <div class="config-card-box" style="border-color: rgba(239, 68, 68, 0.4);">
                     <label style="display: block; margin-bottom: 8px; font-weight: 800; color: #ef4444;">🚨 Zona de Perigo:</label>
-                    <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 12px; text-align: left;">Apaga todo o progresso de questões, XP, histórico de revisões e edições de resumos salvos.</p>
                     <button class="btn-action btn-danger" style="margin: 0 auto; max-width: 100%;" onclick="executarResetTotal()">🗑️ Zerar Todo o Progresso (Reset)</button>
                 </div>
 
@@ -486,7 +583,7 @@
         <div id="screenGame" class="screen">
             <div class="rpg-hud">
                 <div><span class="hud-val" id="hudNivel">Card 1/10</span><span class="hud-label">Sessão</span></div>
-                <div><span class="hud-val" id="hudTimer">0s</span><span class="hud-label">Tempo Card</span></div>
+                <div><span class="hud-val" id="hudTimer">0s</span><span class="hud-label">Tempo</span></div>
                 <div><span class="hud-val" id="hudAcertos">0%</span><span class="hud-label">Aproveitamento</span></div>
                 <div><span class="hud-val" id="hudVidas">❤️❤️❤️</span><span class="hud-label">Vidas</span></div>
             </div>
@@ -496,10 +593,9 @@
             </div>
 
             <div style="width: 100%;">
-                <!-- Barra de ferramentas com caneta marca-texto -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <span class="mission-badge" id="missionTag" style="margin-bottom: 0;">História</span>
-                    <button class="editor-btn" id="btn-highlighter" style="background: #1e293b; border-color: #475569;">
+                    <button class="btn-action" id="btn-highlighter" style="background: rgba(30,41,59,0.9); border: 1px solid #475569; padding: 6px 12px; font-size: 11px; max-width: 150px; margin: 0;">
                         ✏️ Marca-Texto (<span id="highlighter-status">OFF</span>)
                     </button>
                 </div>
@@ -509,7 +605,7 @@
                     <div class="case-title" id="caseTitle">Tópico Principal</div>
                 </div>
                 
-                <div class="case-desc" id="caseDesc">Carregando pergunta...</div>
+                <div class="case-desc" id="caseDesc">A carregar pergunta...</div>
                 
                 <div class="options-grid" id="optionsGrid"></div>
                 
@@ -519,8 +615,32 @@
                 </div>
 
                 <div class="explanation-box" id="explanationBox">
-                    <strong id="expTitle">💡 Mini-Resumo Teórico:</strong>
+                    <strong id="expTitle">💡 Comentário / Fundamentação:</strong>
                     <span id="expText">Explicação...</span>
+                    
+                    <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+                        <button class="btn-action btn-ai" style="flex: 1; font-size: 11px; padding: 8px; margin: 0;" onclick="executarComentarioCurtoIA()">
+                            ⚡ Explicar com I.A. (DeepSeek)
+                        </button>
+                        <button class="btn-action btn-secondary" style="flex: 1; font-size: 11px; padding: 8px; margin: 0;" onclick="abrirCaixaTutorIA()">
+                            💬 Conversar com Tutor I.A.
+                        </button>
+                    </div>
+
+                    <div id="boxComentarioCurto" style="display: none; background: rgba(236, 72, 153, 0.15); border: 1px solid #ec4899; border-radius: 10px; padding: 10px; margin-top: 10px; font-size: 12px; line-height: 1.5;">
+                        <strong style="color: #ec4899;">⚡ Comentário Direto da I.A.:</strong>
+                        <p id="textoComentarioCurto" style="margin: 6px 0;"></p>
+                        <button class="btn-action btn-ai" style="font-size: 11px; padding: 6px 12px; margin: 8px 0 0 0; width: auto;" onclick="adicionarExplicacaoAoOficial()">
+                            ➕ Adicionar ao Comentário/Fundamentação
+                        </button>
+                    </div>
+
+                    <div id="boxTutorIA" style="display: none; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; border-radius: 10px; padding: 10px; margin-top: 10px; font-size: 12px;">
+                        <strong style="color: #38bdf8; display: block; margin-bottom: 4px;">💬 Dúvida Rápida com o Tutor:</strong>
+                        <input type="text" id="inputDuvidaTutor" placeholder="Ex: Por que a alternativa B está incorreta?" style="margin-bottom: 6px; font-size: 12px; padding: 8px; width: 100%; max-width: 100%;">
+                        <button class="btn-action btn-ai" style="font-size: 11px; padding: 6px; margin: 0; width: 100%; max-width: 100%;" onclick="enviarPerguntaTutorIA()">Enviar Pergunta</button>
+                        <div id="respostaTutorIA" style="margin-top: 8px; line-height: 1.4; white-space: pre-line;"></div>
+                    </div>
                 </div>
                 
                 <button class="btn-action btn-warning" id="nextCardBtn" onclick="avancarCardComSeguranca()">Próximo Card ➔</button>
@@ -540,10 +660,7 @@
 
     </div>
 
-    <!-- Elemento de Áudio para o Alerta do Pomodoro (15 segundos) -->
-    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
-
-    <!-- Scripts de Questões por Disciplina -->
+    <!-- Scripts de Questões e Motor de I.A. -->
     <script src="historia.js"></script>
     <script src="biologia.js"></script>
     <script src="historia_brasil.js"></script>
@@ -555,25 +672,8 @@
     <script src="fisica.js"></script>
     <script src="matematica.js"></script>
     <script src="linguagens.js"></script>
-
-    <!-- Unificador do Banco de Questões -->
     <script src="questoes.js"></script>
-
-    <!-- Scripts de Resumos Teóricos por Disciplina -->
-    <script src="resumo_historia.js"></script>
-    <script src="resumo_biologia.js"></script>
-    <script src="resumo_historia_brasil.js"></script>
-    <script src="resumo_geografia.js"></script>
-    <script src="resumo_filosofia.js"></script>
-    <script src="resumo_sociologia.js"></script>
-    <script src="resumo_literatura.js"></script>
-    <script src="resumo_quimica.js"></script>
-    <script src="resumo_fisica.js"></script>
-    <script src="resumo_matematica.js"></script>
-    <script src="resumo_linguagens.js"></script>
-
-    <!-- Unificador do Banco de Resumos -->
-    <script src="resumos.js"></script>
+    <script src="ia-engine.js"></script>
 
     <script>
         let sessaoAtual = {
@@ -586,19 +686,19 @@
             erros: 0,
             historicoRevisao: {},
             questoesRespondidasHistorico: {},
-            resumosEditadosSalvos: {},
+            cardsGeradosIA: [],
             tempoInicioSessao: 0,
             tempoInicioCard: 0,
             timerInterval: null
         };
 
-        let moduloSelecionadoAtualId = null;
+        let tempCardsGeradosPrevia = [];
 
         window.onload = function() {
             carregarConfiguracoesSalvas();
             carregarPerfilUsuario();
             atualizarTopicosMenu();
-            initPomodoroLogic();
+            atualizarTopicosGeradorIA();
             initHighlighterLogic();
         };
 
@@ -611,13 +711,8 @@
                     sessaoAtual.xp = dados.xp || 0;
                     sessaoAtual.historicoRevisao = dados.historicoRevisao || {};
                     sessaoAtual.questoesRespondidasHistorico = dados.questoesRespondidasHistorico || {};
-                    sessaoAtual.resumosEditadosSalvos = dados.resumosEditadosSalvos || {};
-                } catch(e) { console.error(e); }
-            } else {
-                sessaoAtual.xp = 0;
-                sessaoAtual.historicoRevisao = {};
-                sessaoAtual.questoesRespondidasHistorico = {};
-                sessaoAtual.resumosEditadosSalvos = {};
+                    sessaoAtual.cardsGeradosIA = dados.cardsGeradosIA || [];
+                } catch(e) {}
             }
             atualizarTelaBoasVindas();
         }
@@ -625,38 +720,45 @@
         function atualizarTelaBoasVindas() {
             let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
             let nomeJ = config.nomeJogador || 'Richard';
-            document.getElementById('welcomeMsg').innerText = `Jogador: ${nomeJ} | XP Acumulado: ${sessaoAtual.xp} XP`;
-            atualizarContadorFiltro();
-        }
-
-        function cardEstaDisponivelRevisao(cardId) {
-            const agora = Date.now();
-            const infoRevisao = sessaoAtual.historicoRevisao[cardId];
-            if (!infoRevisao || !infoRevisao.proximaRevisao) return true;
-            return agora >= infoRevisao.proximaRevisao;
+            let totalCards = (typeof masterDeck !== 'undefined' ? masterDeck.length : 0) + sessaoAtual.cardsGeradosIA.length;
+            document.getElementById('welcomeMsg').innerText = `Jogador: ${nomeJ} | XP: ${sessaoAtual.xp} XP | Banco: ${totalCards} Questões`;
+            atualizarContadorMenu();
         }
 
         function normalizarTexto(str) {
             return (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
         }
 
-        function atualizarContadorFiltro() {
-            const disciplina = document.getElementById('selectFiltroTema').value;
-            const topico = document.getElementById('selectTopico').value;
-            const subtopico = document.getElementById('selectSubtopico').value;
+        // MOTOR DE ESPAÇAMENTO FSRS/SM-2 CORRIGIDO E INTEGRADO AO CONTADOR
+        function atualizarContadorMenu() {
+            const disc = document.getElementById('selectFiltroTema').value;
+            const top = document.getElementById('selectTopico').value;
+            const sub = document.getElementById('selectSubtopico').value;
 
-            if (typeof masterDeck !== 'undefined') {
-                let filtrados = masterDeck.filter(c => {
-                    let discNorm = normalizarTexto(c.deck);
-                    let selDiscNorm = normalizarTexto(disciplina);
-                    let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia') || (selDiscNorm === 'historia do brasil' && discNorm === 'historia do brasil'));
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let agora = Date.now();
 
-                    let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
-                    let matchSub = (subtopico === 'Todos' || c.subgrupo === subtopico);
-                    return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
-                });
-                document.getElementById('dbCounterBadge').innerText = `📚 Cards para revisão hoje: ${filtrados.length} (Total: ${masterDeck.length})`;
-            }
+            let filtrados = deckCompleto.filter(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disc);
+                let matchDisc = (disc === 'Todos' || discNorm === selDiscNorm || (disc === 'História Geral' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                
+                let topicoCard = c.topicoPrincipal || c.subgrupo || '';
+                let matchTop = (top === 'Todos' || topicoCard === top);
+                let matchSub = (sub === 'Todos' || c.subgrupo === sub);
+
+                if (!matchDisc || !matchTop || !matchSub) return false;
+
+                // Regra do motor espaçado: Se já foi respondida e o prazo de revisão futura ainda não venceu, o card é omitido/descontado
+                let infoRevisao = sessaoAtual.historicoRevisao[c.id];
+                if (infoRevisao && infoRevisao.proximaRevisao && infoRevisao.proximaRevisao > agora) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            document.getElementById('dbCounterBadge').innerText = `📚 Questões Encontradas: ${filtrados.length} (Total Geral: ${deckCompleto.length})`;
         }
 
         function atualizarTopicosMenu() {
@@ -664,15 +766,16 @@
             const selectTopico = document.getElementById('selectTopico');
             selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
             let topicos = new Set();
-            if (typeof masterDeck !== 'undefined') {
-                masterDeck.forEach(c => {
-                    let discNorm = normalizarTexto(c.deck);
-                    let selDiscNorm = normalizarTexto(disciplina);
-                    if(disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia')) {
-                        if(c.topicoPrincipal || c.subgrupo) topicos.add(c.topicoPrincipal || c.subgrupo);
-                    }
-                });
-            }
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disciplina);
+                let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (disciplina === 'História Geral' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                if(matchDisc) {
+                    let t = c.topicoPrincipal || c.subgrupo;
+                    if(t) topicos.add(t);
+                }
+            });
             topicos.forEach(t => {
                 let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
                 selectTopico.appendChild(opt);
@@ -686,183 +789,409 @@
             const selectSub = document.getElementById('selectSubtopico');
             selectSub.innerHTML = '<option value="Todos">📌 Todos os Subtópicos</option>';
             let subs = new Set();
-            if (typeof masterDeck !== 'undefined') {
-                masterDeck.forEach(c => {
-                    let discNorm = normalizarTexto(c.deck);
-                    let selDiscNorm = normalizarTexto(disciplina);
-                    let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
-                    let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
-                    if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
-                });
-            }
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disciplina);
+                let matchDisc = (disciplina === 'Todos' || discNorm === selDiscNorm || (disciplina === 'História Geral' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topico);
+                if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
+            });
             subs.forEach(s => {
                 let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
                 selectSub.appendChild(opt);
             });
-            atualizarContadorFiltro();
+            atualizarContadorMenu();
         }
 
-        function abrirResumoTeorico() {
-            mudarTela('screenTheory');
-            atualizarFiltrosResumosTeoricos();
-            filtrarResumosTeoricos();
-        }
-
-        function alternarSidebar() { document.getElementById('theorySidebar').classList.toggle('collapsed'); }
-
-        function alternarModoConcentracao() {
-            document.body.classList.toggle('focus-mode');
-            const btn = document.getElementById('btnFocusMode');
-            btn.innerText = document.body.classList.contains('focus-mode') ? "❌ Sair" : "🎯 Foco";
-            btn.style.background = document.body.classList.contains('focus-mode') ? "#dc2626" : "#1e293b";
-        }
-
-        function aoMudarDisciplinaResumo() {
-            document.getElementById('theoryFilterTopico').value = "Todos";
-            atualizarFiltrosResumosTeoricos();
-            filtrarResumosTeoricos();
-        }
-
-        function atualizarFiltrosResumosTeoricos() {
-            const discSelect = document.getElementById('theoryFilterDisc').value;
-            const topicoSelect = document.getElementById('theoryFilterTopico');
-            const valorTopicoAtual = topicoSelect.value;
-            topicoSelect.innerHTML = '<option value="Todos">📂 Tópico: Todos</option>';
-
-            if (typeof moduloResumoDirecionado !== 'undefined') {
-                let topicos = new Set();
-                moduloResumoDirecionado.forEach(m => {
-                    let mDiscNorm = normalizarTexto(m.disciplina);
-                    let selDiscNorm = normalizarTexto(discSelect);
-
-                    if (discSelect === 'Todos' || mDiscNorm === selDiscNorm || (selDiscNorm === 'historia geral' && mDiscNorm === 'historia')) {
-                        if (m.topico) topicos.add(m.topico);
-                    }
-                });
-                topicos.forEach(t => {
-                    let opt = document.createElement('option'); 
-                    opt.value = t; 
-                    opt.innerText = t;
-                    topicoSelect.appendChild(opt);
-                });
-
-                if ([...topicos].includes(valorTopicoAtual)) {
-                    topicoSelect.value = valorTopicoAtual;
-                }
-            }
-        }
-
-        function filtrarResumosTeoricos() {
-            const disc = document.getElementById('theoryFilterDisc').value;
-            const topico = document.getElementById('theoryFilterTopico').value;
-            const sidebar = document.getElementById('theorySidebar');
-            sidebar.innerHTML = '';
-
-            if (typeof moduloResumoDirecionado !== 'undefined' && moduloResumoDirecionado.length > 0) {
-                let filtrados = moduloResumoDirecionado.filter(m => {
-                    let mDiscNorm = normalizarTexto(m.disciplina);
-                    let selDiscNorm = normalizarTexto(disc);
-
-                    let matchDisc = (disc === 'Todos' || mDiscNorm === selDiscNorm || (selDiscNorm === 'historia geral' && mDiscNorm === 'historia'));
-                    let matchTop = (topico === 'Todos' || m.topico === topico);
-                    return matchDisc && matchTop;
-                });
-
-                if (filtrados.length > 0) {
-                    filtrados.forEach((mod, idx) => {
-                        const item = document.createElement('div');
-                        item.className = `theory-sidebar-item ${idx === 0 ? 'active' : ''}`;
-                        item.innerText = `${mod.disciplina} ➔ ${mod.topico || ''}: ${mod.subtopico || mod.tituloModulo}`;
-                        item.onclick = () => {
-                            document.querySelectorAll('.theory-sidebar-item').forEach(i => i.classList.remove('active'));
-                            item.classList.add('active');
-                            renderizarConteudoTeorico(mod);
-                        };
-                        sidebar.appendChild(item);
-                    });
-                    renderizarConteudoTeorico(filtrados[0]);
-                } else {
-                    sidebar.innerHTML = '<div style="color:#cbd5e1; font-size:12px; padding:10px;">Nenhum resumo encontrado.</div>';
-                    document.getElementById('theoryContent').innerHTML = '<p style="color:#cbd5e1;">Nenhum conteúdo disponível para esta seleção.</p>';
-                }
-            }
-        }
-
-        function renderizarConteudoTeorico(modulo) {
-            moduloSelecionadoAtualId = modulo.id;
-            const box = document.getElementById('theoryContent');
-            
-            if (sessaoAtual.resumosEditadosSalvos && sessaoAtual.resumosEditadosSalvos[modulo.id]) {
-                box.innerHTML = sessaoAtual.resumosEditadosSalvos[modulo.id];
-                return;
-            }
-
-            let html = `<h3 style="color: #38bdf8; margin-top:0; font-size: 20px; text-align: justify;">${modulo.tituloModulo}</h3>`;
-            html += `<p style="font-size:12px; color:#34d399; font-weight:700; margin-bottom:15px;">📌 ${modulo.disciplina} ➔ ${modulo.topico || ''} ➔ ${modulo.subtopico || ''}</p>`;
-            
-            modulo.conteudo.forEach((bloco, bIdx) => {
-                if (bloco.tipo === 'texto') {
-                    html += `<p style="margin-bottom: 18px; color: #f1f5f9; text-align: justify;">${bloco.corpo}</p>`;
-                } else if (bloco.tipo === 'bizu') {
-                    html += `<div class="bizu-card"><b>💡 BIZU & PEGADINHA DE PROVA:</b><br>${bloco.corpo}</div>`;
-                } else if (bloco.tipo === 'questao_fixar') {
-                    html += `
-                        <div class="fixar-card" id="fixar-${bIdx}">
-                            <div class="fixar-banner">🎯 QUESTÃO MODELO PARA FIXAR (${bloco.estilo || 'Prática'})</div>
-                            <p style="font-weight: 700; color: #ffffff; margin-bottom: 12px; font-size: 15px; text-align: justify;">${bloco.enunciado}</p>
-                            <div style="display: flex; flex-direction: column; gap: 8px;">
-                                ${bloco.alternativas.map((alt) => {
-                                    let letra = alt.charAt(0);
-                                    return `<button class="option-card" onclick="responderQuestaoFixar(${bIdx}, '${letra}', '${bloco.gabarito}', this)">${alt}</button>`;
-                                }).join('')}
-                            </div>
-                            <div id="feedback-${bIdx}" style="margin-top: 12px; display: none; padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.5;"></div>
-                        </div>
-                    `;
+        function atualizarTopicosGeradorIA() {
+            const disciplina = document.getElementById('inputDiscDestino').value;
+            const selectTopico = document.getElementById('inputTopicoDestino');
+            selectTopico.innerHTML = '';
+            let topicos = new Set();
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disciplina);
+                if(discNorm === selDiscNorm || (disciplina === 'História' && (discNorm === 'historia' || discNorm === 'historia geral'))) {
+                    let t = c.topicoPrincipal || c.subgrupo;
+                    if(t) topicos.add(t);
                 }
             });
-            box.innerHTML = html;
+            if(topicos.size === 0) topicos.add("Geral");
+            topicos.forEach(t => {
+                let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
+                selectTopico.appendChild(opt);
+            });
+            atualizarSubtopicosGeradorIA();
         }
 
-        function executarComandoEditor(comando, valor = null) { document.execCommand(comando, false, valor); }
+        function atualizarSubtopicosGeradorIA() {
+            const disciplina = document.getElementById('inputDiscDestino').value;
+            const topico = document.getElementById('inputTopicoDestino').value;
+            const selectSub = document.getElementById('inputSubDestino');
+            selectSub.innerHTML = '';
+            let subs = new Set();
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disciplina);
+                let matchDisc = (discNorm === selDiscNorm || (disciplina === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                let matchTop = (c.topicoPrincipal || c.subgrupo) === topico;
+                if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
+            });
+            if(subs.size === 0) subs.add("Assunto");
+            subs.forEach(s => {
+                let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
+                selectSub.appendChild(opt);
+            });
+        }
 
-        function salvarAlteracoesEditor() {
-            if (!moduloSelecionadoAtualId) return;
-            const conteudoHtml = document.getElementById('theoryContent').innerHTML;
-            if (!sessaoAtual.resumosEditadosSalvos) sessaoAtual.resumosEditadosSalvos = {};
+        // --- PAINEL BANCO DE DADOS COM FILTRO "GERADOS HOJE" ---
+        function abrirPainelBancoDados() {
+            mudarTela('screenBancoDados');
+            atualizarFiltrosTopicosDB();
+            renderizarTabelaDB();
+        }
+
+        function atualizarFiltrosTopicosDB() {
+            const disc = document.getElementById('dbFiltroDisc').value;
+            const selectTopico = document.getElementById('dbFiltroTopico');
+            selectTopico.innerHTML = '<option value="Todos">📂 Todos os Tópicos</option>';
+            let topicos = new Set();
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let matchDisc = (disc === 'Todos' || discNorm === normalizarTexto(disc) || (disc === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                if(matchDisc) {
+                    let t = c.topicoPrincipal || c.topico || c.subgrupo;
+                    if(t) topicos.add(t);
+                }
+            });
+            topicos.forEach(t => {
+                let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
+                selectTopico.appendChild(opt);
+            });
+            atualizarFiltrosSubDB();
+        }
+
+        function atualizarFiltrosSubDB() {
+            const disc = document.getElementById('dbFiltroDisc').value;
+            const topico = document.getElementById('dbFiltroTopico').value;
+            const selectSub = document.getElementById('dbFiltroSub');
+            selectSub.innerHTML = '<option value="Todos">📌 Todos os Assuntos</option>';
+            let subs = new Set();
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let matchDisc = (disc === 'Todos' || discNorm === normalizarTexto(disc) || (disc === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                let matchTop = (topico === 'Todos' || (c.topicoPrincipal || c.topico) === topico);
+                if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
+            });
+            subs.forEach(s => {
+                let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
+                selectSub.appendChild(opt);
+            });
+        }
+
+        function renderizarTabelaDB() {
+            const tbody = document.getElementById('tbodyDadosDB');
+            tbody.innerHTML = '';
+            const filtroDisc = document.getElementById('dbFiltroDisc').value;
+            const filtroTopico = document.getElementById('dbFiltroTopico').value;
+            const filtroSub = document.getElementById('dbFiltroSub').value;
+            const filtroData = document.getElementById('dbFiltroData').value;
+            const termoBusca = normalizarTexto(document.getElementById('inputBuscaDB').value);
+            const dataHoje = obterDataHojeISO();
             
-            sessaoAtual.resumosEditadosSalvos[moduloSelecionadoAtualId] = conteudoHtml;
-            salvarDadosLocais();
-            alert("💾 Alterações salvas com sucesso!");
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            
+            let filtrados = deckCompleto.filter(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let matchDisc = (filtroDisc === 'Todos' || discNorm === normalizarTexto(filtroDisc) || (filtroDisc === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                
+                let tCard = c.topicoPrincipal || c.topico || '';
+                let matchTop = (filtroTopico === 'Todos' || tCard === filtroTopico);
+                let matchSub = (filtroSub === 'Todos' || c.subgrupo === filtroSub);
+                let matchData = (filtroData === 'Todos' || (c.dataCriacao && c.dataCriacao === dataHoje));
+
+                let qText = normalizarTexto(c.q);
+                let matchBusca = !termoBusca || qText.includes(termoBusca) || normalizarTexto(tCard).includes(termoBusca) || normalizarTexto(c.subgrupo).includes(termoBusca);
+
+                return matchDisc && matchTop && matchSub && matchData && matchBusca;
+            });
+
+            document.getElementById('contadorDBStatus').innerText = `Total exibido: ${filtrados.length} cartões`;
+
+            filtrados.forEach((card) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${card.deck || 'Geral'}</b></td>
+                    <td>${card.topicoPrincipal || card.topico || ''} / <span style="color:#38bdf8;">${card.subgrupo || ''}</span></td>
+                    <td style="max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${card.q}">${card.q}</td>
+                    <td>
+                        <button class="btn-action btn-secondary" style="padding: 4px 8px; font-size: 11px; margin: 0 4px 0 0; display: inline-block; width: auto;" onclick="abrirEditorCard('${card.id}')">✏️ Editar</button>
+                        <button class="btn-action btn-danger" style="padding: 4px 8px; font-size: 11px; margin: 0; display: inline-block; width: auto;" onclick="excluirCardDB('${card.id}')">🗑️ Excluir</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
-        function responderQuestaoFixar(bIdx, escolhida, gabarito, btnElement) {
-            const card = document.getElementById(`fixar-${bIdx}`);
-            const botoes = card.querySelectorAll('.option-card');
-            botoes.forEach(b => b.disabled = true);
+        // --- EDITOR COM PRÉVIA VISUAL EM TEMPO REAL ---
+        function abrirEditorCard(idCard) {
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let card = deckCompleto.find(c => c.id == idCard);
+            if(!card) return;
 
-            const feedback = document.getElementById(`feedback-${bIdx}`);
-            feedback.style.display = 'block';
+            document.getElementById('editCardId').value = card.id;
+            document.getElementById('editCardDeck').value = card.deck || '';
+            document.getElementById('editCardTopico').value = card.topicoPrincipal || card.topico || '';
+            document.getElementById('editCardSub').value = card.subgrupo || '';
+            document.getElementById('editCardQ').value = card.q || '';
+            document.getElementById('editCardCorreta').value = card.a || card.gabarito || '';
+            document.getElementById('editCardErradas').value = (card.erradas || []).join(', ');
+            document.getElementById('editCardExplicacao').value = card.explicacao || '';
 
-            if (escolhida === gabarito) {
-                btnElement.classList.add('correct');
-                feedback.style.background = 'rgba(5, 150, 105, 0.25)';
-                feedback.style.border = '1px solid #10b981';
-                feedback.style.color = '#6ee7b7';
-                feedback.innerHTML = `<b>🎉 Resposta Correta!</b> Parabéns.`;
+            atualizarPreviaModalEditor();
+            mudarTela('screenEditorCard');
+        }
+
+        function atualizarPreviaModalEditor() {
+            const deck = document.getElementById('editCardDeck').value || 'Disciplina';
+            const topico = document.getElementById('editCardTopico').value || 'Tópico';
+            const sub = document.getElementById('editCardSub').value || 'Assunto';
+            const q = document.getElementById('editCardQ').value || 'Enunciado da questão...';
+            const correta = document.getElementById('editCardCorreta').value || 'Alternativa Correta';
+            const erradasStr = document.getElementById('editCardErradas').value;
+            const explicacao = document.getElementById('editCardExplicacao').value || 'Comentário aqui...';
+
+            document.getElementById('previewEditorDeck').innerText = deck;
+            document.getElementById('previewEditorTitle').innerText = `${topico} — ${sub}`;
+            document.getElementById('previewEditorQ').innerHTML = q;
+            document.getElementById('previewEditorExplicacao').innerHTML = explicacao;
+
+            const optsDiv = document.getElementById('previewEditorOptions');
+            optsDiv.innerHTML = '';
+
+            if (correta === 'CERTO' || correta === 'ERRADO') {
+                ['CERTO', 'ERRADO'].forEach(op => {
+                    const btn = document.createElement('div');
+                    btn.style.cssText = "padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255,255,255,0.15); color: #fff;";
+                    if (op === correta) btn.style.border = "1px solid #10b981";
+                    btn.innerText = op;
+                    optsDiv.appendChild(btn);
+                });
             } else {
-                btnElement.classList.add('wrong');
-                botoes.forEach(b => { if (b.innerText.charAt(0) === gabarito) b.classList.add('correct'); });
-                feedback.style.background = 'rgba(220, 38, 38, 0.25)';
-                feedback.style.border = '1px solid #ef4444';
-                feedback.style.color = '#fca5a5';
-                feedback.innerHTML = `<b>❌ Resposta Incorreta.</b> O gabarito correto é a letra <b>${gabarito}</b>.`;
+                let erradas = erradasStr.split(',').map(e => e.trim()).filter(e => e.length > 0);
+                let alts = [...erradas, correta];
+                alts.forEach(alt => {
+                    const btn = document.createElement('div');
+                    btn.style.cssText = "padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255,255,255,0.15); color: #fff;";
+                    if (alt === correta) {
+                        btn.style.border = "1px solid #10b981";
+                        btn.style.background = "rgba(16, 185, 129, 0.2)";
+                    }
+                    btn.innerText = alt;
+                    optsDiv.appendChild(btn);
+                });
             }
+        }
+
+        function salvarEdicaoCardDB() {
+            let idCard = document.getElementById('editCardId').value;
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let card = deckCompleto.find(c => c.id == idCard);
+            if(!card) return;
+
+            card.deck = document.getElementById('editCardDeck').value;
+            card.topicoPrincipal = document.getElementById('editCardTopico').value;
+            card.topico = card.topicoPrincipal;
+            card.subgrupo = document.getElementById('editCardSub').value;
+            card.q = document.getElementById('editCardQ').value;
+            
+            let corretaVal = document.getElementById('editCardCorreta').value;
+            if(corretaVal === 'CERTO' || corretaVal === 'ERRADO') {
+                card.estilo = 'cebrape';
+                card.gabarito = corretaVal;
+                delete card.a;
+                delete card.erradas;
+            } else {
+                card.estilo = 'multipla';
+                card.a = corretaVal;
+                let erradasStr = document.getElementById('editCardErradas').value;
+                card.erradas = erradasStr.split(',').map(e => e.trim()).filter(e => e.length > 0);
+                delete card.gabarito;
+            }
+
+            card.explicacao = document.getElementById('editCardExplicacao').value;
+
+            salvarDadosLocais();
+            alert("✅ Cartão atualizado com sucesso!");
+            abrirPainelBancoDados();
+        }
+
+        function excluirCardDB(idCard) {
+            if(!confirm("Tem certeza que deseja excluir este cartão do banco?")) return;
+            sessaoAtual.cardsGeradosIA = sessaoAtual.cardsGeradosIA.filter(c => c.id != idCard);
+            if(typeof masterDeck !== 'undefined') {
+                masterDeck = masterDeck.filter(c => c.id != idCard);
+            }
+            salvarDadosLocais();
+            renderizarTabelaDB();
+            alert("✅ Cartão excluído com sucesso!");
         }
 
         function abrirModalPersonalizado() { mudarTela('screenCustomMenu'); }
+        function abrirGeradorIA() { 
+            document.getElementById('painelConfigGerador').style.display = 'flex';
+            document.getElementById('painelPreviaIA').style.display = 'none';
+            document.getElementById('statusGeradorIA').innerText = '';
+            atualizarTopicosGeradorIA();
+            mudarTela('screenGeradorIA'); 
+        }
+        function voltarConfigGeradorIA() {
+            document.getElementById('painelConfigGerador').style.display = 'flex';
+            document.getElementById('painelPreviaIA').style.display = 'none';
+        }
         function abrirConfiguracoesJogo() { mudarTela('screenConfig'); }
         function abrirDashboardMetricas() { window.location.href = 'metricas.html'; }
+
+        // --- GERADOR DE CARDS POR I.A. COM ESPELHAMENTO LADO A LADO ---
+        async function executarGeradorIA() {
+            const texto = document.getElementById('inputTextoGeradorIA').value.trim();
+            let qtdSelect = document.getElementById('selectQtdGeradorIA').value;
+            let qtd = 5;
+            if(qtdSelect === 'aleatorio') {
+                qtd = Math.floor(Math.random() * 8) + 3;
+            } else {
+                qtd = parseInt(qtdSelect) || 5;
+            }
+
+            const formato = document.getElementById('selectFormatoGeradorIA').value;
+            const disciplinaDestino = document.getElementById('inputDiscDestino').value;
+            const topicoDestino = document.getElementById('inputTopicoDestino').value.trim() || 'Geral';
+            const subDestino = document.getElementById('inputSubDestino').value.trim() || 'Assunto';
+            const st = document.getElementById('statusGeradorIA');
+
+            if (!texto) { alert("Cole o texto para a I.A. processar."); return; }
+            st.innerText = "⏳ A I.A. está a processar e criar os cards...";
+
+            try {
+                const novosCards = await gerarCardsComIAPersonalizado(texto, formato, qtd, disciplinaDestino, topicoDestino, subDestino);
+                tempCardsGeradosPrevia = novosCards;
+
+                const listaPrevia = document.getElementById('listaCardsPrevia');
+                listaPrevia.innerHTML = '';
+                
+                novosCards.forEach((card, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'preview-card-item';
+                    div.id = `card-item-prev-${idx}`;
+                    div.innerHTML = `<b>Card ${idx+1} [${card.deck} / ${card.subgrupo}]:</b><br>${card.q}<br><small style="color:#38bdf8;">Gabarito/Correta: ${card.a || card.gabarito}</small>`;
+                    div.onclick = () => espelharCardNaDireita(idx);
+                    listaPrevia.appendChild(div);
+                });
+
+                document.getElementById('qtdCardsGeradosNum').innerText = novosCards.length;
+                document.getElementById('painelConfigGerador').style.display = 'none';
+                document.getElementById('painelPreviaIA').style.display = 'flex';
+                st.innerText = "";
+                
+                if(novosCards.length > 0) espelharCardNaDireita(0);
+
+            } catch (err) {
+                st.innerText = "❌ Erro ao gerar: " + err.message;
+            }
+        }
+
+        function espelharCardNaDireita(idx) {
+            document.querySelectorAll('.preview-card-item').forEach(el => el.classList.remove('selected'));
+            const cardItem = document.getElementById(`card-item-prev-${idx}`);
+            if(cardItem) cardItem.classList.add('selected');
+
+            const card = tempCardsGeradosPrevia[idx];
+            if(!card) return;
+
+            const container = document.getElementById('espelhoCardConteudo');
+            let altsHtml = '';
+            if (card.estilo === 'cebrape') {
+                ['CERTO', 'ERRADO'].forEach(op => {
+                    let isCorreta = (op === card.gabarito);
+                    altsHtml += `<div style="padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 6px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${op} ${isCorreta ? ' (Gabarito)' : ''}</div>`;
+                });
+            } else {
+                let alts = [...(card.erradas || []), card.a];
+                alts.forEach(alt => {
+                    let isCorreta = (alt === card.a);
+                    altsHtml += `<div style="padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 6px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${alt} ${isCorreta ? ' (Correta)' : ''}</div>`;
+                });
+            }
+
+            container.innerHTML = `
+                <span class="mission-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; margin-bottom: 6px;">${card.deck}</span>
+                <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 8px;">${card.topicoPrincipal} — ${card.subgrupo}</div>
+                <div style="font-size: 14px; line-height: 1.6; background: rgba(30, 41, 59, 0.85); padding: 14px; border-radius: 12px; color: #ffffff; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);">${card.q}</div>
+                <div style="margin-bottom: 12px;">${altsHtml}</div>
+                <div style="background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 12px; font-size: 13px; color: #f0fdf4;">
+                    <strong style="color: #38bdf8; display: block; margin-bottom: 4px;">💡 Comentário / Fundamentação:</strong>
+                    ${card.explicacao}
+                </div>
+            `;
+        }
+
+        async function gerarCardsComIAPersonalizado(textoFonte, formato, quantidade, deck, topico, subgrupo) {
+            const apiKey = obterChaveOpenRouter();
+            if (!apiKey) throw new Error("Chave de API do OpenRouter não encontrada nas Configurações.");
+
+            const dataHoje = obterDataHojeISO();
+            const endpoint = "https://openrouter.ai/api/v1/chat/completions";
+            const promptJSON = `
+                Analise o texto abaixo e crie exatamente ${quantidade} questões de vestibular no formato "${formato}".
+                Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
+                Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras.
+
+                Estrutura se "cebrape":
+                [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cebrape", "q": "Pergunta", "gabarito": "CERTO", "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
+
+                Estrutura se "multipla":
+                [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "multipla", "q": "Pergunta", "a": "Correta", "erradas": ["E1","E2","E3"], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
+
+                Texto: "${textoFonte}"
+            `;
+
+            const bodyData = {
+                model: "deepseek/deepseek-chat",
+                messages: [{ role: "user", content: promptJSON }],
+                max_tokens: 1200,
+                temperature: 0.2
+            };
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                    'HTTP-Referer': 'https://nerdvestibulares.app',
+                    'X-Title': 'Nerd Vestibulares'
+                },
+                body: JSON.stringify(bodyData)
+            });
+
+            if (!response.ok) throw new Error("Falha ao gerar cards com o OpenRouter.");
+
+            const data = await response.json();
+            let rawText = data.choices[0].message.content;
+            rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
+            return JSON.parse(rawText);
+        }
+
+        function salvarCardsGeradosNoBanco() {
+            tempCardsGeradosPrevia.forEach(nc => sessaoAtual.cardsGeradosIA.push(nc));
+            salvarDadosLocais();
+            alert(`✅ ${tempCardsGeradosPrevia.length} cards salvos com sucesso na disciplina escolhida!`);
+            voltarMenu();
+        }
 
         function salvarConfiguracoesEVoltar() {
             const nomeJogador = document.getElementById('inputNomeJogador').value.trim() || 'Richard';
@@ -870,45 +1199,27 @@
             const motorEscolhido = document.querySelector('input[name="motorRevisao"]:checked').value;
             const passos = document.getElementById('inputPassos').value;
             const maxIntervalo = document.getElementById('inputMaxIntervalo').value;
+            const openrouterKey = document.getElementById('inputOpenRouterKey').value.trim();
 
+            salvarChaveOpenRouter(openrouterKey);
             const configObj = { nomeJogador: nomeJogador, tema: temaEscolhido, motor: motorEscolhido, passos: passos, maxIntervalo: maxIntervalo };
             localStorage.setItem('nerd_vestibulares_config_motor', JSON.stringify(configObj));
             aplicarTemaVisual(temaEscolhido);
             carregarPerfilUsuario();
-            alert("💾 Configurações salvas!");
+            alert("💾 Configurações salvas com sucesso!");
             voltarMenu();
         }
 
-        // --- NOVA FUNÇÃO: RESET TOTAL DO PROGRESSO ---
         function executarResetTotal() {
-            if (!confirm("⚠️ ATENÇÃO: Tem certeza absoluta que deseja zerar todo o seu progresso?\n\nIsso apagará seu XP, histórico de acertos/erros, revisões e notas editadas de forma irreversível!")) {
-                return;
-            }
-
-            // 1. Limpa os dados do perfil ativo no LocalStorage
+            if (!confirm("⚠️ Tem a certeza absoluta que deseja zerar todo o seu progresso?")) return;
             let chaveLocal = obterChavePerfilLocalStorage();
             localStorage.removeItem(chaveLocal);
-
-            // 2. Se estiver autenticado e online no Firebase, apaga os dados da nuvem também
-            if (navigator.onLine && usuarioUid && typeof database !== 'undefined') {
-                database.ref('users/' + usuarioUid).remove()
-                    .then(() => {
-                        console.log("Dados da nuvem apagados com sucesso.");
-                    })
-                    .catch(err => {
-                        console.error("Erro ao apagar dados da nuvem: ", err);
-                    });
-            }
-
-            // 3. Reseta o objeto local em memória da sessão atual
+            if (navigator.onLine && usuarioUid) database.ref('users/' + usuarioUid).remove();
             sessaoAtual.xp = 0;
             sessaoAtual.historicoRevisao = {};
             sessaoAtual.questoesRespondidasHistorico = {};
-            sessaoAtual.resumosEditadosSalvos = {};
-
-            alert("✨ Progresso zerado com sucesso! O sistema foi reiniciado.");
-            
-            // Retorna para o menu principal atualizado
+            sessaoAtual.cardsGeradosIA = [];
+            alert("✨ Progresso limpo com sucesso!");
             voltarMenu();
         }
 
@@ -928,12 +1239,13 @@
                 }
                 if (config.passos) document.getElementById('inputPassos').value = config.passos;
                 if (config.maxIntervalo) document.getElementById('inputMaxIntervalo').value = config.maxIntervalo;
-            } else { aplicarTemaVisual('glass3d'); }
+            } else { aplicarTemaVisual('cyber'); }
+            document.getElementById('inputOpenRouterKey').value = obterChaveOpenRouter();
         }
 
         function aplicarTemaVisual(tema) {
-            document.body.classList.remove('theme-glass3d', 'theme-neon', 'theme-clean');
-            document.body.classList.add('theme-' + (tema || 'glass3d'));
+            document.body.classList.remove('theme-cyber', 'theme-emerald', 'theme-gold', 'theme-quartz');
+            document.body.classList.add('theme-' + (tema || 'cyber'));
         }
 
         function mudarTela(idTela) {
@@ -949,75 +1261,67 @@
 
         function confirmarAbandonoSessao() { if(confirm("Deseja abandonar a sessão atual?")) voltarMenu(); }
 
-        function calcularProximaRevisao(acertou) {
-            let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
-            let motor = config.motor || 'fsrs';
-            let agora = Date.now();
-            let umDiaMs = 24 * 60 * 60 * 1000;
-
-            if (!acertou) return agora + (10 * 60 * 1000);
-            return motor === 'sm2' ? agora + (1 * umDiaMs) : agora + (3 * umDiaMs);
-        }
-
-        function processarRespostaRevisao(cardId, acertou) {
-            if (sessaoAtual.modoPersonalizado) return;
-            let dataHoje = new Date().toISOString().split('T')[0];
-            sessaoAtual.questoesRespondidasHistorico[cardId] = { acertou: acertou, data: dataHoje };
-            let proximaData = calcularProximaRevisao(acertou);
-            sessaoAtual.historicoRevisao[cardId] = { proximaRevisao: proximaData, ultimaResposta: acertou ? 'acertou' : 'errou' };
-        }
-
         function iniciarMissaoGeral() { sessaoAtual.modoPersonalizado = false; executarInicioSessao(); }
         function iniciarEstudoPersonalizado() { sessaoAtual.modoPersonalizado = true; executarInicioSessao(); }
 
+        // SIMULADO OFICIAL COM FILTRAGEM ESPAÇADA CORRETA (OMITE AS JÁ ESTUDADAS ATÉ O PRAZO DE REVISÃO)
         function executarInicioSessao() {
-            sessaoAtual.indice = 0; 
-            sessaoAtual.acertos = 0; 
-            sessaoAtual.erros = 0;
-            sessaoAtual.tempoInicioSessao = Date.now();
+            sessaoAtual.indice = 0; sessaoAtual.acertos = 0; sessaoAtual.erros = 0; sessaoAtual.vidas = 5;
             
-            let limiteDesejado = parseInt(document.getElementById('selectTamanhoSessao').value) || 10;
-
-            if (limiteDesejado === 5) {
-                sessaoAtual.vidas = 2;
-            } else if (limiteDesejado === 10) {
-                sessaoAtual.vidas = 5;
-            } else if (limiteDesejado === 20) {
-                sessaoAtual.vidas = 8;
+            let tamanhoVal = document.getElementById('selectTamanhoSessao').value;
+            let limiteDesejado = 10;
+            if (tamanhoVal === 'aleatorio') {
+                limiteDesejado = Math.floor(Math.random() * 11) + 5;
             } else {
-                sessaoAtual.vidas = 5; 
+                limiteDesejado = parseInt(tamanhoVal) || 10;
             }
+
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...sessaoAtual.cardsGeradosIA];
+            let agora = Date.now();
 
             if (sessaoAtual.modoPersonalizado) {
                 let tipoFiltro = document.getElementById('customTipoFiltro').value;
-                let deckFiltrado = masterDeck.filter(c => {
-                    let historicoItem = sessaoAtual.questoesRespondidasHistorico[c.id];
-                    if (!historicoItem) return false;
-                    if (tipoFiltro === 'erradas') return !historicoItem.acertou;
-                    if (tipoFiltro === 'acertadas') return historicoItem.acertou;
-                    return true;
-                });
-                deckFiltrado.sort(() => Math.random() - 0.5);
-                sessaoAtual.cardsSessao = deckFiltrado.slice(0, limiteDesejado);
+                if (tipoFiltro === 'ia') {
+                    deckCompleto = [...sessaoAtual.cardsGeradosIA];
+                } else {
+                    deckCompleto = deckCompleto.filter(c => {
+                        let h = sessaoAtual.questoesRespondidasHistorico[c.id];
+                        if (!h) return false;
+                        if (tipoFiltro === 'erradas') return !h.acertou;
+                        if (tipoFiltro === 'acertadas') return h.acertou;
+                        return true;
+                    });
+                }
             } else {
                 let disc = document.getElementById('selectFiltroTema').value;
                 let top = document.getElementById('selectTopico').value;
                 let sub = document.getElementById('selectSubtopico').value;
 
-                let deckFiltrado = masterDeck.filter(c => {
+                deckCompleto = deckCompleto.filter(c => {
                     let discNorm = normalizarTexto(c.deck);
                     let selDiscNorm = normalizarTexto(disc);
-                    let matchDisc = (disc === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
-                    let matchTop = (top === 'Todos' || (c.topicoPrincipal || c.subgrupo) === top);
+                    let matchDisc = (disc === 'Todos' || discNorm === selDiscNorm || (disc === 'História Geral' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                    let topicoCard = c.topicoPrincipal || c.subgrupo || '';
+                    let matchTop = (top === 'Todos' || topicoCard === top);
                     let matchSub = (sub === 'Todos' || c.subgrupo === sub);
-                    return matchDisc && matchTop && matchSub && cardEstaDisponivelRevisao(c.id);
+
+                    if (!matchDisc || !matchTop || !matchSub) return false;
+
+                    // Oculta e omite do simulado oficial as questões respondidas cujo prazo de revisão ainda não chegou
+                    let infoRevisao = sessaoAtual.historicoRevisao[c.id];
+                    if (infoRevisao && infoRevisao.proximaRevisao && infoRevisao.proximaRevisao > agora) {
+                        return false;
+                    }
+
+                    return true;
                 });
-                deckFiltrado.sort(() => Math.random() - 0.5);
-                sessaoAtual.cardsSessao = deckFiltrado.slice(0, limiteDesejado);
             }
 
+            deckCompleto.sort(() => Math.random() - 0.5);
+            sessaoAtual.cardsSessao = deckCompleto.slice(0, limiteDesejado);
+
             if(sessaoAtual.cardsSessao.length === 0) {
-                alert("Nenhuma questão disponível para revisão hoje com esses filtros.");
+                alert("Nenhuma questão pendente de revisão para os filtros selecionados.");
                 return;
             }
 
@@ -1056,64 +1360,56 @@
             document.getElementById('hudAcertos').innerText = taxa + '%';
             document.getElementById('progressBar').style.width = ((sessaoAtual.indice / total) * 100) + '%';
 
-            const tag = document.getElementById('missionTag');
-            tag.className = `mission-badge ${card.tag || 'tag-historia'}`;
-            tag.innerText = card.deck || "Estudo";
-
+            document.getElementById('missionTag').innerText = card.deck || "Estudo";
             document.getElementById('caseTitle').innerText = `${card.subgrupo || ''} — ${card.topico}`;
             document.getElementById('caseDesc').innerHTML = card.q;
 
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
-            let alternativas = [...card.erradas, card.a].sort(() => Math.random() - 0.5);
+            
+            if (card.estilo === 'cebrape') {
+                ['CERTO', 'ERRADO'].forEach(op => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-card';
+                    btn.innerText = op;
+                    btn.onclick = () => responderCard(op, card.gabarito, card.id, card.explicacao, btn);
+                    grid.appendChild(btn);
+                });
+            } else {
+                let alternativas = [...(card.erradas || []), card.a].sort(() => Math.random() - 0.5);
+                alternativas.forEach(alt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-card';
+                    btn.innerText = alt;
+                    btn.onclick = (e) => {
+                        if (btn.classList.contains('crossed-out')) return;
+                        document.querySelectorAll('.option-card').forEach(b => b.style.borderColor = 'transparent');
+                        btn.style.borderColor = '#38bdf8';
+                        btn.dataset.selected = "true";
+                        document.querySelectorAll('.option-card').forEach(b => { if(b !== btn) b.dataset.selected = "false"; });
+                        document.getElementById('btn-confirm').style.display = 'block';
+                    };
+                    btn.ondblclick = (e) => {
+                        e.preventDefault();
+                        btn.classList.toggle('crossed-out');
+                    };
+                    grid.appendChild(btn);
+                });
 
-            alternativas.forEach(alt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-card';
-                btn.innerText = alt;
-                
-                // Clique simples para selecionar (se não riscada)
-                btn.onclick = (e) => {
-                    if (btn.classList.contains('crossed-out')) return;
-                    document.querySelectorAll('.option-card').forEach(b => b.style.borderColor = 'transparent');
-                    btn.style.borderColor = '#38bdf8';
-                    btn.dataset.selected = "true";
-                    document.querySelectorAll('.option-card').forEach(b => { if(b !== btn) b.dataset.selected = "false"; });
-                    document.getElementById('btn-confirm').style.display = 'block';
+                document.getElementById('btn-confirm').onclick = () => {
+                    let sel = Array.from(grid.children).find(b => b.dataset.selected === "true");
+                    if (!sel) return;
+                    responderCard(sel.innerText, card.a, card.id, card.explicacao, sel);
                 };
-
-                // Duplo clique para riscar alternativa errada (Eliminar distrator)
-                btn.ondblclick = (e) => {
-                    e.preventDefault();
-                    btn.classList.toggle('crossed-out');
-                    if (btn.classList.contains('crossed-out')) {
-                        btn.dataset.selected = "false";
-                        btn.style.borderColor = 'transparent';
-                    }
-                    verificarSelecaoAtiva();
-                };
-
-                grid.appendChild(btn);
-            });
+            }
 
             document.getElementById('btn-confirm').style.display = 'none';
             document.getElementById('explanationBox').style.display = 'none';
+            document.getElementById('boxComentarioCurto').style.display = 'none';
+            document.getElementById('boxTutorIA').style.display = 'none';
+            document.getElementById('respostaTutorIA').innerText = '';
             document.getElementById('nextCardBtn').style.display = 'none';
             document.getElementById('skipCardBtn').style.display = 'block';
-
-            // Configurar botão Confirmar Resposta
-            const btnConfirm = document.getElementById('btn-confirm');
-            btnConfirm.onclick = () => {
-                let selecionadaBtn = Array.from(grid.children).find(b => b.dataset.selected === "true");
-                if (!selecionadaBtn) return;
-                responderCard(selecionadaBtn.innerText, card.a, card.id, card.explicacao, selecionadaBtn);
-            };
-        }
-
-        function verificarSelecaoAtiva() {
-            const grid = document.getElementById('optionsGrid');
-            let algumSelecionado = Array.from(grid.children).some(b => b.dataset.selected === "true");
-            document.getElementById('btn-confirm').style.display = algumSelecionado ? 'block' : 'none';
         }
 
         function pularCardAtual() {
@@ -1123,6 +1419,7 @@
             carregarCard();
         }
 
+        // CÁLCULO DO MOTOR ESPAÇADO E ATUALIZAÇÃO DA PRÓXIMA REVISÃO AO RESPONDER
         function responderCard(escolhida, correta, cardId, explicacaoTexto, elementoBtn) {
             pararTimer();
             const botoes = document.querySelectorAll('.option-card');
@@ -1131,7 +1428,26 @@
             document.getElementById('btn-confirm').style.display = 'none';
 
             let acertou = (escolhida === correta);
-            processarRespostaRevisao(cardId, acertou);
+            let dataHoje = obterDataHojeISO();
+            let agora = Date.now();
+            let umDiaMs = 24 * 60 * 60 * 1000;
+
+            // Define o intervalo futuro com base no motor espaçado (FSRS / SM-2)
+            let diasIncremento = acertou ? 3 : 1; 
+            let infoAnterior = sessaoAtual.historicoRevisao[cardId];
+            if (infoAnterior && infoAnterior.intervalo) {
+                diasIncremento = acertou ? infoAnterior.intervalo * 2 : 1;
+            }
+            let proximaRevisaoTimestamp = agora + (diasIncremento * umDiaMs);
+
+            sessaoAtual.historicoRevisao[cardId] = {
+                proximaRevisao: proximaRevisaoTimestamp,
+                intervalo: diasIncremento,
+                ultimoAcerto: acertou,
+                ultimaResposta: agora
+            };
+
+            sessaoAtual.questoesRespondidasHistorico[cardId] = { acertou: acertou, data: dataHoje, timestamp: agora };
 
             if(acertou) {
                 elementoBtn.classList.add('correct');
@@ -1158,53 +1474,28 @@
             carregarCard();
         }
 
-        function salvarDadosLocais() {
-            salvarDadosHibrido({
-                xp: sessaoAtual.xp,
-                historicoRevisao: sessaoAtual.historicoRevisao,
-                questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico,
-                resumosEditadosSalvos: sessaoAtual.resumosEditadosSalvos
-            });
-        }
-
-        function finalizarSessaoEtapa() {
-            pararTimer();
-            mudarTela('screenReport');
-            let totalResp = sessaoAtual.acertos + sessaoAtual.erros;
-            let percentual = totalResp > 0 ? Math.round((sessaoAtual.acertos / totalResp) * 100) : 0;
-
-            if (sessaoAtual.vidas <= 0 && !sessaoAtual.modoPersonalizado) {
-                document.getElementById('reportTitle').innerText = "🚫 Operação Interrompida (0 Vidas Restantes)";
-            } else {
-                document.getElementById('reportTitle').innerText = percentual >= 70 ? "🏆 Sessão Concluída!" : "⚠️ Desempenho Abaixo da Meta";
-            }
-            
-            let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
-            html += `• XP Ganho: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
-            document.getElementById('reportContent').innerHTML = html;
-        }
-
-        // --- LÓGICA DA CANETA MARCA-TEXTO ---
         function initHighlighterLogic() {
             let highlighterActive = false;
             const btnHighlighter = document.getElementById('btn-highlighter');
             const highlighterStatus = document.getElementById('highlighter-status');
             const questionContent = document.getElementById('caseDesc');
 
-            btnHighlighter.addEventListener('click', () => {
+            if (!btnHighlighter || !questionContent) return;
+
+            btnHighlighter.onclick = () => {
                 highlighterActive = !highlighterActive;
                 if (highlighterActive) {
                     btnHighlighter.style.background = '#fef08a';
                     btnHighlighter.style.color = '#1e293b';
                     highlighterStatus.textContent = 'ON';
                 } else {
-                    btnHighlighter.style.background = '#1e293b';
+                    btnHighlighter.style.background = 'rgba(30,41,59,0.9)';
                     btnHighlighter.style.color = '#f8fafc';
                     highlighterStatus.textContent = 'OFF';
                 }
-            });
+            };
 
-            questionContent.addEventListener('mouseup', () => {
+            questionContent.onmouseup = () => {
                 if (!highlighterActive) return;
                 const selection = window.getSelection();
                 if (!selection.isCollapsed && selection.rangeCount > 0) {
@@ -1215,141 +1506,81 @@
                     try {
                         range.surroundContents(span);
                         selection.removeAllRanges();
-                    } catch (e) {
-                        console.log("Seleção complexa.");
-                    }
+                    } catch (e) {}
                 }
-            });
+            };
 
-            questionContent.addEventListener('click', (e) => {
+            questionContent.onclick = (e) => {
                 if (e.target.tagName === 'MARK') {
                     const parent = e.target.parentNode;
                     parent.replaceChild(document.createTextNode(e.target.textContent), e.target);
                     parent.normalize();
                 }
-            });
+            };
         }
 
-        // --- LÓGICA DO POMODORO DISCRETO (COM OPÇÃO DE LIGAR/DESLIGAR) ---
-        function initPomodoroLogic() {
-            const pomodoroBar = document.getElementById('pomodoro-bar');
-            const togglePomodoroViewBtn = document.getElementById('toggle-pomodoro-view');
-            const masterToggleBtn = document.getElementById('pomodoro-master-toggle');
-            const timerDisplay = document.getElementById('pomodoro-timer');
-            const startBtn = document.getElementById('pomodoro-start');
-            const resetBtn = document.getElementById('pomodoro-reset');
-            const timeSelect = document.getElementById('focus-time-select');
-            const statusLabel = document.getElementById('pomodoro-status');
-            const alarmSound = document.getElementById('alarm-sound');
-
-            let totalSeconds = 25 * 60;
-            let timerInterval = null;
-            let isRunning = false;
-            let isBreak = false;
-            let alarmTimer = null;
-            let pomodoroEnabled = false;
-
-            function togglePomodoroState() {
-                pomodoroEnabled = !pomodoroEnabled;
-                if (pomodoroEnabled) {
-                    pomodoroBar.classList.remove('hidden');
-                    togglePomodoroViewBtn.style.display = 'flex';
-                    masterToggleBtn.classList.add('active');
-                    masterToggleBtn.textContent = 'Pomodoro: Ligado';
-                } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    startBtn.textContent = 'Iniciar';
-                    stopAlarm();
-                    pomodoroBar.classList.add('hidden');
-                    togglePomodoroViewBtn.style.display = 'none';
-                    masterToggleBtn.classList.remove('active');
-                    masterToggleBtn.textContent = 'Pomodoro: Desligado';
-                }
+        async function executarComentarioCurtoIA() {
+            const card = sessaoAtual.cardsSessao[sessaoAtual.indice];
+            const box = document.getElementById('boxComentarioCurto');
+            const texto = document.getElementById('textoComentarioCurto');
+            box.style.display = 'block';
+            texto.innerText = "⏳ A gerar explicação rápida com DeepSeek...";
+            try {
+                const res = await gerarExplicacaoCurtaIA(card.q + " | Gabarito: " + (card.gabarito || card.a));
+                texto.innerText = res;
+            } catch (err) {
+                texto.innerText = "❌ " + err.message;
             }
+        }
 
-            masterToggleBtn.addEventListener('click', togglePomodoroState);
+        function adicionarExplicacaoAoOficial() {
+            const textoIA = document.getElementById('textoComentarioCurto').innerText;
+            const expTextEl = document.getElementById('expText');
+            if (!textoIA) return;
 
-            togglePomodoroViewBtn.addEventListener('click', () => {
-                pomodoroBar.classList.toggle('hidden');
-                togglePomodoroViewBtn.textContent = pomodoroBar.classList.contains('hidden') ? '⏱️' : '👁️';
-            });
+            expTextEl.innerHTML += `<br><br><b>⚡ Complemento da I.A.:</b> ${textoIA}`;
+            const card = sessaoAtual.cardsSessao[sessaoAtual.indice];
+            card.explicacao = expTextEl.innerHTML;
 
-            timeSelect.addEventListener('change', (e) => {
-                if (!isRunning) {
-                    totalSeconds = parseInt(e.target.value) * 60;
-                    updateDisplay();
-                }
-            });
+            alert("✅ Comentário da I.A. adicionado com sucesso à fundamentação oficial!");
+        }
 
-            function updateDisplay() {
-                const minutes = Math.floor(totalSeconds / 60);
-                const seconds = totalSeconds % 60;
-                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        function abrirCaixaTutorIA() { document.getElementById('boxTutorIA').style.display = 'block'; }
+
+        async function enviarPerguntaTutorIA() {
+            const card = sessaoAtual.cardsSessao[sessaoAtual.indice];
+            const duvida = document.getElementById('inputDuvidaTutor').value.trim();
+            const boxRes = document.getElementById('respostaTutorIA');
+            if (!duvida) { alert("Digite a sua dúvida."); return; }
+            boxRes.innerText = "⏳ A consultar o tutor de I.A....";
+            try {
+                const resposta = await consultarTutorIA(card.q + " | Explicação: " + (card.explicacao || ""), duvida);
+                boxRes.innerText = resposta;
+            } catch (err) {
+                boxRes.innerText = "❌ Erro: " + err.message;
             }
+        }
 
-            startBtn.addEventListener('click', () => {
-                if (!pomodoroEnabled) return;
-                if (!isRunning) {
-                    if (totalSeconds <= 0) resetTimerValues();
-                    isRunning = true;
-                    startBtn.textContent = 'Pausar';
-                    timerInterval = setInterval(() => {
-                        if (totalSeconds > 0) {
-                            totalSeconds--;
-                            updateDisplay();
-                        } else {
-                            clearInterval(timerInterval);
-                            isRunning = false;
-                            startBtn.textContent = 'Iniciar';
-                            triggerAlarmSequence();
-                        }
-                    }, 1000);
-                } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    startBtn.textContent = 'Iniciar';
-                }
-            });
+        function salvarDadosLocais() {
+            let chave = obterChavePerfilLocalStorage();
+            let dados = {
+                xp: sessaoAtual.xp,
+                historicoRevisao: sessaoAtual.historicoRevisao,
+                questoesRespondidasHistorico: sessaoAtual.questoesRespondidasHistorico,
+                cardsGeradosIA: sessaoAtual.cardsGeradosIA
+            };
+            salvarDadosHibrido(dados);
+        }
 
-            resetBtn.addEventListener('click', () => {
-                clearInterval(timerInterval);
-                isRunning = false;
-                startBtn.textContent = 'Iniciar';
-                resetTimerValues();
-                stopAlarm();
-            });
-
-            function resetTimerValues() {
-                isBreak = false;
-                statusLabel.textContent = 'Modo Foco';
-                totalSeconds = parseInt(timeSelect.value) * 60;
-                updateDisplay();
-            }
-
-            function triggerAlarmSequence() {
-                statusLabel.textContent = '⏰ Tempo Esgotado!';
-                alarmSound.currentTime = 0;
-                alarmSound.play().catch(e => console.log("Áudio bloqueado pelo navegador."));
-                
-                alarmTimer = setTimeout(() => {
-                    stopAlarm();
-                    if (!isBreak) {
-                        isBreak = true;
-                        statusLabel.textContent = 'Descanso';
-                        totalSeconds = 5 * 60;
-                        updateDisplay();
-                    }
-                }, 15000);
-            }
-
-            function stopAlarm() {
-                if (alarmTimer) clearTimeout(alarmTimer);
-                alarmSound.pause();
-                alarmSound.currentTime = 0;
-            }
-
-            updateDisplay();
+        function finalizarSessaoEtapa() {
+            pararTimer();
+            mudarTela('screenReport');
+            let totalResp = sessaoAtual.acertos + sessaoAtual.erros;
+            let percentual = totalResp > 0 ? Math.round((sessaoAtual.acertos / totalResp) * 100) : 0;
+            document.getElementById('reportTitle').innerText = percentual >= 70 ? "🏆 Sessão Concluída!" : "⚠️ Desempenho Abaixo da Meta";
+            let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
+            html += `• XP Ganho: <b>+${sessaoAtual.acertos * 100} XP</b><br>`;
+            document.getElementById('reportContent').innerHTML = html;
         }
     </script>
 </body>

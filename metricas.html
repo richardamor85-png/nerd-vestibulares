@@ -67,7 +67,6 @@
         .filter-group label { font-size: 11px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
         .filter-group input, .filter-group select { padding: 9px; border: 1px solid #475569; border-radius: 6px; font-size: 13px; background: #0f172a; color: #f8fafc; outline: none; }
         
-        /* REGRA ADICIONADA: Espaçamento elegante para as opções */
         select option { padding: 8px 12px; font-size: 14px; background-color: #0f172a; color: #ffffff; }
 
         .btn-filtrar { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; height: 38px; box-shadow: 0 4px 12px rgba(14,165,233,0.3); transition: 0.2s; }
@@ -134,8 +133,8 @@
         <div class="filter-group">
             <label>Período de Estudo</label>
             <select id="filtroPeriodo" onchange="alternarCamposDataCustom()">
-                <option value="todos" selected>♾️ Todo o Período</option>
-                <option value="hoje">📅 Hoje</option>
+                <option value="todos">♾️ Todo o Período</option>
+                <option value="hoje" selected>📅 Hoje (Relógio Local)</option>
                 <option value="ontem">⏪ Ontem</option>
                 <option value="7dias">📊 Últimos 7 Dias</option>
                 <option value="30dias">📈 Últimos 30 Dias</option>
@@ -155,7 +154,6 @@
 
         <div class="filter-group">
             <label>Disciplina / Tema</label>
-            <!-- ORGANIZAÇÃO POR ÁREAS DO CONHECIMENTO -->
             <select id="filtroDisciplina" onchange="atualizarTopicosMetricas()">
                 <option value="Todos" selected>🌐 Todas as Disciplinas</option>
                 <option value="Linguagens">📝 Linguagens</option>
@@ -338,8 +336,6 @@
     <script src="fisica.js"></script>
     <script src="matematica.js"></script>
     <script src="linguagens.js"></script>
-
-    <!-- Unificador -->
     <script src="questoes.js"></script>
 
     <script>
@@ -386,6 +382,15 @@
                 gIni.style.display = 'none';
                 gFim.style.display = 'none';
             }
+        }
+
+        // Função do Relógio Local EXATA para resetar à meia-noite (YYYY-MM-DD)
+        function obterDataHojeISO() {
+            const d = new Date();
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
 
         function atualizarTopicosMetricas() {
@@ -456,7 +461,8 @@
                             let status = dados.questoesRespondidasHistorico[qId];
                             let cardObj = typeof masterDeck !== 'undefined' ? masterDeck.find(c => c.id == qId) : null;
                             
-                            let dataResposta = (typeof status === 'object' && status.data) ? status.data : new Date().toISOString().split('T')[0];
+                            // Vinculação de data segura e robusta baseada no relógio local
+                            let dataResposta = (typeof status === 'object' && status.data) ? status.data : obterDataHojeISO();
                             let acertouBool = (typeof status === 'object') ? status.acertou : (status === 'acertou');
 
                             historicoUnificado.push({
@@ -496,30 +502,29 @@
             renderizarGraficos();
         }
 
-        function obterDataFormatada(d) {
-            return d.toISOString().split('T')[0];
-        }
-
         function obterHistoricoFiltrado() {
             const discFiltro = document.getElementById('filtroDisciplina').value;
             const topFiltro = document.getElementById('filtroTopico').value;
             const subFiltro = document.getElementById('filtroSubtopico').value;
             const modoPeriodo = document.getElementById('filtroPeriodo').value;
 
-            let hojeObj = new Date();
-            let hojeStr = obterDataFormatada(hojeObj);
+            // Uso rigoroso do relógio local para o filtro "Hoje"
+            let hojeStr = obterDataHojeISO();
 
             let ontemObj = new Date();
-            ontemObj.setDate(hojeObj.getDate() - 1);
-            let ontemStr = obterDataFormatada(ontemObj);
+            ontemObj.setDate(ontemObj.getDate() - 1);
+            let ano = ontemObj.getFullYear();
+            let mes = String(ontemObj.getMonth() + 1).padStart(2, '0');
+            let dia = String(ontemObj.getDate()).padStart(2, '0');
+            let ontemStr = `${ano}-${mes}-${dia}`;
 
             let d7Obj = new Date();
-            d7Obj.setDate(hojeObj.getDate() - 7);
-            let d7Str = obterDataFormatada(d7Obj);
+            d7Obj.setDate(d7Obj.getDate() - 7);
+            let d7Str = `${d7Obj.getFullYear()}-${String(d7Obj.getMonth() + 1).padStart(2, '0')}-${String(d7Obj.getDate()).padStart(2, '0')}`;
 
             let d30Obj = new Date();
-            d30Obj.setDate(hojeObj.getDate() - 30);
-            let d30Str = obterDataFormatada(d30Obj);
+            d30Obj.setDate(d30Obj.getDate() - 30);
+            let d30Str = `${d30Obj.getFullYear()}-${String(d30Obj.getMonth() + 1).padStart(2, '0')}-${String(d30Obj.getDate()).padStart(2, '0')}`;
 
             let dataIniCustom = document.getElementById('filtroDataInicio').value;
             let dataFimCustom = document.getElementById('filtroDataFim').value;
@@ -533,6 +538,7 @@
 
                 let matchData = true;
                 if (modoPeriodo === 'hoje') {
+                    // Garante que só conta o que é exatamente o dia de hoje, resetando a contagem automaticamente à meia-noite
                     matchData = (h.data === hojeStr);
                 } else if (modoPeriodo === 'ontem') {
                     matchData = (h.data === ontemStr);
@@ -570,7 +576,7 @@
                     let selDiscNorm = normalizarTexto(discFiltro);
                     let matchDisc = (discFiltro === 'Todos' || discNorm === selDiscNorm || (selDiscNorm === 'historia geral' && discNorm === 'historia'));
                     let matchTop = (topFiltro === 'Todos' || (c.topicoPrincipal || c.subgrupo) === topFiltro);
-                    let matchSub = (subFiltro === 'Todos' || c.subgrupo === subtopico);
+                    let matchSub = (subFiltro === 'Todos' || c.subgrupo === subFiltro);
                     return matchDisc && matchTop && matchSub;
                 });
 
