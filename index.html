@@ -189,7 +189,7 @@
         .config-card-box { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 18px; text-align: left; font-size: 13px; width: 100%; max-width: 380px; margin: 0 auto 14px auto; color: #f8fafc; box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
         .config-card-box label { text-align: left; margin-left: 0; display: inline; text-transform: none; color: inherit; cursor: pointer; font-weight: 600; max-width: 100%; }
 
-        .preview-card-item { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 10px; margin-bottom: 6px; text-align: left; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+        .preview-card-item { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 10px; margin-bottom: 6px; text-align: left; font-size: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; gap: 8px; }
         .preview-card-item:hover, .preview-card-item.selected { border-color: #ec4899; background: rgba(236, 72, 153, 0.15); }
 
         .db-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -208,7 +208,7 @@
 
     <div class="game-container">
         
-        <!-- TELA 1: MENU PRINCIPAL & AUTENTICAÇÃO -->
+        <!-- TELA 1: MENU PRINCIPAL & AUTENTICAÇÃO (ORDEM REORGANIZADA) -->
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
@@ -271,8 +271,9 @@
                         <button class="btn-action" onclick="iniciarMissaoGeral()">🚀 Simulado Oficial (Espaçado)</button>
                         <button class="btn-action btn-custom" onclick="abrirModalPersonalizado()">⚡ Estudo Personalizado (Simulado Livre)</button>
                         <button class="btn-action btn-ai" onclick="abrirGeradorIA()">🤖 Gerador de Cards por I.A.</button>
-                        <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
+                        <button class="btn-action btn-custom" style="background: linear-gradient(135deg, #0284c7, #0369a1);" onclick="abrirGeradorManual()">📝 Gerador de Cards (Manual)</button>
                         <button class="btn-action btn-db" onclick="abrirPainelBancoDados()">🗂️ Banco de Dados (Navegar/Editar)</button>
+                        <button class="btn-action btn-secondary" onclick="abrirDashboardMetricas()">📊 Dashboard de Métricas</button>
                         <button class="btn-action btn-secondary" style="background: rgba(51, 65, 85, 0.8);" onclick="abrirConfiguracoesJogo()">⚙️ Configurações & API</button>
                         <button class="btn-action btn-danger" style="margin-top: 10px;" onclick="fazerLogout()">🚪 Sair / Trocar Conta</button>
                     </div>
@@ -350,11 +351,10 @@
             <button class="btn-action btn-secondary" style="margin-top: 15px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
         </div>
 
-        <!-- MODAL DE EDIÇÃO COMPLETA DE CARTÃO (COM BOTÃO SALVAR BEM VISÍVEL NO TOPO) -->
+        <!-- MODAL DE EDIÇÃO COMPLETA DE CARTÃO -->
         <div id="screenEditorCard" class="screen">
             <h2 style="color: #38bdf8; text-align: center; margin-top: 0; font-weight: 800;">✏️ Editor Completo de Cartão</h2>
             
-            <!-- BARRA FIXA SUPERIOR COM OS BOTÕES DE SALVAR E CANCELAR GARANTIDOS -->
             <div style="display: flex; gap: 15px; justify-content: center; width: 100%; max-width: 850px; margin-bottom: 12px; background: rgba(15, 23, 42, 0.98); padding: 12px; border-radius: 14px; border: 2px solid #10b981;">
                 <button class="btn-action btn-warning" style="margin: 0 !important; max-width: 220px !important; background: linear-gradient(135deg, #10b981, #047857) !important; font-size: 14px !important; padding: 10px 18px !important; display: block !important;" onclick="salvarEdicaoCardDB()">💾 Salvar Alterações</button>
                 <button class="btn-action btn-secondary" style="margin: 0 !important; max-width: 150px !important; font-size: 14px !important; padding: 10px 18px !important; display: block !important;" onclick="abrirPainelBancoDados()">❌ Cancelar</button>
@@ -389,7 +389,7 @@
                     <label>Alternativas Erradas (separadas por vírgula):</label>
                     <textarea id="editCardErradas" rows="3" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;" placeholder="Errada 1, Errada 2, Errada 3" oninput="atualizarPreviaModalEditor()"></textarea>
 
-                    <label>Comentário / Fundamentação:</label>
+                    <label>💡 Comentário / Fundamentação:</label>
                     <textarea id="editCardExplicacao" rows="4" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;" oninput="atualizarPreviaModalEditor()"></textarea>
                 </div>
 
@@ -431,7 +431,7 @@
             </div>
         </div>
 
-        <!-- TELA DO GERADOR DE CARDS POR I.A. (BOTÃO SALVAR EM DESTAQUE ABSOLUTO NO TOPO) -->
+        <!-- TELA DO GERADOR DE CARDS POR I.A. (COM CHECKBOXES PARA MARCAR/DESMARCAR) -->
         <div id="screenGeradorIA" class="screen">
             <div style="text-align: center; margin-top: 2px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #ec4899; margin-bottom: 4px; font-size: 17px; font-weight: 800;">🤖 Gerador de Cards com I.A.</h2>
@@ -489,11 +489,11 @@
                     <button class="btn-action btn-secondary" style="margin-top: 6px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
                 </div>
 
-                <!-- PAINEL DE PRÉVIA COM O BOTÃO SALVAR EM DESTAQUE ABSOLUTO NO TOPO -->
+                <!-- PAINEL DE PRÉVIA COM CHECKBOXES -->
                 <div id="painelPreviaIA" style="display: none; width: 100%; max-width: 950px; flex-direction: column; margin-top: 2px; align-items: center;">
                     
                     <div style="display: flex; gap: 10px; justify-content: center; width: 100%; margin-bottom: 12px; background: rgba(15, 23, 42, 0.98); padding: 14px; border-radius: 16px; border: 2px solid #10b981; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);">
-                        <button class="btn-action btn-warning" style="margin: 0 !important; max-width: 360px !important; font-size: 15px !important; padding: 12px 24px !important; background: linear-gradient(135deg, #10b981, #047857) !important; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important; display: block !important;" onclick="salvarCardsGeradosNoBanco()">💾 Salvar Cartões na Base (Oficial)</button>
+                        <button class="btn-action btn-warning" style="margin: 0 !important; max-width: 360px !important; font-size: 15px !important; padding: 12px 24px !important; background: linear-gradient(135deg, #10b981, #047857) !important; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important; display: block !important;" onclick="salvarCardsGeradosNoBanco()">💾 Salvar Cartões Marcados</button>
                         <button class="btn-action btn-secondary" style="margin: 0 !important; max-width: 170px !important; font-size: 12px !important; padding: 10px !important; display: block !important;" onclick="voltarConfigGeradorIA()">✏️ Ajustar Configs</button>
                         <button class="btn-action btn-secondary" style="margin: 0 !important; max-width: 150px !important; font-size: 12px !important; padding: 10px !important; background: rgba(30,41,59,0.9) !important; display: block !important;" onclick="voltarMenu()">Voltar Menu</button>
                     </div>
@@ -516,6 +516,80 @@
 
                 </div>
 
+            </div>
+        </div>
+
+        <!-- TELA DO GERADOR MANUAL (NOVO) -->
+        <div id="screenGeradorManual" class="screen">
+            <div style="text-align: center; margin-top: 2px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2 style="color: #0284c7; margin-bottom: 4px; font-size: 17px; font-weight: 800;">📝 Gerador de Cards Manual</h2>
+                
+                <div class="menu-grid" style="max-width: 550px; text-align: left;">
+                    
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <div style="flex: 1;">
+                            <label>Disciplina:</label>
+                            <select id="manualDisc" style="width:100%; max-width:100%; text-align: center;" onchange="atualizarTopicosManual()">
+                                <option value="História">🏛️ História Geral</option>
+                                <option value="História do Brasil">👑 História do Brasil</option>
+                                <option value="Geografia">🌍 Geografia</option>
+                                <option value="Biologia">🧬 Biologia</option>
+                                <option value="Química">🧪 Química</option>
+                                <option value="Física">⚡ Física</option>
+                                <option value="Matemática">📐 Matemática</option>
+                                <option value="Linguagens">📝 Linguagens</option>
+                                <option value="Literatura">📚 Literatura</option>
+                                <option value="Filosofia">🤔 Filosofia</option>
+                                <option value="Sociologia">👥 Sociologia</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Formato do Card:</label>
+                            <select id="manualFormato" style="width:100%; max-width:100%; text-align: center;" onchange="alternarCamposManualFormato()">
+                                <option value="multipla" selected>Múltipla Escolha</option>
+                                <option value="cebrape">Certo / Errado</option>
+                                <option value="cloze">Cloze (Omissão)</option>
+                                <option value="pergunta">Pergunta e Resposta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <div style="flex: 1;">
+                            <label>Tópico Principal:</label>
+                            <select id="manualTopico" style="width:100%; max-width:100%; text-align: center;" onchange="atualizarSubtopicosManual()">
+                                <option value="Geral">📂 Tópico</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Subtópico / Assunto:</label>
+                            <select id="manualSub" style="width:100%; max-width:100%; text-align: center;">
+                                <option value="Assunto">📌 Subtópico</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>Enunciado da Questão (Pergunta ou Texto com Omissão):</label>
+                    <textarea id="manualQ" rows="4" placeholder="Digite o enunciado..." style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;"></textarea>
+
+                    <div id="containerCamposDinamicosManual">
+                        <label id="labelCorretaManual">Alternativa Correta (Gabarito):</label>
+                        <input type="text" id="manualCorreta" placeholder="Resposta certa" style="width: 100%; max-width: 100%; margin-bottom: 10px;">
+
+                        <div id="blocoErradasManual">
+                            <label>Alternativas Erradas (separadas por vírgula):</label>
+                            <textarea id="manualErradas" rows="2" placeholder="Errada 1, Errada 2, Errada 3" style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5; margin-bottom: 10px;"></textarea>
+                        </div>
+                    </div>
+
+                    <label>💡 Comentário / Fundamentação:</label>
+                    <textarea id="manualExplicacao" rows="3" placeholder="Explicação detalhada..." style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5; margin-bottom: 14px;"></textarea>
+
+                    <div style="display: flex; gap: 10px; justify-content: center; width: 100%;">
+                        <button class="btn-action btn-warning" style="margin: 0; max-width: 240px; background: linear-gradient(135deg, #10b981, #047857);" onclick="salvarCardManual()">💾 Salvar Cartão Manual</button>
+                        <button class="btn-action btn-secondary" style="margin: 0; max-width: 160px;" onclick="voltarMenu()">Voltar ao Menu</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -693,6 +767,7 @@
             carregarPerfilUsuario();
             atualizarTopicosMenu();
             atualizarTopicosGeradorIA();
+            atualizarTopicosManual();
             initHighlighterLogic();
         };
 
@@ -836,6 +911,121 @@
                 let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
                 selectSub.appendChild(opt);
             });
+        }
+
+        function atualizarTopicosManual() {
+            const disciplina = document.getElementById('manualDisc').value;
+            const selectTopico = document.getElementById('manualTopico');
+            selectTopico.innerHTML = '';
+            let topicos = new Set();
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disciplina);
+                if(discNorm === selDiscNorm || (disciplina === 'História' && (discNorm === 'historia' || discNorm === 'historia geral'))) {
+                    let t = c.topicoPrincipal || c.subgrupo;
+                    if(t) topicos.add(t);
+                }
+            });
+            if(topicos.size === 0) topicos.add("Geral");
+            topicos.forEach(t => {
+                let opt = document.createElement('option'); opt.value = t; opt.innerText = t;
+                selectTopico.appendChild(opt);
+            });
+            atualizarSubtopicosManual();
+        }
+
+        function atualizarSubtopicosManual() {
+            const disciplina = document.getElementById('manualDisc').value;
+            const topico = document.getElementById('manualTopico').value;
+            const selectSub = document.getElementById('manualSub');
+            selectSub.innerHTML = '';
+            let subs = new Set();
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
+            deckCompleto.forEach(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disciplina);
+                let matchDisc = (discNorm === selDiscNorm || (disciplina === 'História' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                let matchTop = (c.topicoPrincipal || c.subgrupo) === topico;
+                if(matchDisc && matchTop && c.subgrupo) subs.add(c.subgrupo);
+            });
+            if(subs.size === 0) subs.add("Assunto");
+            subs.forEach(s => {
+                let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
+                selectSub.appendChild(opt);
+            });
+        }
+
+        function alternarCamposManualFormato() {
+            const formato = document.getElementById('manualFormato').value;
+            const lbl = document.getElementById('labelCorretaManual');
+            const inp = document.getElementById('manualCorreta');
+            const blocoErradas = document.getElementById('blocoErradasManual');
+
+            if (formato === 'multipla') {
+                lbl.innerText = "Alternativa Correta (Gabarito):";
+                inp.placeholder = "Resposta certa";
+                blocoErradas.style.display = 'block';
+            } else if (formato === 'cebrape') {
+                lbl.innerText = "Gabarito (CERTO ou ERRADO):";
+                inp.placeholder = "CERTO ou ERRADO";
+                blocoErradas.style.display = 'none';
+            } else if (formato === 'cloze') {
+                lbl.innerText = "Termo Omitido (Cloze):";
+                inp.placeholder = "Palavra ou termo que falta";
+                blocoErradas.style.display = 'none';
+            } else if (formato === 'pergunta') {
+                lbl.innerText = "Resposta Esperada:";
+                inp.placeholder = "Resposta da pergunta";
+                blocoErradas.style.display = 'none';
+            }
+        }
+
+        function salvarCardManual() {
+            const deck = document.getElementById('manualDisc').value;
+            const topico = document.getElementById('manualTopico').value;
+            const subgrupo = document.getElementById('manualSub').value;
+            const formato = document.getElementById('manualFormato').value;
+            const q = document.getElementById('manualQ').value.trim();
+            const correta = document.getElementById('manualCorreta').value.trim();
+            const erradasStr = document.getElementById('manualErradas').value;
+            const explicacao = document.getElementById('manualExplicacao').value.trim();
+
+            if (!q || !correta) {
+                alert("Preencha o enunciado e a resposta/gabarito.");
+                return;
+            }
+
+            let novoCard = {
+                id: Date.now(),
+                deck: deck,
+                topicoPrincipal: topico,
+                topico: topico,
+                subgrupo: subgrupo,
+                estilo: formato === 'cebrape' ? 'cebrape' : 'multipla',
+                q: q,
+                explicacao: explicacao || "Fundamentação cadastrada manualmente.",
+                dataCriacao: obterDataHojeISO()
+            };
+
+            if (formato === 'cebrape') {
+                novoCard.gabarito = correta.toUpperCase();
+            } else if (formato === 'multipla') {
+                novoCard.a = correta;
+                novoCard.erradas = erradasStr.split(',').map(e => e.trim()).filter(e => e.length > 0);
+            } else {
+                // Cloze ou Pergunta e Resposta salvos como múltipla com resposta direta ou tratamento próprio
+                novoCard.a = correta;
+                novoCard.erradas = ["Incorreta 1", "Incorreta 2", "Incorreta 3"];
+            }
+
+            adicionarCardsIA([novoCard]);
+            alert("✅ Card manual salvo com sucesso no banco!");
+            document.getElementById('manualQ').value = '';
+            document.getElementById('manualCorreta').value = '';
+            document.getElementById('manualErradas').value = '';
+            document.getElementById('manualExplicacao').value = '';
+            voltarMenu();
         }
 
         function abrirPainelBancoDados() {
@@ -1047,7 +1237,12 @@
             atualizarTopicosGeradorIA();
             mudarTela('screenGeradorIA'); 
         }
+        function abrirGeradorManual() {
+            atualizarTopicosManual();
+            mudarTela('screenGeradorManual');
+        }
         function voltarConfigGeradorIA() {
+            document.getElementById('inputTextoGeradorIA').value = '';
             document.getElementById('painelConfigGerador').style.display = 'flex';
             document.getElementById('painelPreviaIA').style.display = 'none';
         }
@@ -1085,6 +1280,7 @@
                 });
 
                 tempCardsGeradosPrevia = novosCards;
+                document.getElementById('inputTextoGeradorIA').value = '';
 
                 const listaPrevia = document.getElementById('listaCardsPrevia');
                 listaPrevia.innerHTML = '';
@@ -1093,8 +1289,12 @@
                     const div = document.createElement('div');
                     div.className = 'preview-card-item';
                     div.id = `card-item-prev-${idx}`;
-                    div.innerHTML = `<b>Card ${idx+1} [${card.deck} / ${card.subgrupo}]:</b><br>${card.q}<br><small style="color:#38bdf8;">Gabarito/Correta: ${card.a || card.gabarito}</small>`;
-                    div.onclick = () => espelharCardNaDireita(idx);
+                    div.innerHTML = `
+                        <input type="checkbox" id="chk-card-${idx}" checked style="margin-top: 2px; cursor: pointer;" onclick="event.stopPropagation()">
+                        <div style="flex: 1; cursor: pointer;" onclick="espelharCardNaDireita(${idx})">
+                            <b>Card ${idx+1} [${card.deck} / ${card.subgrupo}]:</b><br>${card.q}<br><small style="color:#38bdf8;">Gabarito/Correta: ${card.a || card.gabarito}</small>
+                        </div>
+                    `;
                     listaPrevia.appendChild(div);
                 });
 
@@ -1204,13 +1404,21 @@
         }
 
         function salvarCardsGeradosNoBanco() {
-            if(!tempCardsGeradosPrevia || tempCardsGeradosPrevia.length === 0) {
-                alert("Nenhum card gerado para salvar.");
+            let cardsParaSalvar = [];
+            tempCardsGeradosPrevia.forEach((card, idx) => {
+                const chk = document.getElementById(`chk-card-${idx}`);
+                if (chk && chk.checked) {
+                    cardsParaSalvar.push(card);
+                }
+            });
+
+            if(cardsParaSalvar.length === 0) {
+                alert("Nenhum card selecionado para salvar.");
                 return;
             }
-            adicionarCardsIA(tempCardsGeradosPrevia);
+            adicionarCardsIA(cardsParaSalvar);
             salvarDadosLocais();
-            alert(`✅ ${tempCardsGeradosPrevia.length} cards salvos com sucesso no repositório de I.A. e disponíveis nos filtros!`);
+            alert(`✅ ${cardsParaSalvar.length} cards marcados foram salvos com sucesso na base!`);
             voltarMenu();
         }
 
