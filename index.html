@@ -208,7 +208,7 @@
 
     <div class="game-container">
         
-        <!-- TELA 1: MENU PRINCIPAL & AUTENTICAÇÃO (ORDEM REORGANIZADA) -->
+        <!-- TELA 1: MENU PRINCIPAL & AUTENTICAÇÃO -->
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
@@ -431,7 +431,7 @@
             </div>
         </div>
 
-        <!-- TELA DO GERADOR DE CARDS POR I.A. (COM CHECKBOXES PARA MARCAR/DESMARCAR) -->
+        <!-- TELA DO GERADOR DE CARDS POR I.A. -->
         <div id="screenGeradorIA" class="screen">
             <div style="text-align: center; margin-top: 2px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #ec4899; margin-bottom: 4px; font-size: 17px; font-weight: 800;">🤖 Gerador de Cards com I.A.</h2>
@@ -489,7 +489,7 @@
                     <button class="btn-action btn-secondary" style="margin-top: 6px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
                 </div>
 
-                <!-- PAINEL DE PRÉVIA COM CHECKBOXES -->
+                <!-- PAINEL DE PRÉVIA -->
                 <div id="painelPreviaIA" style="display: none; width: 100%; max-width: 950px; flex-direction: column; margin-top: 2px; align-items: center;">
                     
                     <div style="display: flex; gap: 10px; justify-content: center; width: 100%; margin-bottom: 12px; background: rgba(15, 23, 42, 0.98); padding: 14px; border-radius: 16px; border: 2px solid #10b981; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);">
@@ -519,7 +519,7 @@
             </div>
         </div>
 
-        <!-- TELA DO GERADOR MANUAL (NOVO) -->
+        <!-- TELA DO GERADOR MANUAL -->
         <div id="screenGeradorManual" class="screen">
             <div style="text-align: center; margin-top: 2px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #0284c7; margin-bottom: 4px; font-size: 17px; font-weight: 800;">📝 Gerador de Cards Manual</h2>
@@ -569,8 +569,13 @@
                         </div>
                     </div>
 
-                    <label>Enunciado da Questão (Pergunta ou Texto com Omissão):</label>
-                    <textarea id="manualQ" rows="4" placeholder="Digite o enunciado..." style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;"></textarea>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <label id="labelEnunciadoManual" style="margin-bottom: 0;">Enunciado da Questão:</label>
+                        <button type="button" id="btnClozeIcon" class="btn-action" style="display: none; width: auto; padding: 4px 10px; font-size: 12px; margin: 0; background: linear-gradient(135deg, #8b5cf6, #6d28d9);" onclick="inserirOmisaoClozeAnki()" title="Selecionar texto e clicar para omitir estilo Anki">
+                            [...] Omitir Seleção
+                        </button>
+                    </div>
+                    <textarea id="manualQ" rows="4" placeholder="Digite o enunciado ou texto..." style="width: 100%; max-width: 100%; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; font-size: 13px; line-height: 1.5;"></textarea>
 
                     <div id="containerCamposDinamicosManual">
                         <label id="labelCorretaManual">Alternativa Correta (Gabarito):</label>
@@ -958,27 +963,64 @@
 
         function alternarCamposManualFormato() {
             const formato = document.getElementById('manualFormato').value;
-            const lbl = document.getElementById('labelCorretaManual');
-            const inp = document.getElementById('manualCorreta');
+            const lblEnunciado = document.getElementById('labelEnunciadoManual');
+            const lblCorreta = document.getElementById('labelCorretaManual');
+            const inpCorreta = document.getElementById('manualCorreta');
             const blocoErradas = document.getElementById('blocoErradasManual');
+            const btnClozeIcon = document.getElementById('btnClozeIcon');
 
             if (formato === 'multipla') {
-                lbl.innerText = "Alternativa Correta (Gabarito):";
-                inp.placeholder = "Resposta certa";
+                lblEnunciado.innerText = "Enunciado da Questão (Pergunta):";
+                lblCorreta.innerText = "Alternativa Correta (Gabarito):";
+                inpCorreta.placeholder = "Resposta certa";
                 blocoErradas.style.display = 'block';
+                btnClozeIcon.style.display = 'none';
+                inpCorreta.parentElement.style.display = 'block';
             } else if (formato === 'cebrape') {
-                lbl.innerText = "Gabarito (CERTO ou ERRADO):";
-                inp.placeholder = "CERTO ou ERRADO";
+                lblEnunciado.innerText = "Enunciado da Afirmativa:";
+                lblCorreta.innerText = "Gabarito (CERTO ou ERRADO):";
+                inpCorreta.placeholder = "CERTO ou ERRADO";
                 blocoErradas.style.display = 'none';
+                btnClozeIcon.style.display = 'none';
+                inpCorreta.parentElement.style.display = 'block';
             } else if (formato === 'cloze') {
-                lbl.innerText = "Termo Omitido (Cloze):";
-                inp.placeholder = "Palavra ou termo que falta";
+                lblEnunciado.innerText = "Frase com Omissão (Selecione o texto e clique em [...]):";
+                btnClozeIcon.style.display = 'inline-block';
+                // No Cloze, as respostas ficam embutidas no texto via {{c1::termo}}. Esconde input redundante.
+                inpCorreta.parentElement.style.display = 'none';
                 blocoErradas.style.display = 'none';
             } else if (formato === 'pergunta') {
-                lbl.innerText = "Resposta Esperada:";
-                inp.placeholder = "Resposta da pergunta";
+                lblEnunciado.innerText = "Pergunta (Frente do Card):";
+                lblCorreta.innerText = "Resposta Esperada (Verso do Card):";
+                inpCorreta.placeholder = "Resposta oculta que será revelada";
                 blocoErradas.style.display = 'none';
+                btnClozeIcon.style.display = 'none';
+                inpCorreta.parentElement.style.display = 'block';
             }
+        }
+
+        function inserirOmisaoClozeAnki() {
+            const txtArea = document.getElementById('manualQ');
+            const inicio = txtArea.selectionStart;
+            const fim = txtArea.selectionEnd;
+            const textoSelecionado = txtArea.value.substring(inicio, fim);
+
+            if (!textoSelecionado) {
+                alert("Selecione primeiro uma palavra ou trecho no enunciado para omitir.");
+                return;
+            }
+
+            // Conta quantas omissões já existem para incrementar o índice (c1, c2...)
+            const textoAtual = txtArea.value;
+            const matchCount = (textoAtual.match(/\{\{c\d+::/g) || []).length;
+            const indiceCloze = matchCount + 1;
+
+            const substituicao = `{{c${indiceCloze}::${textoSelecionado}}}`;
+            txtArea.value = textoAtual.substring(0, inicio) + substituicao + textoAtual.substring(fim);
+            
+            // Reposiciona o cursor logo após a inserção
+            txtArea.focus();
+            txtArea.setSelectionRange(inicio + substituicao.length, inicio + substituicao.length);
         }
 
         function salvarCardManual() {
@@ -991,9 +1033,16 @@
             const erradasStr = document.getElementById('manualErradas').value;
             const explicacao = document.getElementById('manualExplicacao').value.trim();
 
-            if (!q || !correta) {
-                alert("Preencha o enunciado e a resposta/gabarito.");
+            if (!q) {
+                alert("Preencha o enunciado.");
                 return;
+            }
+
+            if (formato === 'multipla' || formato === 'cebrape' || formato === 'pergunta') {
+                if (!correta) {
+                    alert("Preencha a resposta/gabarito.");
+                    return;
+                }
             }
 
             let novoCard = {
@@ -1002,7 +1051,7 @@
                 topicoPrincipal: topico,
                 topico: topico,
                 subgrupo: subgrupo,
-                estilo: formato === 'cebrape' ? 'cebrape' : 'multipla',
+                estilo: formato,
                 q: q,
                 explicacao: explicacao || "Fundamentação cadastrada manualmente.",
                 dataCriacao: obterDataHojeISO()
@@ -1013,10 +1062,15 @@
             } else if (formato === 'multipla') {
                 novoCard.a = correta;
                 novoCard.erradas = erradasStr.split(',').map(e => e.trim()).filter(e => e.length > 0);
-            } else {
-                // Cloze ou Pergunta e Resposta salvos como múltipla com resposta direta ou tratamento próprio
+            } else if (formato === 'pergunta') {
                 novoCard.a = correta;
-                novoCard.erradas = ["Incorreta 1", "Incorreta 2", "Incorreta 3"];
+                novoCard.erradas = [];
+            } else if (formato === 'cloze') {
+                // No cloze, extraímos todas as respostas embutidas no formato {{c1::resposta}}
+                let matches = [...q.matchAll(/\{\{c\d+::(.*?)\}\}/g)];
+                let respostasExt = matches.map(m => m[1]);
+                novoCard.a = respostasExt.join(' | '); // Guarda todas as respostas combinadas
+                novoCard.erradas = [];
             }
 
             adicionarCardsIA([novoCard]);
@@ -1325,6 +1379,8 @@
                     let isCorreta = (op === card.gabarito);
                     altsHtml += `<div style="padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; margin-bottom: 4px; background: rgba(30,41,59,0.9); border: 1px solid ${isCorreta ? '#10b981' : 'rgba(255,255,255,0.15)'}; color: #fff;">${op} ${isCorreta ? ' (Gabarito)' : ''}</div>`;
                 });
+            } else if (card.estilo === 'cloze' || card.estilo === 'pergunta') {
+                altsHtml = `<div style="padding: 10px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 8px; color: #34d399; font-size: 13px;"><b>Resposta Oculta:</b> ${card.a}</div>`;
             } else {
                 let alts = [...(card.erradas || []), card.a];
                 alts.forEach(alt => {
@@ -1590,7 +1646,14 @@
 
             document.getElementById('missionTag').innerText = card.deck || "Estudo";
             document.getElementById('caseTitle').innerText = `${card.subgrupo || ''} — ${card.topico}`;
-            document.getElementById('caseDesc').innerHTML = card.q;
+            
+            // Tratamento especial para exibir o Cloze com as lacunas ocultas inicialmente
+            let textoExibicao = card.q;
+            if (card.estilo === 'cloze') {
+                // Substitui {{c1::termo}} por [...] antes de clicar em mostrar resposta
+                textoExibicao = textoExibicao.replace(/\{\{c\d+::(.*?)\}\}/g, '<span style="color: #38bdf8; font-weight: bold; background: rgba(56,189,248,0.15); padding: 2px 6px; border-radius: 4px;">[...]</span>');
+            }
+            document.getElementById('caseDesc').innerHTML = textoExibicao;
 
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
@@ -1603,6 +1666,36 @@
                     btn.onclick = () => responderCard(op, card.gabarito, card.id, card.explicacao, btn);
                     grid.appendChild(btn);
                 });
+            } else if (card.estilo === 'cloze' || card.estilo === 'pergunta') {
+                const btnMostrar = document.createElement('button');
+                btnMostrar.className = 'btn-action btn-custom';
+                btnMostrar.style.cssText = "width: 100%; max-width: 100%; padding: 14px; font-size: 15px; margin-bottom: 10px;";
+                btnMostrar.innerText = "🔍 Mostrar Resposta";
+                
+                btnMostrar.onclick = () => {
+                    btnMostrar.style.display = 'none';
+                    
+                    // Se for cloze, revela o texto original com os termos preenchidos em destaque verde
+                    if (card.estilo === 'cloze') {
+                        let textoRevelado = card.q.replace(/\{\{c\d+::(.*?)\}\}/g, '<span style="color: #34d399; font-weight: bold; background: rgba(16,185,129,0.2); padding: 2px 6px; border-radius: 4px;">$1</span>');
+                        document.getElementById('caseDesc').innerHTML = textoRevelado;
+                    }
+
+                    const boxResp = document.createElement('div');
+                    boxResp.style.cssText = "background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 12px; padding: 15px; margin-bottom: 12px; color: #f0fdf4; font-size: 15px; font-weight: 700; text-align: center;";
+                    boxResp.innerHTML = `🎯 Resposta Oculta: <span style="color: #34d399; font-size: 18px; display: block; margin-top: 6px;">${card.a}</span>`;
+                    grid.insertBefore(boxResp, grid.firstChild);
+
+                    document.getElementById('btn-confirm').style.display = 'none';
+                    const blocoAvaliacao = document.createElement('div');
+                    blocoAvaliacao.style.cssText = "display: flex; gap: 10px; width: 100%; justify-content: center; margin-top: 10px;";
+                    blocoAvaliacao.innerHTML = `
+                        <button class="btn-action btn-danger" style="flex: 1; margin: 0; max-width: 150px;" onclick="responderCard('ERROU', 'ACERTOU', '${card.id}', '${card.explicacao}', this)">❌ Errei</button>
+                        <button class="btn-action btn-warning" style="flex: 1; margin: 0; max-width: 150px; background: linear-gradient(135deg, #10b981, #047857);" onclick="responderCard('ACERTOU', 'ACERTOU', '${card.id}', '${card.explicacao}', this)">✅ Acertei</button>
+                    `;
+                    grid.appendChild(blocoAvaliacao);
+                };
+                grid.appendChild(btnMostrar);
             } else {
                 let alternativas = [...(card.erradas || []), card.a].sort(() => Math.random() - 0.5);
                 alternativas.forEach(alt => {
@@ -1649,12 +1742,13 @@
 
         function responderCard(escolhida, correta, cardId, explicacaoTexto, elementoBtn) {
             pararTimer();
+            const cardAtual = sessaoAtual.cardsSessao[sessaoAtual.indice];
             const botoes = document.querySelectorAll('.option-card');
             botoes.forEach(b => b.disabled = true);
             document.getElementById('skipCardBtn').style.display = 'none';
             document.getElementById('btn-confirm').style.display = 'none';
 
-            let acertou = (escolhida === correta);
+            let acertou = (cardAtual.estilo === 'cloze' || cardAtual.estilo === 'pergunta') ? (escolhida === 'ACERTOU') : (escolhida === correta);
             let dataHoje = obterDataHojeISO();
             let agora = Date.now();
             let umDiaMs = 24 * 60 * 60 * 1000;
@@ -1676,11 +1770,11 @@
             sessaoAtual.questoesRespondidasHistorico[cardId] = { acertou: acertou, data: dataHoje, timestamp: agora };
 
             if(acertou) {
-                elementoBtn.classList.add('correct');
+                if(elementoBtn && elementoBtn.classList) elementoBtn.classList.add('correct');
                 sessaoAtual.acertos++;
                 sessaoAtual.xp += 100;
             } else {
-                elementoBtn.classList.add('wrong');
+                if(elementoBtn && elementoBtn.classList) elementoBtn.classList.add('wrong');
                 botoes.forEach(b => { if(b.innerText === correta) b.classList.add('correct'); });
                 sessaoAtual.erros++;
                 if (!sessaoAtual.modoPersonalizado) {
