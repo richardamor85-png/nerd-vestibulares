@@ -381,7 +381,11 @@
         <!-- TELA SUBMENU SIMULADO OFICIAL (REVISÃO ESPAÇADA) -->
         <div id="screenSimuladoOficialMenu" class="screen">
             <div style="text-align: center; margin-top: 5px; width: 100%;">
-                <h2 style="color: #38bdf8; margin-bottom: 12px; font-weight: 800;">🚀 Simulado Oficial</h2>
+                <h2 style="color: #38bdf8; margin-bottom: 8px; font-weight: 800;">🚀 Simulado Oficial</h2>
+                
+                <!-- BADGE DE CONTAGEM DINÂMICA DE CARDS NO FILTRO -->
+                <div class="db-counter" id="simOficialContadorBadge" style="margin-bottom: 10px;">A calcular cards disponíveis...</div>
+
                 <div class="menu-grid" style="max-width: 440px;">
                     
                     <div style="width:100%;">
@@ -411,14 +415,14 @@
 
                     <div style="width:100%;">
                         <label>3. SUBTÓPICO (ASSUNTO):</label>
-                        <select id="simOficialSub">
+                        <select id="simOficialSub" onchange="atualizarContadorFiltroSimuladoOficial()">
                             <option value="Todos">📌 Todos os Subtópicos</option>
                         </select>
                     </div>
 
                     <div style="width:100%;">
                         <label>4. TIPO DE REVISÃO:</label>
-                        <select id="simuladoOficialTipo">
+                        <select id="simuladoOficialTipo" onchange="atualizarContadorFiltroSimuladoOficial()">
                             <option value="novos" selected>✨ Cards Novos (Inéditos)</option>
                             <option value="revisar" style="color: #34d399; font-weight: bold;">📅 Cards a Revisar (Espaçados para Hoje)</option>
                         </select>
@@ -904,6 +908,57 @@
                 let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
                 selectSub.appendChild(opt);
             });
+            atualizarContadorFiltroSimuladoOficial();
+        }
+
+        // FUNÇÃO PARA ATUALIZAR EM TEMPO REAL A CONTAGEM DE CARDS NO SIMULADO OFICIAL
+        function atualizarContadorFiltroSimuladoOficial() {
+            const disc = document.getElementById('simOficialDisc').value;
+            const top = document.getElementById('simOficialTopico').value;
+            const sub = document.getElementById('simOficialSub').value;
+            const tipoRevisao = document.getElementById('simuladoOficialTipo').value;
+            const badgeEl = document.getElementById('simOficialContadorBadge');
+
+            if (!badgeEl) return;
+
+            let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
+            let agora = Date.now();
+            let hojeDiaOperacional = calcularMomentoViradaDia(agora);
+
+            let filtrados = deckCompleto.filter(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disc);
+                let matchDisc = (disc === 'Todos' || discNorm === selDiscNorm || (disc === 'História Geral' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                let topicoCard = c.topicoPrincipal || c.subgrupo || '';
+                let matchTop = (top === 'Todos' || topicoCard === top);
+                let matchSub = (sub === 'Todos' || c.subgrupo === sub);
+
+                if (!matchDisc || !matchTop || !matchSub) return false;
+
+                let jaRespondido = !!sessaoAtual.questoesRespondidasHistorico[c.id];
+                let infoRevisao = sessaoAtual.historicoRevisao[c.id];
+
+                if (tipoRevisao === 'novos') {
+                    return !jaRespondido;
+                } else {
+                    if (!jaRespondido || !infoRevisao || !infoRevisao.proximaRevisao) return false;
+                    let revisaoDiaOperacional = calcularMomentoViradaDia(infoRevisao.proximaRevisao);
+                    return revisaoDiaOperacional <= hojeDiaOperacional;
+                }
+            });
+
+            let totalGeralFiltro = deckCompleto.filter(c => {
+                let discNorm = normalizarTexto(c.deck);
+                let selDiscNorm = normalizarTexto(disc);
+                let matchDisc = (disc === 'Todos' || discNorm === selDiscNorm || (disc === 'História Geral' && (discNorm === 'historia' || discNorm === 'historia geral')));
+                let topicoCard = c.topicoPrincipal || c.subgrupo || '';
+                let matchTop = (top === 'Todos' || topicoCard === top);
+                let matchSub = (sub === 'Todos' || c.subgrupo === sub);
+                return matchDisc && matchTop && matchSub;
+            }).length;
+
+            let textoLabel = tipoRevisao === 'novos' ? 'Cards Novos Disponíveis' : 'Cards para Revisar Hoje';
+            badgeEl.innerText = `📚 ${textoLabel}: ${filtrados.length} (Total Geral: ${totalGeralFiltro})`;
         }
 
         function atualizarTopicosGeradorIA() {
@@ -970,7 +1025,7 @@
             sel.appendChild(opt);
         }
 
-        // LEITOR DE PDF OTIMIZADO E ROBUSTO (CORRIGIDO)
+        // LEITOR DE PDF OTIMIZADO E ROBUSTO
         async function processarArquivoPdfGerador(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1387,6 +1442,7 @@
 
         function abrirModalSimuladoOficial() { 
             atualizarTopicosSimOficial();
+            atualizarContadorFiltroSimuladoOficial();
             mudarTela('screenSimuladoOficialMenu'); 
         }
         function abrirModalPersonalizado() { mudarTela('screenCustomMenu'); }
@@ -2046,7 +2102,7 @@
             let percentual = totalResp > 0 ? Math.round((sessaoAtual.acertos / totalResp) * 100) : 0;
             document.getElementById('reportTitle').innerText = percentual >= 70 ? "🏆 Sessão Concluída!" : "⚠️ Desempenho Abaixo da Meta";
             let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
-            html += `• XP Ganho: <b>+${sessaoAtual.xp} XP</b><br>`;
+            html += `• XP Ganho: <b>+${sessaoaturacao || sessaoAtual.xp} XP</b><br>`;
             document.getElementById('reportContent').innerHTML = html;
         }
     </script>
