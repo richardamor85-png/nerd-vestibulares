@@ -15,6 +15,12 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
+    <!-- PDF.js para Leitura de Arquivos PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
     <script>
       const firebaseConfig = {
         apiKey: "AIzaSyDN3Imzt0oULpKsttM-nc6q-TsDGNop09w",
@@ -53,6 +59,7 @@
       });
 
       auth.onAuthStateChanged((user) => {
+        const badge = document.getElementById('dbCounterBadge');
         if (user) {
           usuarioUid = user.uid;
           database.ref('users/' + usuarioUid).once('value').then((snapshot) => {
@@ -65,6 +72,7 @@
           });
         } else {
           usuarioUid = null;
+          if(badge) badge.innerText = "⚠️ Modo Local (Sincronização desativada)";
         }
       });
 
@@ -129,8 +137,7 @@
         body.theme-quartz h1 { color: #0f172a; text-shadow: none; }
         .subtitle { color: #cbd5e1; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
 
-        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 8px 18px; border-radius: 30px; display: inline-block; margin-bottom: 14px; font-weight: 700; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer; transition: all 0.2s ease; }
-        .db-counter:hover { filter: brightness(1.2); transform: translateY(-1px); border-color: #38bdf8; }
+        .db-counter { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 12px; font-weight: 700; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
         .game-container { border-radius: 24px; padding: 20px; max-width: 980px; width: 100%; position: relative; min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .screen { display: none; flex-direction: column; width: 100%; height: 100%; align-items: center; }
@@ -212,7 +219,7 @@
         <div id="screenMenu" class="screen active">
             <div style="text-align: center; margin-top: 5px; width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <h2 style="color: #38bdf8; margin-bottom: 6px; font-size: 20px; font-weight: 800;">Painel de Comando</h2>
-                <div class="db-counter" id="dbCounterBadge" onclick="abrirModalSimuladoOficial()" title="Clique para ir ao Simulado Oficial">A carregar questões...</div>
+                <div class="db-counter" id="dbCounterBadge">A carregar questões...</div>
                 
                 <div id="authContainer" class="auth-box-card" style="display: none;">
                     <h3 style="color: #34d399; margin-top: 0; font-size: 15px;" id="authTitle">🔐 Sincronização em Nuvem</h3>
@@ -418,7 +425,7 @@
                     </div>
 
                     <div style="width:100%;">
-                        <label>5. TAMANHO MÁXIMO DA SESSÃO:</label>
+                        <label>5. TAMANHO DA SESSÃO:</label>
                         <select id="selectTamanhoSessao">
                             <option value="5">⚡ Rápido (5 Questões)</option>
                             <option value="10" selected>🎯 Bloco Padrão (Até 10)</option>
@@ -459,8 +466,17 @@
                 <h2 style="color: #ec4899; margin-bottom: 4px; font-size: 17px; font-weight: 800;">🤖 Gerador de Cards com I.A.</h2>
                 
                 <div class="menu-grid" id="painelConfigGerador" style="max-width: 450px;">
+                    
+                    <!-- NOVO: BOTÃO DE UPLOAD DE PDF -->
+                    <div style="width: 100%; background: rgba(14, 165, 233, 0.15); border: 1px dashed rgba(56, 189, 248, 0.5); border-radius: 12px; padding: 10px; margin-bottom: 10px; text-align: center;">
+                        <label style="color: #38bdf8; cursor: pointer; margin-bottom: 4px; font-weight: 800;">📁 Ou Carregar Arquivo PDF (.pdf):</label>
+                        <input type="file" id="inputArquivoPdfIA" accept="application/pdf" style="display: none;" onchange="processarArquivoPdfIA(this)">
+                        <button type="button" class="btn-action" style="background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 12px; padding: 8px 14px; margin: 0 auto; width: auto;" onclick="document.getElementById('inputArquivoPdfIA').click()">📄 Selecionar PDF do Computador</button>
+                        <span id="statusPdfNome" style="font-size: 11px; color: #34d399; display: block; margin-top: 6px; font-weight: 600;">Nenhum PDF selecionado</span>
+                    </div>
+
                     <label>Cole o texto base (Resumo ou Teoria):</label>
-                    <textarea id="inputTextoGeradorIA" rows="4" placeholder="Cole aqui o texto..." style="width:100%; max-width:450px; text-align:left;"></textarea>
+                    <textarea id="inputTextoGeradorIA" rows="4" placeholder="Cole aqui o texto ou carregue um PDF acima..." style="width:100%; max-width:450px; text-align:left;"></textarea>
                     
                     <div style="display: flex; gap: 10px; width: 100%;">
                         <div style="flex:1;">
@@ -477,6 +493,7 @@
                             <select id="selectFormatoGeradorIA">
                                 <option value="multipla" selected>Múltipla Escolha</option>
                                 <option value="cebrape">Certo / Errado</option>
+                                <option value="cloze" style="color: #34d399; font-weight: bold;">📝 Cloze (Omissão)</option>
                             </select>
                         </div>
                     </div>
@@ -496,17 +513,27 @@
                         <option value="Sociologia">👥 Sociologia</option>
                     </select>
 
-                    <label>Tópico Principal:</label>
-                    <select id="inputTopicoDestino" style="text-align: center;" onchange="atualizarSubtopicosGeradorIA()">
-                        <option value="Geral">📂 Selecione o Tópico</option>
-                    </select>
+                    <div style="width:100%;">
+                        <label>Tópico Principal:</label>
+                        <div style="display: flex; gap: 6px; width: 100%; max-width: 450px; margin: 0 auto;">
+                            <select id="inputTopicoDestino" style="flex: 1; text-align: center; margin: 0;" onchange="atualizarSubtopicosGeradorIA()">
+                                <option value="Geral">📂 Selecione o Tópico</option>
+                            </select>
+                            <button type="button" class="btn-action" style="width: 42px; height: 42px; margin: 0; padding: 0; background: linear-gradient(135deg, #10b981, #047857); font-size: 18px; font-weight: 800; border-radius: 12px; display: flex; align-items: center; justify-content: center;" onclick="adicionarNovoTopicoIA()" title="Adicionar Novo Tópico">+</button>
+                        </div>
+                    </div>
 
-                    <label>Subtópico / Assunto Específico:</label>
-                    <select id="inputSubDestino" style="text-align: center;">
-                        <option value="Assunto">📌 Selecione o Subtópico</option>
-                    </select>
+                    <div style="width:100%; margin-top: 10px;">
+                        <label>Subtópico / Assunto Específico:</label>
+                        <div style="display: flex; gap: 6px; width: 100%; max-width: 450px; margin: 0 auto;">
+                            <select id="inputSubDestino" style="flex: 1; text-align: center; margin: 0;">
+                                <option value="Assunto">📌 Selecione o Subtópico</option>
+                            </select>
+                            <button type="button" class="btn-action" style="width: 42px; height: 42px; margin: 0; padding: 0; background: linear-gradient(135deg, #10b981, #047857); font-size: 18px; font-weight: 800; border-radius: 12px; display: flex; align-items: center; justify-content: center;" onclick="adicionarNovoSubIA()" title="Adicionar Novo Subtópico">+</button>
+                        </div>
+                    </div>
 
-                    <button class="btn-action btn-ai" onclick="executarGeradorIA()">✨ Processar e Gerar Prévia</button>
+                    <button class="btn-action btn-ai" style="margin-top: 15px;" onclick="executarGeradorIA()">✨ Processar e Gerar Prévia</button>
                     <div id="statusGeradorIA" style="margin-top: 4px; font-size: 13px; color: #38bdf8; font-weight: 700;"></div>
                     <button class="btn-action btn-secondary" style="margin-top: 6px;" onclick="voltarMenu()">Voltar ao Menu Principal</button>
                 </div>
@@ -579,19 +606,25 @@
                     <div style="display: flex; gap: 10px; width: 100%;">
                         <div style="flex: 1;">
                             <label>Tópico Principal:</label>
-                            <select id="manualTopico" style="width:100%; max-width:100%; text-align: center;" onchange="atualizarSubtopicosManual()">
-                                <option value="Geral">📂 Tópico</option>
-                            </select>
+                            <div style="display: flex; gap: 4px; width: 100%;">
+                                <select id="manualTopico" style="flex: 1; width: 100%; max-width: 100%; text-align: center; margin: 0;" onchange="atualizarSubtopicosManual()">
+                                    <option value="Geral">📂 Tópico</option>
+                                </select>
+                                <button type="button" class="btn-action" style="width: 38px; height: 38px; margin: 0; padding: 0; background: linear-gradient(135deg, #10b981, #047857); font-size: 16px; font-weight: 800; border-radius: 10px; display: flex; align-items: center; justify-content: center;" onclick="adicionarNovoTopicoManual()" title="Adicionar Novo Tópico">+</button>
+                            </div>
                         </div>
                         <div style="flex: 1;">
                             <label>Subtópico / Assunto:</label>
-                            <select id="manualSub" style="width:100%; max-width:100%; text-align: center;">
-                                <option value="Assunto">📌 Subtópico</option>
-                            </select>
+                            <div style="display: flex; gap: 4px; width: 100%;">
+                                <select id="manualSub" style="flex: 1; width: 100%; max-width: 100%; text-align: center; margin: 0;">
+                                    <option value="Assunto">📌 Subtópico</option>
+                                </select>
+                                <button type="button" class="btn-action" style="width: 38px; height: 38px; margin: 0; padding: 0; background: linear-gradient(135deg, #10b981, #047857); font-size: 16px; font-weight: 800; border-radius: 10px; display: flex; align-items: center; justify-content: center;" onclick="adicionarNovoSubManual()" title="Adicionar Novo Subtópico">+</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 4px;">
                         <label id="labelEnunciadoManual" style="margin-bottom: 0;">Enunciado da Questão:</label>
                         <button type="button" id="btnClozeIcon" class="btn-action" style="display: none; width: auto; padding: 4px 10px; font-size: 12px; margin: 0; background: linear-gradient(135deg, #8b5cf6, #6d28d9);" onclick="inserirOmisaoClozeAnki()" title="Selecionar texto e clicar para omitir estilo Anki">
                             [...] Omitir Seleção
@@ -817,7 +850,7 @@
             let config = JSON.parse(localStorage.getItem('nerd_vestibulares_config_motor') || '{}');
             let nomeJ = config.nomeJogador || 'Richard';
             let totalCards = (typeof masterDeck !== 'undefined' ? masterDeck.length : 0) + (typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA.length : 0);
-            document.getElementById('welcomeMsg').innerText = `Jogador: ${nomeJ} | XP: ${sessaoAtual.xp} XP | Total Geral: ${totalCards} Questões`;
+            document.getElementById('welcomeMsg').innerText = `Jogador: ${nomeJ} | XP: ${sessaoAtual.xp} XP | Banco: ${totalCards} Questões`;
             atualizarContadorMenu();
         }
 
@@ -828,7 +861,7 @@
         function atualizarContadorMenu() {
             let deckCompleto = [...(typeof masterDeck !== 'undefined' ? masterDeck : []), ...(typeof cardsGeradosIA !== 'undefined' ? cardsGeradosIA : [])];
             let novosTotal = deckCompleto.filter(c => !sessaoAtual.questoesRespondidasHistorico[c.id]).length;
-            document.getElementById('dbCounterBadge').innerHTML = `📚 Cards Novos Disponíveis: <b>${novosTotal}</b> (Total Geral: ${deckCompleto.length})`;
+            document.getElementById('dbCounterBadge').innerText = `📚 Cards Novos Disponíveis: ${novosTotal} (Total Geral: ${deckCompleto.length})`;
         }
 
         function atualizarTopicosSimOficial() {
@@ -916,6 +949,53 @@
             });
         }
 
+        function adicionarNovoTopicoIA() {
+            let novo = prompt("Digite o nome do novo Tópico Principal:");
+            if(!novo || !novo.trim()) return;
+            novo = novo.trim();
+            const sel = document.getElementById('inputTopicoDestino');
+            let opt = document.createElement('option');
+            opt.value = novo; opt.innerText = novo; opt.selected = true;
+            sel.appendChild(opt);
+            atualizarSubtopicosGeradorIA();
+        }
+
+        function adicionarNovoSubIA() {
+            let novo = prompt("Digite o nome do novo Subtópico / Assunto:");
+            if(!novo || !novo.trim()) return;
+            novo = novo.trim();
+            const sel = document.getElementById('inputSubDestino');
+            let opt = document.createElement('option');
+            opt.value = novo; opt.innerText = novo; opt.selected = true;
+            sel.appendChild(opt);
+        }
+
+        async function processarArquivoPdfIA(inputElem) {
+            const file = inputElem.files[0];
+            if (!file) return;
+
+            document.getElementById('statusPdfNome').innerText = `📄 Lendo "${file.name}"...`;
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+                const pdfDoc = await loadingTask.promise;
+                
+                let textoExtraido = "";
+                for (let i = 1; i <= pdfDoc.numPages; i++) {
+                    const page = await pdfDoc.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    textoExtraido += pageText + "\n\n";
+                }
+
+                document.getElementById('inputTextoGeradorIA').value = textoExtraido.trim();
+                document.getElementById('statusPdfNome').innerText = `✅ PDF carregado com sucesso (${pdfDoc.numPages} páginas)!`;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('statusPdfNome').innerText = `❌ Erro ao ler PDF: ${err.message}`;
+            }
+        }
+
         function atualizarTopicosManual() {
             const disciplina = document.getElementById('manualDisc').value;
             const selectTopico = document.getElementById('manualTopico');
@@ -957,6 +1037,27 @@
                 let opt = document.createElement('option'); opt.value = s; opt.innerText = s;
                 selectSub.appendChild(opt);
             });
+        }
+
+        function adicionarNovoTopicoManual() {
+            let novo = prompt("Digite o nome do novo Tópico Principal:");
+            if(!novo || !novo.trim()) return;
+            novo = novo.trim();
+            const sel = document.getElementById('manualTopico');
+            let opt = document.createElement('option');
+            opt.value = novo; opt.innerText = novo; opt.selected = true;
+            sel.appendChild(opt);
+            atualizarSubtopicosManual();
+        }
+
+        function adicionarNovoSubManual() {
+            let novo = prompt("Digite o nome do novo Subtópico / Assunto:");
+            if(!novo || !novo.trim()) return;
+            novo = novo.trim();
+            const sel = document.getElementById('manualSub');
+            let opt = document.createElement('option');
+            opt.value = novo; opt.innerText = novo; opt.selected = true;
+            sel.appendChild(opt);
         }
 
         function alternarCamposManualFormato() {
@@ -1311,7 +1412,7 @@
             const subDestino = document.getElementById('inputSubDestino').value.trim() || 'Assunto';
             const st = document.getElementById('statusGeradorIA');
 
-            if (!texto) { alert("Cole o texto para a I.A. processar."); return; }
+            if (!texto) { alert("Cole o texto ou carregue um PDF para a I.A. processar."); return; }
             st.innerText = "⏳ A I.A. está a processar e criar os cards...";
 
             try {
@@ -1399,19 +1500,34 @@
 
             const dataHoje = obterDataHojeISO();
             const endpoint = "https://openrouter.ai/api/v1/chat/completions";
-            const promptJSON = `
-                Analise o texto abaixo e crie exatamente ${quantidade} questões de vestibular no formato "${formato}".
-                Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
-                Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
+            
+            let promptJSON = "";
+            if (formato === 'cloze') {
+                promptJSON = `
+                    Analise o texto abaixo e crie exatamente ${quantidade} questões de vestibular no formato "cloze" (omissão de palavras estilo Anki, com marcações {{c1::termo}}).
+                    Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
+                    Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
 
-                Estrutura se "cebrape":
-                [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cebrape", "q": "Pergunta", "gabarito": "CERTO", "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
+                    Estrutura JSON:
+                    [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cloze", "q": "Frase com {{c1::omissão}}", "a": "termo omitido", "erradas": [], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
 
-                Estrutura se "multipla":
-                [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "multipla", "q": "Pergunta", "a": "Correta", "erradas": ["E1","E2","E3"], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
+                    Texto: "${textoFonte}"
+                `;
+            } else {
+                promptJSON = `
+                    Analise o texto abaixo e crie exatamente ${quantidade} questões de vestibular no formato "${formato}".
+                    Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
+                    Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
 
-                Texto: "${textoFonte}"
-            `;
+                    Estrutura se "cebrape":
+                    [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cebrape", "q": "Pergunta", "gabarito": "CERTO", "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
+
+                    Estrutura se "multipla":
+                    [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "multipla", "q": "Pergunta", "a": "Correta", "erradas": ["E1","E2","E3"], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
+
+                    Texto: "${textoFonte}"
+                `;
+            }
 
             const bodyData = {
                 model: "deepseek/deepseek-chat",
@@ -1590,7 +1706,6 @@
                     });
                 }
             } else {
-                // SIMULADO OFICIAL (ESPAÇADO) COM FILTROS DA TELA DEDICADA
                 deckCompleto = deckCompleto.filter(c => {
                     let discNorm = normalizarTexto(c.deck);
                     let selDiscNorm = normalizarTexto(disc);
