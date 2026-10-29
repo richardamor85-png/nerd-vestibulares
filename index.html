@@ -15,10 +15,10 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
-    <!-- PDF.js para Leitura de Arquivos PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- PDF.js para Leitura Nativa de PDFs no Navegador -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     </script>
 
     <script>
@@ -467,15 +467,14 @@
                 
                 <div class="menu-grid" id="painelConfigGerador" style="max-width: 450px;">
                     
-                    <!-- NOVO: BOTÃO DE UPLOAD DE PDF -->
-                    <div style="width: 100%; background: rgba(14, 165, 233, 0.15); border: 1px dashed rgba(56, 189, 248, 0.5); border-radius: 12px; padding: 10px; margin-bottom: 10px; text-align: center;">
-                        <label style="color: #38bdf8; cursor: pointer; margin-bottom: 4px; font-weight: 800;">📁 Ou Carregar Arquivo PDF (.pdf):</label>
-                        <input type="file" id="inputArquivoPdfIA" accept="application/pdf" style="display: none;" onchange="processarArquivoPdfIA(this)">
-                        <button type="button" class="btn-action" style="background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 12px; padding: 8px 14px; margin: 0 auto; width: auto;" onclick="document.getElementById('inputArquivoPdfIA').click()">📄 Selecionar PDF do Computador</button>
-                        <span id="statusPdfNome" style="font-size: 11px; color: #34d399; display: block; margin-top: 6px; font-weight: 600;">Nenhum PDF selecionado</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 4px;">
+                        <label style="margin-bottom: 0;">Cole o texto base ou carregue um PDF:</label>
+                        <label for="inputPdfGerador" class="btn-action" style="margin: 0; padding: 4px 10px; font-size: 11px; background: linear-gradient(135deg, #0284c7, #0369a1); cursor: pointer; width: auto; display: inline-block;">
+                            📁 Carregar PDF
+                        </label>
+                        <input type="file" id="inputPdfGerador" accept="application/pdf" style="display: none;" onchange="processarArquivoPdfGerador(event)">
                     </div>
 
-                    <label>Cole o texto base (Resumo ou Teoria):</label>
                     <textarea id="inputTextoGeradorIA" rows="4" placeholder="Cole aqui o texto ou carregue um PDF acima..." style="width:100%; max-width:450px; text-align:left;"></textarea>
                     
                     <div style="display: flex; gap: 10px; width: 100%;">
@@ -485,6 +484,7 @@
                                 <option value="3">3 Questões</option>
                                 <option value="5" selected>5 Questões</option>
                                 <option value="10">10 Questões</option>
+                                <option value="cobrir_tudo" style="color: #34d399; font-weight: bold;">🎯 Cobrir Tudo (Mapeamento Completo)</option>
                                 <option value="aleatorio" style="color: #ec4899; font-weight: bold;">🤖 Aleatório (I.A.)</option>
                             </select>
                         </div>
@@ -970,29 +970,42 @@
             sel.appendChild(opt);
         }
 
-        async function processarArquivoPdfIA(inputElem) {
-            const file = inputElem.files[0];
+        // LEITOR DE PDF OTIMIZADO E ROBUSTO (CORRIGIDO)
+        async function processarArquivoPdfGerador(event) {
+            const file = event.target.files[0];
             if (!file) return;
 
-            document.getElementById('statusPdfNome').innerText = `📄 Lendo "${file.name}"...`;
+            const st = document.getElementById('statusGeradorIA');
+            st.innerText = "📁 A ler o arquivo PDF...";
+
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
                 const pdfDoc = await loadingTask.promise;
-                
-                let textoExtraido = "";
-                for (let i = 1; i <= pdfDoc.numPages; i++) {
-                    const page = await pdfDoc.getPage(i);
-                    const textContent = await page.getTextContent();
-                    const pageText = textContent.items.map(item => item.str).join(' ');
-                    textoExtraido += pageText + "\n\n";
+                let textoCompleto = "";
+
+                if (pdfDoc.numPages > 20) {
+                    alert(`⚠️ Atenção: Este PDF possui ${pdfDoc.numPages} páginas.\nPara garantir o mapeamento completo, recomendamos dividir o material se necessário.`);
                 }
 
-                document.getElementById('inputTextoGeradorIA').value = textoExtraido.trim();
-                document.getElementById('statusPdfNome').innerText = `✅ PDF carregado com sucesso (${pdfDoc.numPages} páginas)!`;
+                for (let i = 1; i <= pdfDoc.numPages; i++) {
+                    st.innerText = `📄 A extrair texto da página ${i} de ${pdfDoc.numPages}...`;
+                    const page = await pdfDoc.getPage(i);
+                    const textContent = await page.getTextContent();
+                    let paginaTexto = textContent.items.map(item => item.str).join(' ');
+                    textoCompleto += `--- Página ${i} ---\n` + paginaTexto + "\n\n";
+                }
+
+                if (!textoCompleto.trim() || textoCompleto.replace(/--- Página \d+ ---/g, "").trim().length < 5) {
+                    throw new Error("O PDF não retornou texto legível.");
+                }
+
+                document.getElementById('inputTextoGeradorIA').value = textoCompleto.trim();
+                st.innerText = `✅ PDF carregado (${pdfDoc.numPages} páginas) com sucesso!`;
             } catch (err) {
-                console.error(err);
-                document.getElementById('statusPdfNome').innerText = `❌ Erro ao ler PDF: ${err.message}`;
+                console.error("Erro PDF:", err);
+                st.innerText = "❌ Erro ao ler PDF. Tente copiar e colar o texto.";
+                alert("⚠️ Não foi possível extrair o texto automaticamente. Dica: abra o arquivo PDF no navegador ou leitor, selecione o texto, copie e cole diretamente na caixa de texto do gerador!");
             }
         }
 
@@ -1400,7 +1413,10 @@
             const texto = document.getElementById('inputTextoGeradorIA').value.trim();
             let qtdSelect = document.getElementById('selectQtdGeradorIA').value;
             let qtd = 5;
-            if(qtdSelect === 'aleatorio') {
+            
+            if(qtdSelect === 'cobrir_tudo') {
+                qtd = 40;
+            } else if(qtdSelect === 'aleatorio') {
                 qtd = Math.floor(Math.random() * 8) + 3;
             } else {
                 qtd = parseInt(qtdSelect) || 5;
@@ -1413,10 +1429,10 @@
             const st = document.getElementById('statusGeradorIA');
 
             if (!texto) { alert("Cole o texto ou carregue um PDF para a I.A. processar."); return; }
-            st.innerText = "⏳ A I.A. está a processar e criar os cards...";
+            st.innerText = "⏳ A I.A. está a mapear minuciosamente o conteúdo e a gerar os cards...";
 
             try {
-                const novosCards = await gerarCardsComIAPersonalizado(texto, formato, qtd, disciplinaDestino, topicoDestino, subDestino);
+                const novosCards = await gerarCardsComIAPersonalizado(texto, formato, qtd, disciplinaDestino, topicoDestino, subDestino, qtdSelect === 'cobrir_tudo');
                 
                 novosCards.forEach(card => {
                     card.deck = disciplinaDestino;
@@ -1494,17 +1510,22 @@
             `;
         }
 
-        async function gerarCardsComIAPersonalizado(textoFonte, formato, quantidade, deck, topico, subgrupo) {
+        async function gerarCardsComIAPersonalizado(textoFonte, formato, quantidade, deck, topico, subgrupo, isCobrirTudo) {
             const apiKey = obterChaveOpenRouter();
             if (!apiKey) throw new Error("Chave de API do OpenRouter não encontrada nas Configurações.");
 
             const dataHoje = obterDataHojeISO();
             const endpoint = "https://openrouter.ai/api/v1/chat/completions";
             
+            let instrucaoExtra = isCobrirTudo ? 
+                "⚠️ MODO COBRIR TUDO ATIVADO: Faça um mapeamento exaustivo e minucioso de TODO o texto fornecido. Ignore cabeçalhos, rodapés, numeração de páginas e elementos irrelevantes. Crie cartões cobrindo cada conceito, regra, exceção, data, autor ou definição presente no texto (gere quantos cartões forem necessários para esgotar o assunto, podendo chegar a 30 ou 40 questões se o texto for longo)." : 
+                `Crie exatamente ${quantidade} questões.`;
+
             let promptJSON = "";
             if (formato === 'cloze') {
                 promptJSON = `
-                    Analise o texto abaixo e crie exatamente ${quantidade} questões de vestibular no formato "cloze" (omissão de palavras estilo Anki, com marcações {{c1::termo}}).
+                    Analise o texto abaixo e crie questões no formato "cloze" (omissão de palavras estilo Anki, com marcações {{c1::termo}}).
+                    ${instrucaoExtra}
                     Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
                     Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
 
@@ -1515,7 +1536,8 @@
                 `;
             } else {
                 promptJSON = `
-                    Analise o texto abaixo e crie exatamente ${quantidade} questões de vestibular no formato "${formato}".
+                    Analise o texto abaixo e crie questões no formato "${formato}".
+                    ${instrucaoExtra}
                     Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
                     Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
 
@@ -1532,7 +1554,7 @@
             const bodyData = {
                 model: "deepseek/deepseek-chat",
                 messages: [{ role: "user", content: promptJSON }],
-                max_tokens: 3000,
+                max_tokens: 4000,
                 temperature: 0.2
             };
 
