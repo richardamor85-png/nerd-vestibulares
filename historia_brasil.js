@@ -6,10 +6,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Frentes de Ocupação",
-    q: "Quais foram as duas frentes de ocupação do território maranhense e suas principais características?",
-    a: "Frente Litorânea (séc. XVII, estimulada pelo Estado Português) e Frente Pastoril (séc. XVIII, partindo de Pastos Bons, por iniciativa privada).",
-    erradas: ["Frente Mineradora (Estado) e Frente Agrícola (privada).", "Frente Jesuíta (privada) e Frente Litorânea (Estado).", "Frente Pastoril (séc. XVII, Estado) e Frente Litorânea (séc. XVIII, privada)."],
-    explicacao: "A litorânea focou nos rios (Pindaré, Mearim, Itapecuru). A pastoril ocupou o interior (sul) e articulou o Maranhão com o Nordeste açucareiro."
+    estilo: "cloze",
+    q: "A ocupação do Maranhão teve duas frentes principais: a Frente {{c1::Litorânea}} (estimulada pelo Estado Português no século XVII) e a Frente {{c2::Pastoril}} (partindo de Pastos Bons no século XVIII, por iniciativa privada).",
+    a: "Litorânea e Pastoril",
+    erradas: [],
+    explicacao: "A litorânea focou nos rios (Pindaré, Mearim, Itapecuru). A pastoril ocupou o interior (sul) e articulou o Maranhão com o Nordeste açucareiro.",
+    bizu: "Litorânea = Estado (séc XVII). Pastoril = Privada (séc XVIII)."
   },
   {
     id: 189,
@@ -18,10 +20,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Invasões Estrangeiras — França Equinocial",
-    q: "Qual foi o objetivo da invasão francesa ao Maranhão em 1612 (França Equinocial)?",
-    a: "Fundar uma colônia francesa na linha equinocial e garantir o domínio econômico da região norte da América do Sul.",
-    erradas: ["Expulsar os holandeses do litoral.", "Implantar a cultura da cana-de-açúcar para exportação.", "Catequizar os indígenas para a Coroa Espanhola."],
-    explicacao: "Liderados por Daniel de La Touche, os franceses fundaram o Forte de São Luís (em homenagem ao rei Luís XIII) para explorar o potencial econômico."
+    estilo: "cebrape",
+    q: "O objetivo da invasão francesa ao Maranhão em 1612 (França Equinocial) era fundar uma colônia na linha equinocial e garantir o domínio econômico da região norte da América do Sul.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Liderados por Daniel de La Touche, os franceses fundaram o Forte de São Luís (em homenagem ao rei Luís XIII) para explorar o potencial econômico.",
+    bizu: "França Equinocial (1612) = fundar colônia na linha do Equador."
   },
   {
     id: 190,
@@ -30,10 +34,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Invasões Estrangeiras — Batalha de Guaxenduba",
-    q: "O que foi a Batalha de Guaxenduba (1614) no contexto da expulsão dos franceses?",
-    a: "A vitória dos portugueses (liderados por Jerônimo de Albuquerque) sobre os franceses, em Icatu, consolidando o domínio português.",
-    erradas: ["A vitória francesa que garantiu a permanência deles no Maranhão.", "Uma batalha naval que expulsou os holandeses.", "Um conflito entre jesuítas e colonos portugueses."],
-    explicacao: "Conhecida como 'Jornada Milagrosa', os portugueses, com menos homens, derrotaram os franceses e seus aliados Tupinambás, expulsando-os definitivamente."
+    estilo: "cebrape",
+    q: "A Batalha de Guaxenduba (1614) resultou na vitória dos franceses, que garantiram a permanência deles no Maranhão e a expulsão dos portugueses.",
+    gabarito: "ERRADO",
+    erradas: [],
+    explicacao: "Conhecida como 'Jornada Milagrosa', os portugueses, com menos homens, derrotaram os franceses e seus aliados Tupinambás, expulsando-os definitivamente.",
+    bizu: "Guaxenduba = Jornada Milagrosa = Vitória Portuguesa!"
   },
   {
     id: 191,
@@ -42,10 +48,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Invasões Estrangeiras — Holandeses",
-    q: "Quais foram os principais motivos da invasão holandesa ao Maranhão em 1641?",
-    a: "O contexto da União Ibérica (fim da trégua com a Holanda) e o interesse no mercado consumidor e no comércio do açúcar.",
-    erradas: ["A aliança com os franceses para expulsar os portugueses.", "O desejo de fundar uma colônia de povoamento e não de exploração.", "A tentativa de impedir o tráfico negreiro na região."],
-    explicacao: "Os holandeses já dominavam Pernambuco e expandiram seu domínio para o Maranhão visando controlar o comércio. Foram expulsos em 1644 por colonos, jesuítas e índios."
+    estilo: "cloze",
+    q: "Os holandeses invadiram o Maranhão em 1641, no contexto da {{c1::União Ibérica}} (fim da trégua com a Holanda) e pelo interesse no mercado consumidor e no comércio do {{c2::açúcar}}.",
+    a: "União Ibérica e açúcar",
+    erradas: [],
+    explicacao: "Os holandeses já dominavam Pernambuco e expandiram seu domínio para o Maranhão visando controlar o comércio. Foram expulsos em 1644 por colonos, jesuítas e índios.",
+    bizu: "Holandeses no MA = União Ibérica + comércio de açúcar."
   },
   {
     id: 192,
@@ -54,10 +62,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Estado Colonial do Maranhão",
-    q: "Por que o Estado Colonial do Maranhão (criado em 1621) foi estabelecido de forma separada do Estado do Brasil?",
-    a: "Pela vulnerabilidade da costa norte (invasões), posição geográfica estratégica e para efetivar a exploração econômica das drogas do sertão.",
-    erradas: ["Para facilitar o comércio de escravos com a África Central.", "Para impedir o avanço da pecuária no interior.", "Devido à riqueza de minérios encontrada na região."],
-    explicacao: "A grande extensão e o isolamento em relação à Bahia tornavam a região vulnerável. O Estado do Maranhão abrangia do Rio Grande do Norte ao vale Amazônico."
+    estilo: "cebrape",
+    q: "O Estado Colonial do Maranhão foi criado em 1621 separado do Estado do Brasil devido à vulnerabilidade da costa norte (invasões) e à necessidade de efetivar a exploração econômica das drogas do sertão.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "A grande extensão e o isolamento em relação à Bahia tornavam a região vulnerável. O Estado do Maranhão abrangia do Rio Grande do Norte ao vale Amazônico.",
+    bizu: "Estado do MA (1621) = Separado do Brasil por vulnerabilidade e drogas do sertão."
   },
   {
     id: 193,
@@ -66,10 +76,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Economia Colonial — Drogas do Sertão",
-    q: "Qual foi a base da economia maranhense no século XVII?",
-    a: "A economia era voltada para o setor primário, com destaque para o extrativismo vegetal (drogas do sertão), caça, pesca e agricultura de subsistência.",
-    erradas: ["A agromanufatura açucareira em larga escala, superando Pernambuco.", "A mineração de ouro e pedras preciosas.", "A indústria têxtil com alta tecnologia."],
-    explicacao: "O Maranhão não teve o sucesso da lavoura açucareira de outras capitanias. A economia girou em torno das drogas do sertão (cacau, baunilha, etc.) e da subsistência."
+    estilo: "cloze",
+    q: "A base da economia maranhense no século XVII era voltada para o setor primário, com destaque para o extrativismo vegetal das {{c1::Drogas do Sertão}}, caça, pesca e agricultura de subsistência.",
+    a: "Drogas do Sertão",
+    erradas: [],
+    explicacao: "O Maranhão não teve o sucesso da lavoura açucareira de outras capitanias. A economia girou em torno das drogas do sertão (cacau, baunilha, etc.) e da subsistência.",
+    bizu: "Séc XVII no MA = Extrativismo (Drogas do Sertão)."
   },
   {
     id: 194,
@@ -78,10 +90,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Economia Colonial — Escravidão",
-    q: "Qual foi o grande problema enfrentado pela lavoura maranhense no século XVII em relação à mão de obra?",
-    a: "A escassez e o alto preço de escravos africanos, o que forçou os colonos a buscar a escravização dos indígenas, gerando conflitos com os jesuítas.",
-    erradas: ["A proibição total do trabalho escravo pela Coroa Portuguesa.", "O excesso de escravos africanos, que causava revoltas constantes.", "A falta de interesse dos colonos em produzir qualquer tipo de mercadoria."],
-    explicacao: "O tráfico negreiro para o Maranhão era irregular e caro. A alternativa encontrada foi a escravidão indígena, fortemente combatida pela Companhia de Jesus."
+    estilo: "cebrape",
+    q: "A escassez e o alto preço de escravos africanos forçaram os colonos maranhenses no século XVII a buscar a escravização dos indígenas, gerando conflitos com os jesuítas.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "O tráfico negreiro para o Maranhão era irregular e caro. A alternativa encontrada foi a escravidão indígena, fortemente combatida pela Companhia de Jesus.",
+    bizu: "Falta de escravos negros no MA = Escravização indígena (conflito com jesuítas)."
   },
   {
     id: 195,
@@ -90,10 +104,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Igreja e Colonos — Jesuítas",
-    q: "Qual foi a principal causa do conflito entre colonos e jesuítas no Maranhão colonial?",
-    a: "A defesa dos jesuítas pela liberdade dos indígenas, o que impedia os colonos de escravizá-los para o trabalho nas lavouras.",
-    erradas: ["A disputa por terras férteis na região do Itapecuru.", "O controle exclusivo dos jesuítas sobre o comércio de especiarias.", "A tentativa dos jesuítas de impor o protestantismo na região."],
-    explicacao: "Padres como Antônio Vieira lutavam contra a escravidão indígena. Os colonos, precisando de mão de obra, entravam em choque direto com as missões."
+    estilo: "cloze",
+    q: "O conflito entre colonos e jesuítas no Maranhão colonial ocorria porque os jesuítas defendiam a {{c1::liberdade}} dos indígenas, o que impedia os colonos de escravizá-los para o trabalho nas lavouras.",
+    a: "Liberdade",
+    erradas: [],
+    explicacao: "Padres como Antônio Vieira lutavam contra a escravidão indígena. Os colonos, precisando de mão de obra, entravam em choque direto com as missões.",
+    bizu: "Jesuítas = Defesa da liberdade indígena (contra colonos)."
   },
   {
     id: 196,
@@ -102,10 +118,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Nativistas",
     tag: "tag-historia",
     topico: "Revolta de Beckman (1684) — Causas",
-    q: "Quais foram os principais motivos que levaram à Revolta de Beckman no Maranhão?",
-    a: "A falta de escravos africanos, os conflitos entre colonos e jesuítas e o monopólio comercial imposto pela Companhia de Comércio.",
-    erradas: ["A cobrança de impostos sobre a extração de ouro.", "O recrutamento militar obrigatório para a Guerra do Paraguai.", "A imposição do trabalho assalariado na indústria têxtil."],
-    explicacao: "Liderada por Manuel Beckman, a revolta depôs o governador, expulsou os jesuítas e fechou os armazéns da Companhia, que praticava preços abusivos."
+    estilo: "cloze",
+    q: "A Revolta de Beckman (1684) foi motivada pela falta de escravos africanos, pelos conflitos entre colonos e jesuítas e pelo monopólio comercial imposto pela {{c1::Companhia de Comércio}}.",
+    a: "Companhia de Comércio",
+    erradas: [],
+    explicacao: "Liderada por Manuel Beckman, a revolta depôs o governador, expulsou os jesuítas e fechou os armazéns da Companhia, que praticava preços abusivos.",
+    bizu: "Beckman = Monopólio da Companhia + Falta de escravos + Conflito com jesuítas."
   },
   {
     id: 197,
@@ -114,10 +132,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Nativistas",
     tag: "tag-historia",
     topico: "Revolta de Beckman — Desfecho",
-    q: "Qual foi o desfecho da Revolta de Beckman?",
-    a: "A Coroa Portuguesa enviou tropas, anulou as decisões dos revoltosos, e Manuel Beckman e Jorge Sampaio foram executados.",
-    erradas: ["A Coroa cedeu às exigências, expulsou os jesuítas e extinguiu a Companhia.", "Os revoltosos conseguiram a independência do Maranhão.", "Os líderes foram perdoados e nomeados governadores."],
-    explicacao: "A revolta foi contida. A Coroa não tolerou o desafio ao seu poder, embora tenha posteriormente revisto a atuação da Companhia de Comércio."
+    estilo: "cebrape",
+    q: "A Revolta de Beckman terminou com a Coroa Portuguesa cedendo às exigências, expulsando os jesuítas e extinguindo a Companhia de Comércio.",
+    gabarito: "ERRADO",
+    erradas: [],
+    explicacao: "A revolta foi contida. A Coroa não tolerou o desafio ao seu poder, embora tenha posteriormente revisto a atuação da Companhia de Comércio. Manuel Beckman e Jorge Sampaio foram executados.",
+    bizu: "Beckman fracassou: Manuel Beckman e Jorge Sampaio foram executados."
   },
   {
     id: 198,
@@ -126,10 +146,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Pombalino",
     tag: "tag-historia",
     topico: "Reformas Pombalinas — Companhia de Comércio",
-    q: "O que foi a Companhia Geral de Comércio do Grão-Pará e Maranhão, criada em 1755?",
-    a: "Uma empresa monopolista criada pelo Marquês de Pombal para dinamizar a economia, fornecendo escravos africanos e fomentando a lavoura de exportação (arroz e algodão).",
-    erradas: ["Uma organização de defesa militar contra os holandeses.", "Uma empresa privada sem incentivos do governo para explorar drogas do sertão.", "Uma entidade filantrópica para libertar os escravos."],
-    explicacao: "A Companhia trouxe milhares de escravos africanos, introduziu o cultivo do arroz e impulsionou a economia maranhense, mas com forte controle monopolista."
+    estilo: "cloze",
+    q: "A Companhia Geral de Comércio do Grão-Pará e Maranhão foi criada em 1755 pelo {{c1::Marquês de Pombal}} para dinamizar a economia, fornecendo escravos africanos e fomentando a lavoura de exportação.",
+    a: "Marquês de Pombal",
+    erradas: [],
+    explicacao: "A Companhia trouxe milhares de escravos africanos, introduziu o cultivo do arroz e impulsionou a economia maranhense, mas com forte controle monopolista.",
+    bizu: "Cia de Comércio (1755) = Marquês de Pombal."
   },
   {
     id: 199,
@@ -138,10 +160,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Pombalino",
     tag: "tag-historia",
     topico: "Economia do Séc. XVIII — Algodão",
-    q: "Por que a produção de algodão maranhense teve um grande impulso na segunda metade do século XVIII?",
-    a: "Devido à Revolução Industrial na Europa (demanda por matéria-prima), incentivo da Companhia de Comércio e à Guerra de Independência dos EUA (que paralisou a produção concorrente).",
-    erradas: ["Devido ao fim do tráfico negreiro e à mão de obra assalariada.", "Por causa da descoberta de ouro no vale do Itapecuru.", "Pela proibição do cultivo de arroz na colônia."],
-    explicacao: "O algodão maranhense chegou a ser o segundo maior do Brasil. A prosperidade gerada foi fundamental para o desenvolvimento de cidades como Caxias."
+    estilo: "cebrape",
+    q: "O algodão maranhense teve um grande impulso no século XVIII devido à Revolução Industrial na Europa e à Guerra de Independência dos EUA, que paralisou a produção concorrente.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "O algodão maranhense chegou a ser o segundo maior do Brasil. A prosperidade gerada foi fundamental para o desenvolvimento de cidades como Caxias.",
+    bizu: "Algodão MA = Revolução Industrial + Independência dos EUA."
   },
   {
     id: 200,
@@ -150,10 +174,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Independência e Império",
     tag: "tag-historia",
     topico: "Independência do Brasil — Adesão",
-    q: "Por que a elite maranhense resistiu à Independência do Brasil em 1822?",
-    a: "Devido aos fortes laços comerciais e políticos com Portugal, sendo uma das províncias mais ricas e avessas ao controle do Rio de Janeiro.",
-    erradas: ["Porque queriam se unir à França.", "Porque o Maranhão era uma província pobre e abandonada.", "Porque apoiavam a independência do Piauí."],
-    explicacao: "O comércio marítimo direto com Lisboa era muito lucrativo. A adesão só ocorreu em 1823, após o bloqueio naval de Lord Cochrane."
+    estilo: "cloze",
+    q: "A elite maranhense resistiu à Independência do Brasil em 1822 devido aos fortes laços {{c1::comerciais}} e políticos com Portugal, sendo uma das províncias mais ricas da época.",
+    a: "Comerciais",
+    erradas: [],
+    explicacao: "O comércio marítimo direto com Lisboa era muito lucrativo. A adesão só ocorreu em 1823, após o bloqueio naval de Lord Cochrane.",
+    bizu: "MA rico e ligado a Portugal = Resistiu à Independência."
   },
   {
     id: 201,
@@ -162,10 +188,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Independência e Império",
     tag: "tag-historia",
     topico: "Independência — Batalha do Jenipapo e Caxias",
-    q: "Qual foi o papel de Caxias no contexto da Independência do Maranhão?",
-    a: "Foi a principal base de resistência portuguesa liderada por Fidié, que se fortificou na cidade após a Batalha do Jenipapo (PI).",
-    erradas: ["Foi a primeira cidade a proclamar a independência.", "Foi palco de uma grande festa em apoio a D. Pedro I.", "Foi a capital da França Equinocial."],
-    explicacao: "Fidié resistiu bravamente em Caxias, mas acabou capitulando. A adesão de São Luís só ocorreu com a pressão da esquadra de Lord Cochrane."
+    estilo: "cebrape",
+    q: "Caxias foi a principal base de resistência portuguesa liderada por Fidié após a Batalha do Jenipapo (PI), sendo palco da rendição portuguesa no Maranhão.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Fidié resistiu bravamente em Caxias, mas acabou capitulando. A adesão de São Luís só ocorreu com a pressão da esquadra de Lord Cochrane.",
+    bizu: "Fidié resistiu em Caxias, mas rendeu-se."
   },
   {
     id: 202,
@@ -174,10 +202,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Independência e Império",
     tag: "tag-historia",
     topico: "Setembrada (1831)",
-    q: "O que foi a Setembrada no Maranhão?",
-    a: "Um movimento antilusitano que exigia a expulsão dos portugueses dos cargos administrativos e o retorno de D. Pedro I (em alguns momentos) ou o fim do poder português.",
-    erradas: ["Um movimento de escravos pela abolição.", "Uma revolta contra a cobrança de impostos do algodão.", "Uma revolta separatista que queria anexar o Maranhão ao Pará."],
-    explicacao: "Ocorreu em 1831, no contexto da abdicação de D. Pedro I. A população maranhense, temendo o domínio português, expulsou lusitanos de cargos públicos."
+    estilo: "cloze",
+    q: "A Setembrada (1831) foi um movimento {{c1::Antilusitano}} que exigia a expulsão dos portugueses dos cargos administrativos no Maranhão, no contexto da abdicação de D. Pedro I.",
+    a: "Antilusitano",
+    erradas: [],
+    explicacao: "Ocorreu em 1831, no contexto da abdicação de D. Pedro I. A população maranhense, temendo o domínio português, expulsou lusitanos de cargos públicos.",
+    bizu: "Setembrada (1831) = Antilusitano (contra portugueses)."
   },
   {
     id: 203,
@@ -186,10 +216,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Regenciais",
     tag: "tag-historia",
     topico: "Balaiada — Causas",
-    q: "Quais foram os principais fatores que desencadearam a Balaiada (1838-1841)?",
-    a: "A crise econômica (queda do algodão), a miséria da população, as disputas entre grupos políticos (bem-te-vis e conservadores) e a Lei dos Prefeitos.",
-    erradas: ["A cobrança de impostos sobre o ouro.", "A proibição da escravidão e a insatisfação dos senhores de terra.", "O desejo de separar o Maranhão do Brasil."],
-    explicacao: "Foi uma revolta regencial de caráter popular e social, motivada pela miséria e pelas disputas das elites locais pelo poder provincial."
+    estilo: "cloze",
+    q: "A Balaiada (1838-1841) foi motivada pela crise econômica (queda do algodão), pela miséria da população, pelas disputas entre grupos políticos e pela imposição da {{c1::Lei dos Prefeitos}}.",
+    a: "Lei dos Prefeitos",
+    erradas: [],
+    explicacao: "Foi uma revolta regencial de caráter popular e social, motivada pela miséria e pelas disputas das elites locais pelo poder provincial.",
+    bizu: "Balaiada = Crise + Miséria + Lei dos Prefeitos."
   },
   {
     id: 204,
@@ -198,10 +230,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Regenciais",
     tag: "tag-historia",
     topico: "Balaiada — Lei dos Prefeitos",
-    q: "Por que a Lei dos Prefeitos foi um estopim para a Balaiada?",
-    a: "Porque permitia ao governador da província nomear prefeitos, centralizando o poder e ferindo os interesses das oligarquias locais.",
-    erradas: ["Porque criava impostos sobre a fabricação de balaios.", "Porque libertava todos os escravos da província.", "Porque dava autonomia total aos municípios."],
-    explicacao: "A lei foi vista como um abuso autoritário do governo provincial (aliado dos conservadores), que passou a controlar os municípios."
+    estilo: "cebrape",
+    q: "A Lei dos Prefeitos foi um estopim para a Balaiada porque permitia ao governador da província nomear prefeitos, centralizando o poder e ferindo os interesses das oligarquias locais.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "A lei foi vista como um abuso autoritário do governo provincial (aliado dos conservadores), que passou a controlar os municípios.",
+    bizu: "Lei dos Prefeitos = Centralização do governador (feriu oligarquias)."
   },
   {
     id: 205,
@@ -210,10 +244,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Regenciais",
     tag: "tag-historia",
     topico: "Balaiada — Líderes",
-    q: "Quem foram os principais líderes populares da Balaiada e suas motivações?",
-    a: "Raimundo Gomes (Cara Preta) - libertar o irmão preso; Manoel dos Anjos (fabricante de balaios) - vingar a filha desonrada; Cosme Bento - líder quilombola e abolicionista.",
-    erradas: ["Manuel Beckman e Jorge Sampaio, líderes da independência.", "Fidié e Lord Cochrane, líderes militares.", "Benedito Leite e Urbano Santos, líderes republicanos."],
-    explicacao: "O movimento começou com demandas pessoais e logo ganhou proporções sociais, unindo vaqueiros, artesãos, escravos fugidos e negros libertos."
+    estilo: "cloze",
+    q: "Os líderes populares da Balaiada incluíam Raimundo Gomes (Cara Preta), Manoel dos Anjos (fabricante de balaios) e {{c1::Cosme Bento}}, que era um líder quilombola e abolicionista.",
+    a: "Cosme Bento",
+    erradas: [],
+    explicacao: "O movimento começou com demandas pessoais e logo ganhou proporções sociais, unindo vaqueiros, artesãos, escravos fugidos e negros libertos.",
+    bizu: "Líderes: Cara Preta (Raimundo), Manoel dos Anjos e Cosme Bento (quilombola)."
   },
   {
     id: 206,
@@ -222,10 +258,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Regenciais",
     tag: "tag-historia",
     topico: "Balaiada — Repressão",
-    q: "Como terminou a Balaiada?",
-    a: "Foi reprimida violentamente pelas tropas imperiais, com destaque para o Duque de Caxias, que pacificou a região com anistia aos elites e punição aos líderes populares.",
-    erradas: ["Os balaios venceram e conquistaram a independência do Maranhão.", "O movimento foi resolvido pacificamente sem violência.", "Os líderes foram perdoados e assumiram o governo."],
-    explicacao: "Caxias usou de diplomacia para separar as elites dos rebeldes pobres e força militar para esmagar a revolta. Cosme Bento foi enforcado."
+    estilo: "cebrape",
+    q: "A Balaiada foi reprimida violentamente pelas tropas imperiais, com destaque para o Duque de Caxias, que pacificou a região com anistia às elites e punição aos líderes populares.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Caxias usou de diplomacia para separar as elites dos rebeldes pobres e força militar para esmagar a revolta. Cosme Bento foi enforcado.",
+    bizu: "Duque de Caxias = Reprimiu a Balaiada (anistia para elites, punição para pobres)."
   },
   {
     id: 207,
@@ -234,10 +272,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Independência e Império",
     tag: "tag-historia",
     topico: "Economia Séc. XIX — Indústria Têxtil",
-    q: "Por que o Maranhão passou por um surto de industrialização têxtil no final do século XIX?",
-    a: "Devido à decadência da agricultura (algodão e cana) e da abolição, a elite investiu o capital na indústria para diversificar suas atividades.",
-    erradas: ["Devido ao investimento pesado do governo imperial.", "Porque a Inglaterra transferiu suas fábricas para o Maranhão.", "Por causa do fim da concorrência americana com a Guerra de Secessão."],
-    explicacao: "Com a falência das fazendas, o capital foi transferido para fábricas de tecidos (São Luís, Caxias, Codó), mas não se sustentou por falta de tecnologia e mercado."
+    estilo: "cloze",
+    q: "O Maranhão passou por um surto de industrialização têxtil no final do século XIX devido à decadência da agricultura e da {{c1::Abolição}}, fazendo com que a elite investisse o capital na indústria.",
+    a: "Abolição",
+    erradas: [],
+    explicacao: "Com a falência das fazendas, o capital foi transferido para fábricas de tecidos (São Luís, Caxias, Codó), mas não se sustentou por falta de tecnologia e mercado.",
+    bizu: "Indústria Têxtil no MA = Capital da decadente agricultura e abolição."
   },
   {
     id: 208,
@@ -246,10 +286,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Independência e Império",
     tag: "tag-historia",
     topico: "Atenas Brasileira",
-    q: "Por que São Luís recebeu o título de 'Atenas Brasileira' no século XIX?",
-    a: "Devido à intensa atividade literária e ao destaque nacional de escritores maranhenses do Romantismo, impulsionados pela riqueza do período do algodão.",
-    erradas: ["Por causa da construção da primeira universidade do Brasil.", "Devido à sua arquitetura europeia e aos altos investimentos em educação pública.", "Por ser o maior polo industrial do Império."],
-    explicacao: "A riqueza gerada pela agroexportação permitiu que as elites enviassem seus filhos para estudar na Europa, formando uma elite intelectual que brilhou na literatura."
+    estilo: "cebrape",
+    q: "São Luís recebeu o título de 'Atenas Brasileira' no século XIX devido à intensa atividade literária e ao destaque nacional de escritores maranhenses do Romantismo.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "A riqueza gerada pela agroexportação permitiu que as elites enviassem seus filhos para estudar na Europa, formando uma elite intelectual que brilhou na literatura.",
+    bizu: "Atenas Brasileira = Riqueza do algodão financiou intelectuais no séc. XIX."
   },
   {
     id: 209,
@@ -258,10 +300,12 @@ const deckHistoriaBrasil = [
     subgrupo: "República Velha",
     tag: "tag-historia",
     topico: "República Velha — Oligarquias",
-    q: "Quem foram os principais representantes da oligarquia maranhense na República Velha?",
-    a: "Benedito Leite e Urbano Santos, que controlavam a política local através do coronelismo e do Partido Republicano.",
-    erradas: ["Victorino Freire e Eugênio Barros.", "José Sarney e Renato Archer.", "Manuel Beckman e Cosme Bento."],
-    explicacao: "Benedito Leite foi a grande liderança da política maranhense na Primeira República, exercendo controle sobre o legislativo e o executivo. Urbano Santos chegou à vice-presidência da República."
+    estilo: "cloze",
+    q: "Na República Velha, os principais representantes da oligarquia maranhense foram {{c1::Benedito Leite}} e Urbano Santos, que controlavam a política local através do coronelismo.",
+    a: "Benedito Leite",
+    erradas: [],
+    explicacao: "Benedito Leite foi a grande liderança da política maranhense na Primeira República, exercendo controle sobre o legislativo e o executivo. Urbano Santos chegou à vice-presidência da República.",
+    bizu: "Oligarquia do MA na Rep. Velha = Benedito Leite e Urbano Santos."
   },
   {
     id: 210,
@@ -270,10 +314,12 @@ const deckHistoriaBrasil = [
     subgrupo: "República Velha",
     tag: "tag-historia",
     topico: "Revolta do Léda (1888-1909)",
-    q: "O que foi a Revolta do Léda no contexto da República Velha?",
-    a: "Um conflito no sertão maranhense (Grajaú) que demonstrou a instabilidade política, envolvendo disputas entre as elites locais e a oposição ao domínio oligárquico.",
-    erradas: ["Uma revolta de escravos contra os senhores de terra.", "Um levante contra a cobrança de impostos sobre o algodão.", "Uma disputa entre o Maranhão e o Piauí por terras."],
-    explicacao: "Foi um movimento de cunho político-eleitoral no interior, marcado por violência e disputas pelo poder local."
+    estilo: "cebrape",
+    q: "A Revolta do Léda (1888-1909) foi um conflito no sertão maranhense (Grajaú) que demonstrou a instabilidade política e as disputas entre as elites locais na República Velha.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Foi um movimento de cunho político-eleitoral no interior, marcado por violência e disputas pelo poder local.",
+    bizu: "Revolta do Léda (Grajaú) = Disputa de elites no interior."
   },
   {
     id: 211,
@@ -282,10 +328,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Era Vargas e Populismo",
     tag: "tag-historia",
     topico: "Vitorinismo — Ascensão",
-    q: "Quem foi Victorino Freire e como ele chegou ao poder no Maranhão?",
-    a: "Um político pernambucano que chegou em 1933, apoiou o Golpe de 1930 e, através de alianças com o governo federal (Getúlio Vargas e Eurico Dutra) e o PSD, tornou-se o chefe político do estado até os anos 60.",
-    erradas: ["Um líder popular que se elegeu através do voto direto e da mobilização das massas.", "Um militar que tomou o poder através de um golpe de estado no Maranhão.", "Um escritor que se destacou na 'Atenas Brasileira'."],
-    explicacao: "Victorino era um político 'de cima para baixo', que usava a máquina pública e o prestígio federal para controlar o Maranhão. Sua frase 'vou ao Maranhão apertar as cangalhas' demonstra seu coronelismo."
+    estilo: "cloze",
+    q: "Victorino Freire chegou ao poder no Maranhão em 1933, apoiou o Golpe de 1930 e, através de alianças com o governo federal e o {{c1::PSD}}, tornou-se o chefe político do estado.",
+    a: "PSD",
+    erradas: [],
+    explicacao: "Victorino era um político 'de cima para baixo', que usava a máquina pública e o prestígio federal para controlar o Maranhão. Sua frase 'vou ao Maranhão apertar as cangalhas' demonstra seu coronelismo.",
+    bizu: "Vitorinismo = Aliança com Getúlio Vargas e o PSD."
   },
   {
     id: 212,
@@ -294,10 +342,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Era Vargas e Populismo",
     tag: "tag-historia",
     topico: "Greve de 1951 (Balaiada Urbana) — Causas",
-    q: "O que motivou a Greve de 1951 em São Luís?",
-    a: "A fraude eleitoral que garantiu a vitória de Eugênio de Barros sobre Saturnino Belo, gerando uma revolta popular contra a oligarquia vitorinista.",
-    erradas: ["O aumento abusivo das passagens de ônibus.", "A falta de alimentos causada pela Segunda Guerra Mundial.", "A prisão de Manuel Beckman."],
-    explicacao: "A população, insatisfeita com a manipulação do TRE que anulou votos da oposição, foi às ruas. O movimento uniu estudantes, trabalhadores e a classe média."
+    estilo: "cebrape",
+    q: "A Greve de 1951 em São Luís foi motivada pela fraude eleitoral que garantiu a vitória de Eugênio de Barros sobre Saturnino Belo, gerando uma revolta popular contra a oligarquia vitorinista.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "A população, insatisfeita com a manipulação do TRE que anulou votos da oposição, foi às ruas. O movimento uniu estudantes, trabalhadores e a classe média.",
+    bizu: "Greve de 51 = Fraude eleitoral (Eugênio de Barros vs Saturnino Belo)."
   },
   {
     id: 213,
@@ -306,10 +356,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Era Vargas e Populismo",
     tag: "tag-historia",
     topico: "Greve de 1951 — Consequências",
-    q: "Qual foi o desfecho da Greve de 1951 no Maranhão?",
-    a: "Apesar da ampla mobilização popular e da intervenção federal, Eugênio de Barros foi diplomado. A greve fortaleceu a oposição e apelidou São Luís de 'Ilha Rebelde'.",
-    erradas: ["Victorino Freire renunciou e Saturnino Belo assumiu o governo.", "O Maranhão conquistou sua independência.", "A monarquia foi restaurada na província."],
-    explicacao: "O movimento foi violentamente reprimido por tropas federais, mas marcou a história política do estado como um símbolo de resistência contra o coronelismo."
+    estilo: "cloze",
+    q: "Apesar da ampla mobilização popular e da intervenção federal, Eugênio de Barros foi diplomado. A greve fortaleceu a oposição e apelidou São Luís de {{c1::Ilha Rebelde}}.",
+    a: "Ilha Rebelde",
+    erradas: [],
+    explicacao: "O movimento foi violentamente reprimido por tropas federais, mas marcou a história política do estado como um símbolo de resistência contra o coronelismo.",
+    bizu: "Greve de 51 = Ilha Rebelde."
   },
   {
     id: 214,
@@ -318,10 +370,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Ditadura Militar",
     tag: "tag-historia",
     topico: "Era Sarney",
-    q: "Como José Sarney assumiu o controle político do Maranhão a partir de 1966?",
-    a: "Através do apoio da ditadura militar (1964), elegeu-se governador pela UDN/ARENA e iniciou um processo de modernização conservadora ('Maranhão Novo'), financiado por recursos federais.",
-    erradas: ["Através de uma revolução popular e voto direto das massas.", "Pela indicação de Victorino Freire como seu sucessor.", "Através da liderança do movimento sindical."],
-    explicacao: "Sarney estruturou uma nova oligarquia, rompendo com Victorino. Criou a TVE, SUDEMA, Hidrelétrica de Boa Esperança, porto de Itaqui e a Lei de Terras."
+    estilo: "cebrape",
+    q: "José Sarney assumiu o controle político do Maranhão a partir de 1966 através do apoio da ditadura militar, iniciando um processo de modernização conservadora financiado por recursos federais.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Sarney estruturou uma nova oligarquia, rompendo com Victorino. Criou a TVE, SUDEMA, Hidrelétrica de Boa Esperança, porto de Itaqui e a Lei de Terras.",
+    bizu: "Era Sarney = Apoio da Ditadura Militar + Modernização Conservadora."
   },
   {
     id: 215,
@@ -330,10 +384,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Economia Contemporânea",
     tag: "tag-historia",
     topico: "Babaçu",
-    q: "Qual a importância do babaçu para a economia maranhense?",
-    a: "O Maranhão é o maior produtor nacional (90% da safra), sendo o extrativismo do babaçu essencial para a subsistência de famílias tradicionais (quebradeiras de coco).",
-    erradas: ["É a principal matéria-prima da indústria de tecnologia.", "Foi responsável pelo surto industrial do século XIX.", "É utilizado exclusivamente na fabricação de tecidos."],
-    explicacao: "A extração do babaçu, embora muitas vezes marcada por conflitos de terra, é uma importante fonte de renda e preservação cultural no interior."
+    estilo: "cloze",
+    q: "O Maranhão é o maior produtor nacional de {{c1::Babaçu}}, sendo o extrativismo essencial para a subsistência de famílias tradicionais (quebradeiras de coco).",
+    a: "Babaçu",
+    erradas: [],
+    explicacao: "A extração do babaçu, embora muitas vezes marcada por conflitos de terra, é uma importante fonte de renda e preservação cultural no interior.",
+    bizu: "Maranhão = Maior produtor de Babaçu."
   },
   {
     id: 216,
@@ -342,14 +398,13 @@ const deckHistoriaBrasil = [
     subgrupo: "Economia Contemporânea",
     tag: "tag-historia",
     topico: "Soja e Mineração",
-    q: "Quais fatores atraíram a produção de soja para a região de Balsas (MA) a partir de 1990?",
-    a: "O acesso a terras baratas, localização geográfica privilegiada (próxima à ferrovia Carajás e portos) e incentivos governamentais.",
-    erradas: ["A abundância de mão de obra qualificada na região.", "O solo fértil e o clima úmido do litoral maranhense.", "A proibição da pecuária extensiva no estado."],
-    explicacao: "A expansão da fronteira agrícola (soja) transformou o sul do Maranhão (Gerais de Balsas), substituindo parte da pecuária extensiva."
+    estilo: "cebrape",
+    q: "A produção de soja na região de Balsas (MA) foi atraída pelo acesso a terras baratas, localização geográfica privilegiada (próxima à ferrovia Carajás) e incentivos governamentais.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "A expansão da fronteira agrícola (soja) transformou o sul do Maranhão (Gerais de Balsas), substituindo parte da pecuária extensiva.",
+    bizu: "Soja em Balsas = Terras baratas + Ferrovia Carajás."
   },
- // ==========================================
-  // HISTÓRIA DO MARANHÃO
-  // ==========================================
   {
     id: 289,
     deck: "História do Brasil",
@@ -357,10 +412,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Período Colonial e Ocupação",
     tag: "tag-historia",
     topico: "Invasões Estrangeiras — França Equinocial",
-    q: "Qual foi o objetivo dos franceses ao fundarem a França Equinocial em São Luís (1612)?",
-    a: "Criar uma colônia francesa na linha do Equador para explorar as riquezas locais e garantir o domínio do território.",
-    erradas: ["Expulsar os portugueses e holandeses da região.", "Implantar a monocultura da cana-de-açúcar.", "Catequizar os indígenas para a Coroa Espanhola."],
-    explicacao: "Liderados por Daniel de La Touche, os franceses chegaram e fundaram o forte de São Luís (homenagem ao rei Luís XIII). Foram expulsos pelos portugueses na Batalha de Guaxenduba."
+    estilo: "cebrape",
+    q: "O objetivo dos franceses ao fundarem a França Equinocial em São Luís (1612) era expulsar os portugueses e holandeses da região.",
+    gabarito: "ERRADO",
+    erradas: [],
+    explicacao: "Liderados por Daniel de La Touche, os franceses chegaram e fundaram o forte de São Luís (homenagem ao rei Luís XIII) para criar uma colônia na linha do Equador e explorar as riquezas.",
+    bizu: "França Equinocial = Fundar colônia e dominar a região."
   },
   {
     id: 290,
@@ -369,10 +426,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Nativistas",
     tag: "tag-historia",
     topico: "Revolta de Beckman (1684)",
-    q: "Quais foram as principais causas da Revolta de Beckman no Maranhão?",
-    a: "O monopólio comercial da Companhia de Comércio (que cobrava preços abusivos) e a escravização indígena proibida pelos jesuítas.",
-    erradas: ["A cobrança de impostos sobre a extração de ouro.", "O desejo de independência do Brasil.", "A imposição do trabalho assalariado na indústria têxtil."],
-    explicacao: "Os colonos não tinham escravos africanos suficientes e não podiam escravizar índios (proibição dos jesuítas). Além disso, a Companhia de Comércio controlava os preços, gerando revolta."
+    estilo: "cebrape",
+    q: "A Revolta de Beckman foi motivada pelo monopólio comercial da Companhia de Comércio e pela proibição da escravização indígena pelos jesuítas.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Os colonos não tinham escravos africanos suficientes e não podiam escravizar índios (proibição dos jesuítas). Além disso, a Companhia de Comércio controlava os preços, gerando revolta.",
+    bizu: "Beckman = Companhia de Comércio (monopólio) + Jesuítas (proibiam escravizar índios)."
   },
   {
     id: 291,
@@ -381,10 +440,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Regenciais",
     tag: "tag-historia",
     topico: "Balaiada — Causas",
-    q: "Qual foi a principal motivação popular para a adesão à Balaiada (1838-1841)?",
-    a: "A extrema pobreza, a crise econômica (queda do algodão) e a insatisfação com os abusos do governo e das elites locais.",
-    erradas: ["O desejo de separar o Maranhão do Brasil.", "A luta pela abolição imediata da escravidão.", "O apoio à volta de D. Pedro I ao trono."],
-    explicacao: "A Balaiada começou com disputas entre grupos políticos (bem-te-vis e conservadores), mas ganhou força quando a população pobre (vaqueiros, artesãos, escravos) se juntou contra a miséria."
+    estilo: "cebrape",
+    q: "A principal motivação popular para a adesão à Balaiada foi o desejo de separar o Maranhão do Brasil.",
+    gabarito: "ERRADO",
+    erradas: [],
+    explicacao: "A Balaiada começou com disputas entre grupos políticos (bem-te-vis e conservadores), mas ganhou força quando a população pobre (vaqueiros, artesãos, escravos) se juntou contra a miséria, a crise econômica e os abusos do governo.",
+    bizu: "Balaiada = Revolta social e de miséria (não era separatista)."
   },
   {
     id: 292,
@@ -393,10 +454,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Revoltas Regenciais",
     tag: "tag-historia",
     topico: "Balaiada — Líderes Populares",
-    q: "Quem foram os principais líderes populares da Balaiada e suas motivações iniciais?",
-    a: "Raimundo Gomes (Cara Preta) e Manuel dos Anjos (fabricante de balaios), que buscavam libertar presos e vingar injustiças pessoais.",
-    erradas: ["Manuel Beckman e Jorge Sampaio, líderes da Revolta de Beckman.", "Fidié e Lord Cochrane, líderes militares portugueses.", "Benedito Leite e Urbano Santos, líderes republicanos."],
-    explicacao: "Raimundo Gomes invadiu a cadeia para libertar seu irmão. Manuel dos Anjos se revoltou contra um soldado que desonrou sua filha. O movimento cresceu e se tornou uma revolta social."
+    estilo: "cebrape",
+    q: "Raimundo Gomes (Cara Preta) e Manuel dos Anjos foram líderes da Balaiada motivados inicialmente por injustiças pessoais.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Raimundo Gomes invadiu a cadeia para libertar seu irmão. Manuel dos Anjos se revoltou contra um soldado que desonrou sua filha. O movimento cresceu e se tornou uma revolta social.",
+    bizu: "Cara Preta = Libertou irmão. Manoel dos Anjos = Vingar filha."
   },
   {
     id: 293,
@@ -405,10 +468,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Era Vargas e Populismo",
     tag: "tag-historia",
     topico: "Vitorinismo — Práticas Políticas",
-    q: "Quais eram as principais práticas políticas do Vitorinismo no Maranhão (1940-1960)?",
-    a: "O coronelismo, o clientelismo, a fraude eleitoral, o controle da máquina pública e a perseguição aos opositores.",
-    erradas: ["A defesa da democracia plena e da liberdade de imprensa.", "A distribuição igualitária de terras e riquezas.", "O incentivo à industrialização autônoma e à educação pública."],
-    explicacao: "Victorino Freire controlava o estado através do PSD. Ele usava a máquina pública para benefício próprio e dos aliados, além de fraudar eleições para manter o poder (ex: Greve de 1951)."
+    estilo: "cebrape",
+    q: "O Vitorinismo caracterizou-se pela defesa da democracia plena e pela distribuição igualitária de terras e riquezas.",
+    gabarito: "ERRADO",
+    erradas: [],
+    explicacao: "Victorino Freire controlava o estado através do PSD. Ele usava a máquina pública para benefício próprio e dos aliados, além de fraudar eleições para manter o poder, com práticas de coronelismo, clientelismo e perseguição aos opositores.",
+    bizu: "Vitorinismo = Coronelismo, clientelismo, fraude."
   },
   {
     id: 294,
@@ -417,10 +482,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Era Vargas e Populismo",
     tag: "tag-historia",
     topico: "Greve de 1951 — Balaiada Urbana",
-    q: "O que motivou a Greve de 1951 em São Luís, também conhecida como 'Balaiada Urbana'?",
-    a: "A fraude eleitoral que garantiu a vitória de Eugênio de Barros (aliado de Victorino) sobre Saturnino Belo, gerando revolta popular.",
-    erradas: ["O aumento abusivo das passagens de transporte público.", "A falta de alimentos causada pela Segunda Guerra Mundial.", "A prisão de Manuel Beckman por autoridades portuguesas."],
-    explicacao: "A população de São Luís foi às ruas contra a manipulação do TRE. O movimento paralisou a cidade, queimou prédios e ficou conhecido como 'Ilha Rebelde'."
+    estilo: "cebrape",
+    q: "A Greve de 1951 em São Luís ficou conhecida como 'Balaiada Urbana' e foi motivada pela fraude eleitoral.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "A população de São Luís foi às ruas contra a manipulação do TRE que garantiu a vitória de Eugênio de Barros (aliado de Victorino) sobre Saturnino Belo. O movimento paralisou a cidade e ficou conhecido como 'Ilha Rebelde'.",
+    bizu: "Balaiada Urbana = Greve de 1951 pela fraude eleitoral."
   },
   {
     id: 295,
@@ -429,10 +496,12 @@ const deckHistoriaBrasil = [
     subgrupo: "Economia Contemporânea",
     tag: "tag-historia",
     topico: "Economia — Babaçu",
-    q: "Qual é a importância econômica e social do babaçu para o estado do Maranhão?",
-    a: "O estado é o maior produtor nacional; o extrativismo do babaçu é a principal fonte de renda e subsistência para milhares de famílias (quebradeiras de coco).",
-    erradas: ["É a principal matéria-prima da indústria automobilística maranhense.", "Foi o produto responsável pelo surto industrial do século XIX.", "Substituiu o algodão na pauta de exportações do século XVIII."],
-    explicacao: "O babaçu é essencial para a sobrevivência das populações tradicionais do interior. A extração da amêndoa, do óleo e do carvão move uma economia local e enfrenta conflitos de terra."
+    estilo: "cebrape",
+    q: "O babaçu é a principal matéria-prima da indústria automobilística maranhense.",
+    gabarito: "ERRADO",
+    erradas: [],
+    explicacao: "O estado é o maior produtor nacional, e o extrativismo do babaçu é a principal fonte de renda e subsistência para milhares de famílias (quebradeiras de coco), não sendo matéria-prima da indústria automobilística.",
+    bizu: "Babaçu = Extrativismo e subsistência (não é indústria automobilística)."
   },
   {
     id: 296,
@@ -441,9 +510,11 @@ const deckHistoriaBrasil = [
     subgrupo: "Ditadura Militar",
     tag: "tag-historia",
     topico: "Era Sarney — Modernização",
-    q: "Qual foi a base do governo de José Sarney no Maranhão a partir de 1966?",
-    a: "O apoio da ditadura militar (ARENA) e a modernização conservadora ('Maranhão Novo'), com investimentos federais em infraestrutura e indústria (ALUMAR, Itaqui).",
-    erradas: ["O apoio dos movimentos sociais e a reforma agrária.", "A ruptura total com o governo militar e o alinhamento com o comunismo.", "A criação de uma democracia popular e participativa."],
-    explicacao: "Sarney rompeu com o Vitorinismo e se aliou aos militares. Com verbas federais, criou a TVE, SUDEMA, Hidrelétrica de Boa Esperança e o Porto de Itaqui, mas mantendo a estrutura oligárquica."
+    estilo: "cebrape",
+    q: "A base do governo de José Sarney no Maranhão a partir de 1966 foi o apoio da ditadura militar e a modernização conservadora.",
+    gabarito: "CERTO",
+    erradas: [],
+    explicacao: "Sarney rompeu com o Vitorinismo e se aliou aos militares (ARENA). Com verbas federais, criou a TVE, SUDEMA, Hidrelétrica de Boa Esperança e o Porto de Itaqui, mas mantendo a estrutura oligárquica.",
+    bizu: "Sarney = Ditadura Militar + 'Maranhão Novo' (modernização conservadora)."
   }
 ];
