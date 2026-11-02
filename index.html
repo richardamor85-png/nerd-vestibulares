@@ -383,7 +383,6 @@
             <div style="text-align: center; margin-top: 5px; width: 100%;">
                 <h2 style="color: #38bdf8; margin-bottom: 8px; font-weight: 800;">🚀 Simulado Oficial</h2>
                 
-                <!-- BADGE DE CONTAGEM DINÂMICA DE CARDS NO FILTRO -->
                 <div class="db-counter" id="simOficialContadorBadge" style="margin-bottom: 10px;">A calcular cards disponíveis...</div>
 
                 <div class="menu-grid" style="max-width: 440px;">
@@ -495,9 +494,10 @@
                         <div style="flex:1;">
                             <label>Formato:</label>
                             <select id="selectFormatoGeradorIA">
-                                <option value="multipla" selected>Múltipla Escolha</option>
+                                <option value="multipla">Múltipla Escolha</option>
                                 <option value="cebrape">Certo / Errado</option>
-                                <option value="cloze" style="color: #34d399; font-weight: bold;">📝 Cloze (Omissão)</option>
+                                <option value="cloze">Cloze (Omissão)</option>
+                                <option value="misto" style="color: #ec4899; font-weight: bold;" selected>🤖 Misto (Certo/Errado + Cloze)</option>
                             </select>
                         </div>
                     </div>
@@ -911,7 +911,6 @@
             atualizarContadorFiltroSimuladoOficial();
         }
 
-        // FUNÇÃO PARA ATUALIZAR EM TEMPO REAL A CONTAGEM DE CARDS NO SIMULADO OFICIAL
         function atualizarContadorFiltroSimuladoOficial() {
             const disc = document.getElementById('simOficialDisc').value;
             const top = document.getElementById('simOficialTopico').value;
@@ -1025,7 +1024,6 @@
             sel.appendChild(opt);
         }
 
-        // LEITOR DE PDF OTIMIZADO E ROBUSTO
         async function processarArquivoPdfGerador(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1511,7 +1509,7 @@
                     div.innerHTML = `
                         <input type="checkbox" id="chk-card-${idx}" checked style="margin-top: 2px; cursor: pointer;" onclick="event.stopPropagation()">
                         <div style="flex: 1; cursor: pointer;" onclick="espelharCardNaDireita(${idx})">
-                            <b>Card ${idx+1} [${card.deck} / ${card.subgrupo}]:</b><br>${card.q}<br><small style="color:#38bdf8;">Gabarito/Correta: ${card.a || card.gabarito}</small>
+                            <b>Card ${idx+1} [${card.deck} / ${card.subgrupo}] (${card.estilo}):</b><br>${card.q}<br><small style="color:#38bdf8;">Gabarito/Correta: ${card.a || card.gabarito}</small>
                         </div>
                     `;
                     listaPrevia.appendChild(div);
@@ -1555,7 +1553,7 @@
             }
 
             container.innerHTML = `
-                <span class="mission-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; margin-bottom: 4px;">${card.deck}</span>
+                <span class="mission-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; display: inline-block; margin-bottom: 4px;">${card.deck} (${card.estilo})</span>
                 <div style="font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 6px;">${card.topicoPrincipal} — ${card.subgrupo}</div>
                 <div style="font-size: 13px; line-height: 1.5; background: rgba(30, 41, 59, 0.85); padding: 10px; border-radius: 10px; color: #ffffff; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1);">${card.q}</div>
                 <div style="margin-bottom: 10px;">${altsHtml}</div>
@@ -1577,35 +1575,30 @@
                 "⚠️ MODO COBRIR TUDO ATIVADO: Faça um mapeamento exaustivo e minucioso de TODO o texto fornecido. Ignore cabeçalhos, rodapés, numeração de páginas e elementos irrelevantes. Crie cartões cobrindo cada conceito, regra, exceção, data, autor ou definição presente no texto (gere quantos cartões forem necessários para esgotar o assunto, podendo chegar a 30 ou 40 questões se o texto for longo)." : 
                 `Crie exatamente ${quantidade} questões.`;
 
-            let promptJSON = "";
-            if (formato === 'cloze') {
-                promptJSON = `
-                    Analise o texto abaixo e crie questões no formato "cloze" (omissão de palavras estilo Anki, com marcações {{c1::termo}}).
-                    ${instrucaoExtra}
-                    Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
-                    Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
-
-                    Estrutura JSON:
-                    [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cloze", "q": "Frase com {{c1::omissão}}", "a": "termo omitido", "erradas": [], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
-
-                    Texto: "${textoFonte}"
-                `;
+            let formatoInstrucao = "";
+            if (formato === 'misto') {
+                formatoInstrucao = "Varie os formatos entre 'cebrape' (certo/errado) e 'cloze' (omissão com marcações {{c1::termo}}), escolhendo o formato que melhor se adaptar a cada frase ou conceito do texto.";
+            } else if (formato === 'cloze') {
+                formatoInstrucao = "Crie todas as questões no formato 'cloze' (omissão de palavras estilo Anki, com marcações {{c1::termo}}).";
+            } else if (formato === 'cebrape') {
+                formatoInstrucao = "Crie todas as questões no formato 'cebrape' (Certo / Errado).";
             } else {
-                promptJSON = `
-                    Analise o texto abaixo e crie questões no formato "${formato}".
-                    ${instrucaoExtra}
-                    Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
-                    Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
-
-                    Estrutura se "cebrape":
-                    [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cebrape", "q": "Pergunta", "gabarito": "CERTO", "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
-
-                    Estrutura se "multipla":
-                    [{"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "multipla", "q": "Pergunta", "a": "Correta", "erradas": ["E1","E2","E3"], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}]
-
-                    Texto: "${textoFonte}"
-                `;
+                formatoInstrucao = "Crie todas as questões no formato 'multipla' escolha.";
             }
+
+            let promptJSON = `
+                Analise o texto abaixo e ${formatoInstrucao}
+                ${instrucaoExtra}
+                Atribua obrigatoriamente a disciplina "${deck}", o tópico principal "${topico}" e o subtópico "${subgrupo}" a cada questão.
+                Responda EXCLUSIVAMENTE com um array JSON válido sem marcações extras, sem markdown de código (nada de \`\`\`json).
+
+                Estruturas permitidas no array (conforme o estilo escolhido para o card):
+                1. Se estilo "cebrape": {"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cebrape", "q": "Afirmativa", "gabarito": "CERTO", "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}
+                2. Se estilo "cloze": {"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "cloze", "q": "Frase com {{c1::omissão}}", "a": "termo omitido", "erradas": [], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}
+                3. Se estilo "multipla": {"id": ${Date.now()}+i, "deck": "${deck}", "topicoPrincipal": "${topico}", "subgrupo": "${subgrupo}", "topico": "${topico}", "estilo": "multipla", "q": "Pergunta", "a": "Correta", "erradas": ["E1","E2","E3"], "explicacao": "Fundamentação", "dataCriacao": "${dataHoje}"}
+
+                Texto: "${textoFonte}"
+            `;
 
             const bodyData = {
                 model: "deepseek/deepseek-chat",
@@ -1733,7 +1726,6 @@
 
         function confirmarAbandonoSessao() { if(confirm("Deseja abandonar a sessão atual?")) voltarMenu(); }
 
-        // MOTOR DE REVISÃO ESPAÇADA COM VIRADA DE DIA ÀS 04:00 AM
         function calcularMomentoViradaDia(timestamp) {
             let d = new Date(timestamp);
             d.setHours(d.getHours() - 4);
@@ -1898,6 +1890,10 @@
                         <button class="btn-action btn-warning" style="flex: 1; margin: 0; max-width: 150px; background: linear-gradient(135deg, #10b981, #047857);" onclick="responderCard('ACERTOU', 'ACERTOU', '${card.id}', '${card.explicacao}', this)">✅ Acertei</button>
                     `;
                     grid.appendChild(blocoAvaliacao);
+
+                    // ATIVA AGENTE DE I.A. IMEDIATAMENTE PARA CARDS CLOZE QUANDO REVELADOS
+                    document.getElementById('expText').innerText = card.explicacao || "Conceito fundamental.";
+                    document.getElementById('explanationBox').style.display = 'block';
                 };
                 grid.appendChild(btnMostrar);
             } else {
@@ -2102,7 +2098,7 @@
             let percentual = totalResp > 0 ? Math.round((sessaoAtual.acertos / totalResp) * 100) : 0;
             document.getElementById('reportTitle').innerText = percentual >= 70 ? "🏆 Sessão Concluída!" : "⚠️ Desempenho Abaixo da Meta";
             let html = `• Aproveitamento: <b>${percentual}%</b> (${sessaoAtual.acertos} acertos / ${sessaoAtual.erros} erros)<br>`;
-            html += `• XP Ganho: <b>+${sessaoaturacao || sessaoAtual.xp} XP</b><br>`;
+            html += `• XP Ganho: <b>+${sessaoAtual.xp} XP</b><br>`;
             document.getElementById('reportContent').innerHTML = html;
         }
     </script>
